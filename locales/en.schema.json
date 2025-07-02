@@ -1,0 +1,47 @@
+{
+    "theme_label": "Basic Template",
+    "theme_description": "Complete Basic Template Library",
+    "templates": {
+      "video-list": {
+        "name": "Video Course List",
+        "description": "Video Course List",
+        "settings": {
+          "default_cover": {
+            "label": "Default Video Cover",
+            "info": "Recommended size: 16:9"
+          }
+        }
+      },
+      "video-page": {
+        "name": "Video Course Details",
+        "description": "Video Course Details",
+        "settings": {
+          "title": {
+            "label": "Title"
+          },
+          "description": {
+            "label": "Brief Description"
+          },
+          "video": {
+            "label": "Video"
+          },
+          "duration": {
+            "label": "Video Duration",
+            "info": "Format: 10:30s means 10 minutes and 30 seconds"
+          },
+          "cover": {
+            "label": "Cover",
+            "info": "Recommended size: 16:9"
+          },
+          "tags": {
+            "label": "Video Tags",
+            "info": "Recommended to use no more than 3 tags"
+          },
+          "content": {
+            "label": "Course Details"
+          }
+        }
+      }
+    }
+  }
+  

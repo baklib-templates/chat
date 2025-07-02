@@ -1,0 +1,16 @@
+{
+    "templates": {
+      "video-page": {
+        "recent_videos": "Recent Videos",
+        "recent_videos_description": "Explore the latest video content, bringing you cutting-edge information and in-depth analysis."
+      }
+    },
+    "snippets": {
+      "empty": {
+        "title": "No Content Found",
+        "description": "Please try other search keywords or browse other categories",
+        "button_text": "Back to Home"
+      }
+    }
+  }
+  

@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "./_daisyui.css";
+@import "./_base.css" layer(base);
+@import "./_components.css" layer(components);
+@import "./_utilities.css" layer(utilities);
+
+
+/* tiny-slider */
+
+@import "tiny-slider/dist/tiny-slider.css";
+
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+

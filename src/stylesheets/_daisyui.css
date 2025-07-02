@@ -1,0 +1,22 @@
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark;
+  root: ":root";
+  include:;
+  exclude:;
+  prefix:;
+  logs: true;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: oklch(54.1% 0.281 293.009);
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: false;
+  --color-primary: oklch(54.1% 0.281 293.009);
+}

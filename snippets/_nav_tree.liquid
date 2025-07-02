@@ -1,0 +1,17 @@
+<ul class="menu w-full {{ class }}" id="nav-tree" data-turbo-permanent data-controller="nav-tree" data-nav-tree-active-class="nav-menu-active">
+  {% for tree in nav_tree %}
+    {% if tree.children %}
+      <li class='mt-1'>
+        <summary data-nav-tree-target="item" class='font-semibold hover:bg-transparent hover:text-primary active:bg-transparent'><a href="{{ tree.path }}"  data-turbo-frame="page-content">{{ tree.link_text }}</a></summary>
+        {% assign newDepth = depth | plus: 1 %}
+        {% render 'sub_nav_tree', nav_tree: tree.children, depth: newDepth %}
+      </li>
+    {% else %}
+      <li class='mt-1'>
+        <summary class='font-semibold hover:bg-transparent hover:text-primary'>
+          <a data-nav-tree-target="item" href="{{ tree.path }}"  data-turbo-frame="page-content">{{ tree.link_text }}</a>
+        </summary>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

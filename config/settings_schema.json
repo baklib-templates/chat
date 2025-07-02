@@ -1,0 +1,140 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ai_chat",
+    "theme_label": "t:schema.theme_label",
+    "theme_description": "t:schema.theme_description",
+    "theme_version": "0.0.1",
+    "theme_syntax_version": "v2",
+    "theme_scope": "wiki",
+    "theme_author": "Baklib",
+    "theme_documentation_url": "https://www.baklib.com/blog",
+    "theme_support_url": "https://www.baklib.com/",
+    "theme_thumb_url": "images/theme/${lang}/thumb.png",
+    "theme_preview_images": [
+      "images/theme/${lang}/preview1.png",
+      "images/theme/${lang}/preview2.png",
+      "images/theme/${lang}/preview3.png"
+    ],
+    "theme_languages": [
+      {
+        "name": "中文简体",
+        "value": "zh-CN"
+      },
+      {
+        "name": "English",
+        "value": "en"
+      }
+    ],
+    "recommendations": {
+      "color_schemas": {
+        "scheme1": {
+          "name": "配色方案1",
+          "colors": {
+            "--theme-color-base-100": "#f8f9ff",
+            "--theme-color-base-200": "#f5f7ff",
+            "--theme-color-base-300": "#e6eaf7",
+            "--theme-color-base-content": "#181a1f",
+            "--theme-color-primary": "#e0005b",
+            "--theme-color-primary-content": "#3a1a1c",
+            "--theme-color-secondary": "#e6f7e6",
+            "--theme-color-secondary-content": "#2a1a1c",
+            "--theme-color-accent": "#5fd3b3",
+            "--theme-color-accent-content": "#1a2a1c",
+            "--theme-color-neutral": "#5a5a5a",
+            "--theme-color-neutral-content": "#f8f9ff",
+            "--theme-color-info": "#3a8fff",
+            "--theme-color-info-content": "#f5f7ff",
+            "--theme-color-success": "#4caf50",
+            "--theme-color-success-content": "#f5f7ff",
+            "--theme-color-warning": "#ffc107",
+            "--theme-color-warning-content": "#f5f7ff",
+            "--theme-color-error": "#ff5252",
+            "--theme-color-error-content": "#f5f7ff"
+          }
+        },
+        "scheme2": {
+          "name": "配色方案2",
+          "colors": {
+            "--theme-color-base-100": "#181a2a",
+            "--theme-color-base-200": "#23234a",
+            "--theme-color-base-300": "#2e2e6a",
+            "--theme-color-base-content": "#f5f6fa",
+            "--theme-color-primary": "#4ad7c8",
+            "--theme-color-primary-content": "#2e3a3f",
+            "--theme-color-secondary": "#000000",
+            "--theme-color-secondary-content": "#ffffff",
+            "--theme-color-accent": "#5fd3b3",
+            "--theme-color-accent-content": "#1a2a1c",
+            "--theme-color-neutral": "#3d3d5a",
+            "--theme-color-neutral-content": "#fafbff",
+            "--theme-color-info": "#3a8fff",
+            "--theme-color-info-content": "#f5f7ff",
+            "--theme-color-success": "#4fdc7b",
+            "--theme-color-success-content": "#f6fff9",
+            "--theme-color-warning": "#ffd966",
+            "--theme-color-warning-content": "#fffbe6",
+            "--theme-color-error": "#ff5252",
+            "--theme-color-error-content": "#f5f7ff"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "t:schema.settings.brand.title",
+    "settings": [
+      {
+        "id": "logo_url",
+        "type": "image_picker",
+        "width": 300,
+        "height": 80,
+        "label": "t:schema.settings.brand.logo_url.label",
+        "info": "t:schema.settings.brand.logo_url.info"
+      },
+      {
+        "id": "dark_logo_url",
+        "type": "image_picker",
+        "width": 300,
+        "height": 80,
+        "label": "t:schema.settings.brand.dark_logo_url.label",
+        "info": "t:schema.settings.brand.dark_logo_url.info"
+      },
+      {
+        "id": "slogan",
+        "type": "text",
+        "label": "t:schema.settings.brand.slogan.label",
+        "info": "t:schema.settings.brand.slogan.info"
+      },
+      {
+        "id": "copyright",
+        "type": "text",
+        "label": "t:schema.settings.brand.copyright.label",
+        "info": "t:schema.settings.brand.copyright.info"
+      }
+    ]
+  },
+  {
+    "name": "t:schema.settings.policy.title",
+    "settings": [
+      {
+        "id": "icp_beian",
+        "type": "text",
+        "label": "t:schema.settings.policy.icp_beian.label",
+        "required": true
+      },
+      {
+        "id": "service_term_url",
+        "type": "text",
+        "label": "t:schema.settings.policy.service_term_url.label",
+        "info": "t:schema.settings.policy.service_term_url.info"
+      },
+      {
+        "id": "privacy_policy_url",
+        "type": "text",
+        "label": "t:schema.settings.policy.privacy_policy_url.label",
+        "info": "t:schema.settings.policy.privacy_policy_url.info"
+      }
+    ]
+  }
+]

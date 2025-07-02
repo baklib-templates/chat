@@ -1,0 +1,107 @@
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+@media (min-width: 540px) {
+  .container {
+      max-width: 540px;
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+      max-width: 640px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+      max-width: 768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+      max-width: 992px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+      max-width: 1024px;
+      padding-left: 45px;
+      padding-right: 45px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+      max-width: 1280px;
+      padding-left: 5rem;
+      padding-right: 5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+      max-width: 1536px;
+      padding-right: 13rem;
+      padding-left: 13rem;
+  }
+}
+
+/* ----------------- */
+
+/* 侧边栏 */
+.menu {
+  :where(li > details > summary), :where(li > .menu-dropdown-toggle) {
+    &:after {
+      rotate: 135deg;
+    }
+  }
+  :where(li > details[open] > summary), :where(li > .menu-dropdown-toggle) {
+    &:after {
+      rotate: 225deg;
+    }
+  }
+
+  summary.nav-menu-active,
+  summary:has(.nav-menu-active) {
+    @apply text-primary;
+  }
+
+  summary:active,
+  summary:focus-visible {
+    background: transparent !important;
+    color: inherit !important;
+    outline: none !important;
+  }
+}
+
+.search-highlight-block {
+  b {
+    @apply text-primary;
+  }
+}
+
+.sidebar-menu-active {
+  @apply bg-gray-100;
+}
+
+.sidebar-menu-active > i {
+  @apply text-primary;
+}
+
+.sidebar-active {
+  @apply bg-gray-100;
+}
+
+.sidebar-active > i {
+  @apply text-primary;
+}

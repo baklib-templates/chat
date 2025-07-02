@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="{{ site.language }}" class="scroll-smooth">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="turbo-prefetch" content="false">
+    {% meta_tags %}
+    {{ 'javascripts/application.js' | asset_url | script_tag: defer: true, data-turbo-track: 'reload' }}
+    {{ 'stylesheets/application.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
+    {{ 'fonts/remixicon.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
+    {{ 'baklib/shared/main.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
+    {{ 'baklib/shared/main.js' | asset_url | script_tag: data-turbo-track: 'reload' }}
+
+    <style > :root
+    {
+      --color-base-100: hsl(var(--theme-color-base-100));
+      --color-base-200: hsl(var(--theme-color-base-200));
+      --color-base-300: hsl(var(--theme-color-base-300));
+      --color-base-content: hsl(var(--theme-color-base-content));
+      --color-primary: hsl(var(--theme-color-primary));
+      --color-secondary: hsl(var(--theme-color-secondary));
+      --color-accent: hsl(var(--theme-color-accent));
+      --color-neutral: hsl(var(--theme-color-neutral));
+      --color-info: hsl(var(--theme-color-info));
+      --color-success: hsl(var(--theme-color-success));
+      --color-warning: hsl(var(--theme-color-warning));
+      --color-error: hsl(var(--theme-color-error));
+    }
+
+    :root:has(input.theme-controller[value=dark]:checked),
+    [data-theme="dark"] {
+      --color-base-100: hsl(var(--theme-color-base-100-dark));
+      --color-base-200: hsl(var(--theme-color-base-200-dark));
+      --color-base-300: hsl(var(--theme-color-base-300-dark));
+      --color-base-content: hsl(var(--theme-color-base-content-dark));
+      --color-primary: hsl(var(--theme-color-primary-dark));
+      --color-secondary: hsl(var(--theme-color-secondary-dark));
+      --color-accent: hsl(var(--theme-color-accent-dark));
+      --color-neutral: hsl(var(--theme-color-neutral-dark));
+      --color-info: hsl(var(--theme-color-info-dark));
+      --color-success: hsl(var(--theme-color-success-dark));
+      --color-warning: hsl(var(--theme-color-warning-dark));
+      --color-error: hsl(var(--theme-color-error-dark));
+    }
+
+    body {font-family: 'Public Sans', sans-serif;}
+  </style>
+
+  {% assign head_html = site.settings.head_html | presence %}
+  {% if head_html %}
+    <!-- start head_html -->
+    {{ head_html }}
+    <!-- end head_html -->
+  {% endif %}
+</head>
+<body id="js--body">
+  <main>
+    {{ content_for_layout }}
+  </main>
+</body></html>

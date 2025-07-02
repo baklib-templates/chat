@@ -1,0 +1,20 @@
+{% comment %}
+  面包屑导航
+  变量:
+  - breadcrumb: 面包屑导航数据
+  - current: 当前页面
+{% endcomment %}
+
+<div class="flex justify-end text-sm breadcrumbs">
+  <ul>
+    {% for item in breadcrumb %}
+      <li class="{% if forloop.last %}text-primary{% else %}text-base-content/60{% endif %}">
+        {% if item.path != '/' %}
+          <a href="{{ item.path }}">{{ item.link_text }}</a>
+        {% else %}
+          {{ item.link_text }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

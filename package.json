@@ -1,0 +1,31 @@
+{
+  "name": "baklib-template-cms-base",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm-run-all --parallel build:css build:js",
+    "build:css": "npx @tailwindcss/cli -i ./src/stylesheets/application.css -o ./assets/stylesheets/application.css",
+    "build:js": "npx esbuild ./src/javascripts/application.js --bundle --outfile=./assets/javascripts/application.js",
+    "dev": "npm-run-all --parallel 'build:css -- --watch' 'build:js -- --watch'",
+    "livereload": "guard"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "daisyui": "^5.0.43",
+    "esbuild": "^0.19.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.3",
+    "prettier-plugin-liquid": "^0.0.1-security",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tailwindcss": "^4.1.8"
+  },
+  "dependencies": {
+    "@hotwired/turbo": "^8.0.13",
+    "alpinejs": "^3.14.9",
+    "marked": "^16.0.0",
+    "tiny-slider": "^2.9.4"
+  }
+}

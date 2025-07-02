@@ -1,0 +1,32 @@
+/* Tiny Slider Navigation Dots */
+.tns-nav {
+  @apply flex justify-center items-center gap-2 mt-4;
+}
+
+.tns-nav button {
+  @apply w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tns-nav button.tns-nav-active {
+  @apply bg-amber-500 w-4;
+}
+
+.tns-nav button:hover {
+  @apply bg-amber-400;
+}
+
+/* Tiny Slider Container */
+.tiny-three-item {
+  @apply relative;
+}
+
+.tns-outer {
+  @apply relative;
+}
+
+.tns-inner {
+  @apply overflow-hidden;
+} 

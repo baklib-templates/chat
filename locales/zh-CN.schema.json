@@ -1,0 +1,184 @@
+{
+  "theme_label": "Ai chat模版",
+  "theme_description": "适用于智能对话、知识问答和自动回复的 AI 聊天主题",
+  "settings": {
+    "brand": {
+      "title": "品牌相关",
+      "logo_url": {
+        "label": "亮色 Logo 图片",
+        "info": "网站亮色 Logo 建议尺寸 300x80"
+      },
+      "dark_logo_url": {
+        "label": "暗色 Logo 图片",
+        "info": "网站暗色 Logo 建议尺寸 300x80"
+      },
+      "slogan": {
+        "label": "网站口号",
+        "info": "网站口号将显示在首页 Banner 中，建议不超过10个字"
+      },
+      "copyright": {
+        "label": "版权信息",
+        "info": "版权信息将显示在网站底部"
+      }
+    },
+    "policy": {
+      "title": "备案信息",
+      "icp_beian": {
+        "label": "备案号",
+        "info": "备案号将显示在网站底部"
+      },
+      "service_term_url": {
+        "label": "服务条款链接",
+        "info": "服务条款链接将显示在网站底部"
+      },
+      "privacy_policy_url": {
+        "label": "隐私政策链接",
+        "info": "隐私政策链接将显示在网站底部"
+      }
+    }
+  },
+  "templates": {
+    "blank": {
+      "name": "空白页",
+      "description": "用于创建空白页面"
+    },
+    "blog-list": {
+      "name": "博客列表",
+      "description": "用于发布博客列表页",
+      "settings": {
+        "title": {
+          "label": "标题",
+          "info": "更新日志列表标题",
+          "default": "Blogs & News"
+        },
+        "bg_image": {
+          "label": "页面背景图",
+          "info": "建议尺寸: 16:9，用于页面顶部背景显示"
+        }
+      }
+    },
+    "blog-page": {
+      "name": "博客详情",
+      "description": "用于发布博客详情页",
+      "settings": {
+        "title": {
+          "label": "标题",
+          "info": "显示在正文上方的文章标题"
+        },
+        "description": {
+          "label": "摘要"
+        },
+        "reading_time": {
+          "label": "预估阅读时间",
+          "info": "格式：10:30s 表示10分钟30秒"
+        },
+        "tags":{
+          "label": "标签"
+        },
+        "thumb_image_url":{
+          "label": "封面图"
+        },
+        "content":{
+          "label": "页面内容"
+        }
+      }
+    },
+    "help-center-list": {
+      "name": "帮助中心列表",
+      "description": "用于发布帮助中心列表页"
+    },
+    "help-center-page": {
+      "name": "帮助中心详情",
+      "description": "用于发布帮助中心详情页"
+    },
+    "index": {
+      "name": "官网首页",
+      "description": "用于发布企业官网首页",
+      "video": {
+        "name": "视频首页",
+        "description": "用于发布企业视频首页"
+      },
+      "help-center": {
+        "name": "帮助中心首页",
+        "description": "用于发布企业帮助中心首页"
+      }
+    },
+    "release-logs-list": {
+      "name": "更新日志",
+      "description": "用于发布产品更新",
+      "settings": {
+        "title": {
+          "label": "标题",
+          "info": "更新日志列表标题",
+          "default": "更新日志"
+        },
+        "description": {
+          "label": "简要描述",
+          "default": "汇总所有产品更新、功能发布、Bug修复与重要公告，<br class=\"hidden sm:inline\"/>帮助你了解我们在不断改进哪些关键内容"
+        }
+      }
+    },
+    "release-logs-page": {
+      "name": "更新日志详情",
+      "description": "展示更新日志的详情页",
+      "settings": {
+        "title": {
+          "label": "标题",
+          "info": "显示在正文上方的文章标题"
+        },
+        "description": {
+          "label": "摘要"
+        },
+        "tags":{
+          "label": "标签"
+        },
+        "thumb_image_url":{
+          "label": "封面图"
+        },
+        "content":{
+          "label": "页面内容"
+        }
+      }
+    },
+    "video-list": {
+      "name": "视频列表",
+      "description": "展示企业视频相关的列表页",
+      "settings": {
+        "default_cover": {
+          "label": "视频默认封面图",
+          "info": "建议尺寸: 16:9"
+        }
+      }
+    },
+    "video-page": {
+      "name": "视频详情",
+      "description": "展示视频的详情页",
+      "settings": {
+        "title": {
+          "label": "标题"
+        },
+        "description": {
+          "label": "简要描述"
+        },
+        "video": {
+          "label": "视频"
+        },
+        "duration": {
+          "label": "视频时长",
+          "info": "格式：10:30s 表示10分钟30秒"
+        },
+        "cover": {
+          "label": "封面",
+          "info": "建议尺寸: 16:9"
+        },
+        "tags": {
+          "label": "视频标签",
+          "info": "建议标签数量不超过3个"
+        },
+        "content": {
+          "label": "课程详情"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+<!-- Start left sidebar-menu -->
+<div class="flex flex-col flex-shrink-0 min-h-screen bg-white shadow-md w-19" >
+  <!-- LOGO -->
+  <div class="flex flex-col justify-center items-center">
+    <a href="index.html">
+      <span class="logo-sm">
+        <img
+          src="https://themesbrand.com/chatvia/layouts/assets/images/logo.svg"
+          class="m-4 w-8" alt="" height="30">
+      </span>
+    </a>
+  </div>
+  <!-- end navbar-brand-box -->
+
+  <!-- Start side-menu nav -->
+  <div class="flex my-auto lg:flex-col">
+    <ul class="flex flex-col justify-center items-center" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
+      <li class="m-2" >
+        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-gray-100" href="/"
+          role="tab" data-nav-tree-target="item">
+          <i class="text-2xl text-gray-500 ri-home-2-line"></i>
+        </a>
+      </li>
+      <li class="m-2" title="AI 智能搜索" >
+        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-gray-100" href="/-/search"
+          role="tab" data-nav-tree-target="item">
+          <i class="text-2xl text-gray-500 ri-message-3-line"></i>
+        </a>
+      </li>
+      <li class="m-2" title="标签分类">
+        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-gray-100 {% if tag %}
+          sidebar-active
+        {% endif %}"
+        href="/s/tags"
+          role="tab" data-nav-tree-target="item">
+          <i class="text-2xl text-gray-500 ri-bookmark-line"></i>
+        </a>
+      </li>
+
+      {% assign page = site.pages['/'].children |first %}
+      <li class="m-2" title="目录" data-nav-tree-target="item">
+        <a class="flex justify-center items-center w-12 h-12 rounded-m d hover:bg-gray-100" href="{{ page.path }}"
+          role="tab" data-nav-tree-target="item">
+          <i class="text-2xl text-gray-500 ri-list-ordered-2"></i>
+        </a>
+      </li>
+
+      <li class="inline-block m-2 dropdown profile-user-dropdown sm:hidden">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <img src="assets/images/users/avatar-1.jpg" alt="" class="profile-user rounded-circle">
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Profile <i class="ri-profile-line float-end text-muted"></i></a>
+          <a class="dropdown-item" href="#">Setting <i class="ri-settings-3-line float-end text-muted"></i></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Log out <i class="ri-logout-circle-r-line float-end text-muted"></i></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- end side-menu nav -->
+
+  <div class="hidden justify-center sm:flex">
+    <ul class="nav side-menu-nav justify-content-center">
+      <li class="m-2">
+        <label class="items-center w-12 h-12 rounded-md hover:bg-gray-100 swap swap-rotate">
+          <!-- this hidden checkbox controls the state -->
+          <input type="checkbox" class="theme-controller" value="synthwave" />
+
+          <!-- sun icon -->
+          <i class="text-2xl text-gray-500 ri-sun-line theme-mode-icon swap-off"></i>
+
+          <!-- moon icon -->
+          <i class="text-2xl text-gray-500 ri-moon-line theme-mode-icon swap-on"></i>
+        </label>
+      </li>
+
+      <li class="m-2 btn-group dropup profile-user-dropdown">
+        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-gray-100 dropdown-toggle" href="#"
+          role="button">
+          <img
+            src="https://tanmer.baklib.com/-/dam/assets/organization_pry3c5/eyJfcmFpbHMiOnsiZGF0YSI6eyJpZCI6NzMsInBhdGgiOiJhdmF0YXI1LnBuZyIsInRpbWVzdGFtcCI6IjIwMjQtMDUtMTYgMjI6NDU6NDYgKzA4MDAifSwicHVyIjoib3JnYW5pemF0aW9uX3ByeTNjNSJ9fQ--78c6418b5a32bb00743ce80a16f03e64cc56f9b22493e11a54cd43f043dc9ed9/avatar5.png"
+            alt="" class="w-9 h-9 rounded-full">
+        </a>
+        <div class="hidden dropdown-menu">
+          <a class="dropdown-item" href="#">Profile <i class="ri-profile-line float-end text-muted"></i></a>
+          <a class="dropdown-item" href="#">Setting <i class="ri-settings-3-line float-end text-muted"></i></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="auth-login.html">Log out <i
+              class="ri-logout-circle-r-line float-end text-muted"></i></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- Side menu user -->
+</div>

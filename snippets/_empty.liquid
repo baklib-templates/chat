@@ -1,0 +1,59 @@
+{%- comment -%}
+  空状态组件
+  参数：
+  - title: 标题文本
+  - description: 描述文本
+  - icon: 图标名称（可选）
+
+  使用方法：
+  {% render 'empty',
+      title: '没有找到相关内容',
+      description: '请尝试其他搜索关键词或浏览其他分类',
+      icon: 'video',
+      button_text: '返回首页',
+      button_url: '/'
+  %}
+{%- endcomment -%}
+
+{% assign default_title = 'snippets.empty.title' | t %}
+{% assign default_description = 'snippets.empty.description' | t %}
+{% assign default_button_text = 'snippets.empty.button_text' | t %}
+
+<div class="container mx-auto px-4 py-16">
+  <div class="flex flex-col items-center justify-center text-center">
+    {%- if icon -%}
+      <div class="mb-6 text-gray-400">
+        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          {%- case icon -%}
+            {%- when 'search' -%}
+              <i class="ri-search-2-line text-7xl"></i>
+            {%- when 'document' -%}
+              <i class="ri-article-line text-7xl"></i>
+            {%- when 'video' -%}
+              <i class="ri-movie-2-line text-7xl"></i>
+            {%- else -%}
+              <i class="ri-information-line text-7xl"></i>
+          {%- endcase -%}
+        </svg>
+      </div>
+    {%- endif -%}
+
+    <h2 class="text-2xl font-semibold text-base-content mb-3">
+      {{ title | default: default_title }}
+    </h2>
+    
+    {%- if description -%}
+      <p class="text-base-content/50 max-w-md mx-auto">
+        {{ description | default: default_description }}
+      </p>
+    {%- endif -%}
+
+    {%- if button_text and button_url -%}
+      <div class="mt-8">
+        <a href="{{ button_url | default: '/' }}" class="btn btn-primary rounded-full text-white">
+          {{ button_text | default: default_button_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

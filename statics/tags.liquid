@@ -25,6 +25,8 @@
             | size }} </span>
         </a>
       </li>
+      {% else %}
+        {% render 'empty', title: '暂无标签', description: '请在后台添加标签' %}
       {% endfor %}
 
     </ul>

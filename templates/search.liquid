@@ -7,7 +7,7 @@
     {% assign total_size = extends_size | plus: items_size %}
     {% assign top_5_paths = items | map: 'path' | limit: 5 | join: ',' %}
     <!-- start chat-leftsidebar -->
-    <div class=" min-w-[380px] max-w-[400px] bg-gray-50 border-r border-gray-100 px-8 py-8 h-screen overflow-hidden flex flex-col">
+    <div class=" min-w-[380px] max-w-[400px] bg-gray-50 border-r border-gray-100 px-8 py-8 h-screen overflow-y-auto">
         <h2 class="mb-4 text-xl font-bold">AI 智能搜索</h2>
 
         <turbo-frame id="frame--search-results" class="overflow-hidden flex-1">

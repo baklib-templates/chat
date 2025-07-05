@@ -3,7 +3,7 @@
     <!-- end left sidebar-menu -->
 
     <!-- start chat-leftsidebar -->
-    <div class=" min-w-[380px] max-w-[400px] bg-gray-50 border-r border-gray-100 py-8 px-6 h-screen	 overflow-auto">
+    <div class=" min-w-[380px] max-w-[400px] bg-base-200 border-r border-base-300 py-8 px-6 h-screen overflow-auto">
         <h2 class="mb-4 text-xl font-semibold">目录导航</h2>
 
         <!-- 搜索框 -->
@@ -25,24 +25,28 @@
     <!-- end chat-leftsidebar -->
 
     <!-- Start User chat -->
-    <turbo-frame id="page-content" class="overflow-hidden w-full bg-white">
+    <turbo-frame id="page-content" class="overflow-hidden w-full bg-base-100">
         <div class="sm:flex">
             <div class="flex flex-col flex-1 min-h-screen">
                 <!-- 欢迎语 -->
-                <div class="flex justify-between items-center px-8 h-20 bg-white border-b border-gray-200">
+                <div class="flex justify-between items-center px-8 h-20 border-b border-base-content/15 bg-base-100">
                     <!-- 左侧绿色小圆点 -->
                     <h5 class="mb-0 text-base text-truncate"> {% render 'breadcrumb', breadcrumb: page.breadcrumb %}
                     </h5>
                     <!-- 右侧更多操作 -->
                     <div class="flex space-x-2">
                         <a  data-turbo-stream="true"
-                        href="{{ page.feedback_path }}" class="flex items-center space-x-1 text-gray-500 hover:text-gray-600">
-                            <i class="ri-feedback-line"></i>
+                        href="{{ page.feedback_path }}" class="flex items-center space-x-1 text-base-content/50 hover:text-base-content/70">
+                            <i class="{% if page.visitor_posted_feedback %}
+                            ri-thumb-up-fill text-primary
+                            {% else %}
+                            ri-thumb-up-line
+                            {% endif %} "></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="h-[calc(100vh-184px)] overflow-y-auto p-4 relative first-letter:text">
+                <div class="h-[calc(100vh-100px)] overflow-y-auto p-4 relative first-letter:text">
                     {% if site.settings.show_author or site.settings.show_published_at %}
                     <section class="mt-2 mb-6">
                         {% if site.settings.show_author and site.settings.show_published_at %}
@@ -51,7 +55,7 @@
                                 {% render 'avatar', url: page.author.avatar_url, name: page.author.name %}
                                 <div class="flex flex-col space-y-0.5">
                                     <span class="text-xs">{{ page.author.name }}</span>
-                                    <span class="text-xs text-slate-400">{{ 'generic.published_at' | t }}: {{
+                                    <span class="text-xs text-base-content/60">{{ 'generic.published_at' | t }}: {{
                                         page.published_at | date: "%Y-%m-%d" }}</span>
                                 </div>
                             </div>
@@ -100,7 +104,7 @@
                     </article>
                 </div>
 
-                <div class="p-1 border-t border-gray-200">
+                <div class="p-1 border-t border-base-content/15">
                 </div>
             </div>
 
@@ -140,56 +144,41 @@
 "name": "t:schema.templates.help-center-list.name",
 "description": "t:schema.templates.help-center-list.description",
 "thumb_url": "",
-"sub_page_templates": ["help-center-page"],
+"sub_page_templates": ["page"],
 "settings": [
-{
-"id": "show_list",
-"type": "checkbox",
-"default": "false",
-"label": "t:schema.templates.help-center-page.settings.show_list.label",
-"info": "t:schema.templates.help-center-page.settings.show_list.info"
-},
-{
-"id": "is_topic_channel",
-"type": "checkbox",
-"default": "false",
-"label": "t:schema.templates.help-center-page.settings.is_topic_channel.label",
-"info": "t:schema.templates.help-center-page.settings.is_topic_channel.info",
-"query_enabled": true
-},
 {
 "id": "tags",
 "type": "tag_picker",
 "multiple": true,
-"label": "t:schema.templates.help-center-page.settings.tags.label",
+"label": "t:schema.templates.page.settings.tags.label",
 "query_enabled": true
 },
 {
-"id": "icon",
+"id": "thumb_image_url",
 "type": "image_picker",
 "ratio": "1:1",
 "width": 100,
-"label": "t:schema.templates.help-center-page.settings.icon.label",
-"info": "t:schema.templates.help-center-page.settings.icon.info"
+"label": "t:schema.templates.page.settings.thumb_image_url.label",
+"info": "t:schema.templates.page.settings.thumb_image_url.info"
 },
 {
 "id": "title",
 "type": "text",
 "readonly": false,
-"label": "t:schema.templates.help-center-page.settings.title.label",
-"info": "t:schema.templates.help-center-page.settings.title.info"
+"label": "t:schema.templates.page.settings.title.label",
+"info": "t:schema.templates.page.settings.title.info"
 },
 {
 "id": "description",
 "type": "textarea",
-"label": "t:schema.templates.help-center-page.settings.description.label"
+"label": "t:schema.templates.page.settings.description.label"
 },
 {
 "id": "content",
 "type": "richtext",
-"label": "t:schema.templates.help-center-page.settings.content.label",
+"label": "t:schema.templates.page.settings.content.label",
 "readonly": false,
-"info": "t:schema.templates.help-center-page.settings.content.info"
+"info": "t:schema.templates.page.settings.content.info"
 }
 ]
 }

@@ -19,38 +19,38 @@
 {% assign default_description = 'snippets.empty.description' | t %}
 {% assign default_button_text = 'snippets.empty.button_text' | t %}
 
-<div class="container mx-auto px-4 py-16">
-  <div class="flex flex-col items-center justify-center text-center">
+<div class="container px-4 py-16 mx-auto">
+  <div class="flex flex-col justify-center items-center text-center">
     {%- if icon -%}
-      <div class="mb-6 text-gray-400">
-        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <div class="mb-6 text-base-content/60">
+        <svg class="mx-auto w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           {%- case icon -%}
             {%- when 'search' -%}
-              <i class="ri-search-2-line text-7xl"></i>
+              <i class="text-7xl ri-search-2-line"></i>
             {%- when 'document' -%}
-              <i class="ri-article-line text-7xl"></i>
+              <i class="text-7xl ri-article-line"></i>
             {%- when 'video' -%}
-              <i class="ri-movie-2-line text-7xl"></i>
+              <i class="text-7xl ri-movie-2-line"></i>
             {%- else -%}
-              <i class="ri-information-line text-7xl"></i>
+              <i class="text-7xl ri-information-line"></i>
           {%- endcase -%}
         </svg>
       </div>
     {%- endif -%}
 
-    <h2 class="text-2xl font-semibold text-base-content mb-3">
+    <h2 class="mb-3 text-2xl font-semibold text-base-content">
       {{ title | default: default_title }}
     </h2>
-    
+
     {%- if description -%}
-      <p class="text-base-content/50 max-w-md mx-auto">
+      <p class="mx-auto max-w-md text-base-content/50">
         {{ description | default: default_description }}
       </p>
     {%- endif -%}
 
     {%- if button_text and button_url -%}
       <div class="mt-8">
-        <a href="{{ button_url | default: '/' }}" class="btn btn-primary rounded-full text-white">
+        <a href="{{ button_url | default: '/' }}" class="rounded-full btn btn-primary">
           {{ button_text | default: default_button_text }}
         </a>
       </div>

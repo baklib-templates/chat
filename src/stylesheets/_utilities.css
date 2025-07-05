@@ -91,7 +91,7 @@
 }
 
 .sidebar-menu-active {
-  @apply bg-gray-100;
+  @apply bg-base-300;
 }
 
 .sidebar-menu-active > i {
@@ -99,9 +99,13 @@
 }
 
 .sidebar-active {
-  @apply bg-gray-100;
+  @apply bg-base-300;
 }
 
 .sidebar-active > i {
   @apply text-primary;
+}
+
+.ProseMirror [bke-role="column"] {
+  background-color: var(--color-base-200) !important;
 }

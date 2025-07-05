@@ -1,4 +1,4 @@
-{% comment %} 
+{% comment %}
   分页组件
   变量:
   - paginate: 分页对象
@@ -12,9 +12,9 @@
 {% if paginate.total_count > 0 %}
   <div class="container text-sm">
     {% if paginate.total_pages > 1 %}
-      <div class="join px-4 space-x-1">
+      <div class="px-4 space-x-1 join">
         {% comment %} 上一页 {% endcomment %}
-        <a data-turbo-action="advance" {% if paginate.prev_page %}href="{{ paginate.url_for[paginate.prev_page] }}"{% else %}disabled{% endif %} class="btn btn-soft btn-circle shadow">
+        <a data-turbo-action="advance" {% if paginate.prev_page %}href="{{ paginate.url_for[paginate.prev_page] }}"{% else %}disabled{% endif %} class="shadow btn btn-soft btn-circle">
           <i class="ri-arrow-left-s-line"></i>
           <span class="sr-only">{{ "paginate.previous" | t: '上一页'  }}</span>
         </a>
@@ -24,21 +24,21 @@
           {% case type %}
             {% when 'string' %}
               {% if i == 'gap' %}
-                <span class="join-item btn border-none btn-soft btn-circle">...</span>
+                <span class="border-none join-item btn btn-soft btn-circle">...</span>
               {% else %}
-                <span aria-current="page" class="join-item btn btn-primary btn-circle border-none shadow shadow-primary/20 btn-active">{{i}}</span>
+                <span aria-current="page" class="border-none shadow join-item btn btn-primary btn-circle shadow-primary/20 btn-active">{{i}}</span>
               {% endif %}
             {% when 'integer' %}
-              <a data-turbo-action="advance" href="{{paginate.url_for[i]}}" class="join-item btn btn-soft btn-circle border-none shadow">{{i}}</a>
+              <a data-turbo-action="advance" href="{{paginate.url_for[i]}}" class="border-none shadow join-item btn btn-soft btn-circle">{{i}}</a>
           {% endcase %}
         {% endfor %}
         {% comment %} 下一页 {% endcomment %}
-        <a data-turbo-action="advance" {% if paginate.next_page %}href="{{ paginate.url_for[paginate.next_page] }}"{% else %}disabled{% endif %} class="btn btn-soft btn-circle shadow">
+        <a data-turbo-action="advance" {% if paginate.next_page %}href="{{ paginate.url_for[paginate.next_page] }}"{% else %}disabled{% endif %} class="shadow btn btn-soft btn-circle">
           <i class="ri-arrow-right-s-line"></i>
           <span class="sr-only">{{ "paginate.next" | t: '下一页'  }}</span>
         </a>
       </div>
-      <div class="text-center text-base-content/50 mt-4">
+      <div class="mt-4 text-center text-base-content/50">
         {{ "paginate.showing" | t: "当前显示第" }}
         <span class="font-medium">{{paginate.from}}</span>
         ~
@@ -49,7 +49,7 @@
         {{ "paginate.records" | t: "条记录" }}
       </div>
     {% else %}
-      <div class="text-center text-base-content/50 mt-4">
+      <div class="mt-4 text-center text-base-content/50">
         {{ "paginate.records" | t: "总共" }}
           <span class="bkt-font-medium">{{paginate.total_count}}</span>
         {{ "paginate.records" | t: "条记录" }}

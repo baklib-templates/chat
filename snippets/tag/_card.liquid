@@ -1,0 +1,40 @@
+<article
+class="flex flex-col h-full rounded-lg border transition-all duration-200 border-base-content/15 bg-base-100 hover:border-primary/70 hover:ring hover:ring-primary/70 hover:bg-primary/3 hover:-translate-y-1 aos-init"
+data-aos="fade-up">
+<!-- Image -->
+
+<a class="block overflow-hidden relative rounded-t-lg group" href="{{ page.path }}"
+    data-turbo-frame="page-content">
+    {% if page.settings.thumb_image_url %}
+    <img class="w-full rounded-t-lg aspect-[16/9] md:aspect-video object-cover group-hover:scale-105 transition duration-700 ease-out"
+        src="{{ page.settings.thumb_image_url }}" alt="{{ page.settings.title }}">
+    {% endif %}
+    <div class="absolute bottom-6 start-6">
+        {% for tag in page.settings.tags %}
+        <span
+            class="bg-primary text-white text-[12px] px-2.5 py-1 rounded-md h-4 mx-[2px]"
+            href="?tag={{ tag.name }}">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+</a>
+
+<!-- Content -->
+<div class="flex flex-col p-4 grow">
+    <h3 class="mb-3 text-xl font-black tracking-tight">
+        <a class="hover:underline hover:decoration-primary-200"
+            href="{{ page.path }}" data-turbo-frame="page-content">{{ page.settings.title }}</a>
+    </h3>
+    <p class="grow line-clamp-3">{{ page.settings.content | strip_html |
+        truncate: 100 }}</p>
+    <div class="flex justify-between items-center mt-4 text-xs">
+        <div class="flex items-center">
+            <img class="mr-3 rounded-full shrink-0" src="{{ page.author.avatar_url }}"
+                width="32" height="32">
+            <span class="font-medium -800">{{ page.author.name }}</span>
+        </div>
+        <div class="flex items-center">
+            {{ page.created_at | date: '%Y-%m-%d' }}
+        </div>
+    </div>
+</div>
+</article>

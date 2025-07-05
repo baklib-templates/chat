@@ -12,13 +12,32 @@
         "label": "暗色 Logo 图片",
         "info": "网站暗色 Logo 建议尺寸 300x80"
       },
-      "slogan": {
-        "label": "网站口号",
-        "info": "网站口号将显示在首页 Banner 中，建议不超过10个字"
-      },
       "copyright": {
         "label": "版权信息",
         "info": "版权信息将显示在网站底部"
+      },
+      "company_name": {
+        "label": "公司名称",
+        "info": "公司名称将显示在首页 "
+      },
+      "brand_name": {
+        "label": "品牌名称",
+        "info": "品牌名称将显示在首页 "
+      },
+      "site_description": {
+        "label": "站点描述",
+        "info": "站点描述将显示在首页 ",
+        "default": "一个简单好用的智能问答和知识库平台，帮你快速找到答案，提升工作效率。"
+      },
+      "welcome_title": {
+        "label": "欢迎标题",
+        "info": "欢迎标题将显示在首页 ",
+        "default": "👏 欢迎"
+      },
+      "welcome_description": {
+        "label": "欢迎描述",
+        "info": "欢迎描述将显示在首页 ",
+        "default": "这里支持智能问答、文档检索、标签筛选等功能，助您快速获取所需信息，提升工作效率与客户满意度。"
       }
     },
     "policy": {

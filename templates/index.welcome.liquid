@@ -1,104 +1,100 @@
+{% assign logo_url = site.settings.logo_url | presence %}
 <div class="sm:flex">
     {% render 'sidebar' %}
 
     <!-- start chat-leftsidebar -->
-    <div class=" min-w-[320px] max-w-[400px] h-full bg-gray-50 border-r border-gray-100 px-8 py-8">
+    <div class=" min-w-[320px] max-w-[400px] h-full bg-base-200 border-r border-base-300 px-8 py-8">
 
         <div class="mb-6">
-            <div class="flex justify-center items-center p-6 bg-white rounded-lg shadow-sm">
-                <img src="https://themesbrand.com/chatvia/layouts/assets/images/logo.svg"
-                    alt="logo" class="mr-4 w-12 h-12" />
-                <span class="text-4xl font-bold text-gray-700">Chatvia</span>
+            <div class="flex justify-center items-center p-6 bg-base-100 rounded-lg shadow-sm">
+                {% if logo_url %}
+                <img src="{{ logo_url }}" alt="{{ site.name | escape_once }}" class="mr-4 w-12 h-12">
+                {% else %}
+                {% assign favicon_url = site.favicon_url | presence %}
+                {% if favicon_url %}
+                <img src="{{ favicon_url }}" alt="{{ site.name | escape_once }}" class="mr-4 w-12 h-12">
+                {% endif %}
+                {% endif %}
+                <span class="text-4xl font-bold text-base-content/80"> {{ site.settings.brand_name }} </span>
             </div>
         </div>
 
         <!-- 网站名称和公司 -->
         <div class="mb-6">
             <div class="text-center">
-                <div class="mb-1 text-xl font-bold">网站名称</div>
-                <div class="flex justify-center items-center text-base text-gray-500">
+                <div class="mb-1 text-xl font-bold">{{ site.name }}</div>
+                <div class="flex justify-center items-center text-base text-base-content/50">
                     <span class="inline-block mr-2 w-2 h-2 bg-green-400 rounded-full"></span>
-                    公司名称
+                    {{ site.settings.company_name }}
                 </div>
             </div>
         </div>
 
         <!-- 简介 -->
         <div class="mb-6">
-            <p class="leading-relaxed text-gray-500">
-                这是网站的一句话介绍，If several languages coalesce, the grammar of the resulting language is more simple and
-                regular than that of the individual.
+            <p class="leading-relaxed text-base-content/50 indent-8">
+                {{ site.settings.site_description }}
             </p>
         </div>
 
-        <!-- 自定义导航卡片 -->
-        <div class="p-4 bg-white rounded-lg shadow-sm">
-            <div class="flex items-center mb-2">
-                <svg class="mr-2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <span class="font-semibold text-gray-700">自定义导航</span>
-                <span class="ml-auto text-lg text-gray-400">&#x25B2;</span>
+        <div class="w-full max-w-md bg-base-100 shadow-md rounded-box">
+        <div class="bg-base-100 collapse collapse-arrow">
+            <input type="checkbox" class="peer" checked/>
+            <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
+                快捷导航
             </div>
-            <ul class="pl-2 space-y-1 list-disc list-inside text-gray-600">
-                <li><a href="#" class="hover:underline">返回官网</a></li>
-                <li><a href="#" class="hover:underline">开发者中心</a></li>
-                <li><a href="#" class="hover:underline">产品发布</a></li>
+            <div class="leading-6 text-base-content/80 collapse-content">
+            <ul class="pl-2 space-y-1 list-disc list-inside">
+                <li><a href="/" class="hover:underline">返回官网</a></li>
+                <li><a href="/developers" class="hover:underline">开发者中心</a></li>
+                <li><a href="/releases" class="hover:underline">产品发布</a></li>
             </ul>
+            </div>
+        </div>
         </div>
     </div>
     <!-- end chat-leftsidebar -->
 
     <!-- Start User chat -->
-    <div class="overflow-hidden w-full bg-white">
+    <div class="overflow-hidden w-full bg-base-100">
         <div class="sm:flex">
             <div class="flex flex-col flex-1 min-h-screen">
                 <!-- 欢迎语 -->
-                <div class="flex justify-between items-center px-8 h-20 bg-white border-b border-gray-200">
+                <div class="flex justify-between items-center px-8 h-20 bg-base-100 border-b border-base-content/15">
                     <!-- 左侧绿色小圆点 -->
                     <span><i class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i></span>
                     <!-- 右侧更多操作 -->
-                    <button class="flex items-center space-x-1 text-gray-400 hover:text-gray-600">
-                        <i class="ri-more-fill"></i>
-                    </button>
                 </div>
-
                 <div class="px-4 py-16 my-12 mb-36 text-center text">
-                    <div class="mb-2 text-5xl">
-                        <span class="align-middle">👏</span>
-                        <span class="font-bold align-middle">欢迎</span>
+                    <div class="mb-2 text-5xl font-bold align-middle">
+                        {{ site.settings.welcome_title }}
                     </div>
-                    <div class="mx-auto mt-4 mb-8 max-w-xl text-lg font-normal text-gray-500">
-                        Quickly design and customize responsive mobile-first sites with Bootstrap, and powerful
-                        JavaScript plugins.
+                    <div class="mx-auto mt-4 mb-8 max-w-xl text-lg font-normal text-left text-base-content/50 indent-8">
+                       {{ site.settings.welcome_description }}
                     </div>
                     <!-- 输入框 -->
-
-
                     {% form_tag 'search', class: 'w-full' %}
-                        <div class="flex justify-center items-center mb-6">
-                            <div class="relative w-full max-w-md">
-                                <span class="absolute left-3 top-1/2 text-gray-400 -translate-y-1/2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <circle cx="11" cy="11" r="8" />
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                    </svg>
-                                </span>
-                                <input type="text" placeholder="输入问题"
-                                    class="pl-10 w-full text-base bg-gray-100 input input-bordered"  name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}"
-                                    placeholder="{{ "layout.theme.search_input_placeholder" | t }}"
-                                    autocomplete="off" />
-                            </div>
+                    <div class="flex justify-center items-center mb-6">
+                        <div class="relative w-full max-w-md">
+                            <span class="absolute left-3 top-1/2 text-base-content/60 -translate-y-1/2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                            </span>
+                            <input type="text" placeholder="输入问题"
+                                class="pl-10 w-full text-base bg-base-300 input input-bordered"
+                                name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}"
+                                placeholder="{{ " layout.theme.search_input_placeholder" | t }}" autocomplete="off" />
                         </div>
-                        <!-- 按钮 -->
-                        <button class="w-40 text-base btn btn-primary">开始聊天</button>
+                    </div>
+                    <!-- 按钮 -->
+                    <button class="w-40 text-base btn btn-primary">开始聊天</button>
                     {% endform_tag %}
                 </div>
 
-                <div class="p-1 border-t border-gray-200">
+                <div class="p-1 border-t border-base-content/15">
                 </div>
             </div>
 

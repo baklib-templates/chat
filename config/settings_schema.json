@@ -31,26 +31,46 @@
         "scheme1": {
           "name": "配色方案1",
           "colors": {
-            "--theme-color-base-100": "#f8f9ff",
-            "--theme-color-base-200": "#f5f7ff",
-            "--theme-color-base-300": "#e6eaf7",
-            "--theme-color-base-content": "#181a1f",
-            "--theme-color-primary": "#e0005b",
-            "--theme-color-primary-content": "#3a1a1c",
-            "--theme-color-secondary": "#e6f7e6",
-            "--theme-color-secondary-content": "#2a1a1c",
-            "--theme-color-accent": "#5fd3b3",
-            "--theme-color-accent-content": "#1a2a1c",
-            "--theme-color-neutral": "#5a5a5a",
-            "--theme-color-neutral-content": "#f8f9ff",
-            "--theme-color-info": "#3a8fff",
-            "--theme-color-info-content": "#f5f7ff",
-            "--theme-color-success": "#4caf50",
-            "--theme-color-success-content": "#f5f7ff",
-            "--theme-color-warning": "#ffc107",
-            "--theme-color-warning-content": "#f5f7ff",
-            "--theme-color-error": "#ff5252",
-            "--theme-color-error-content": "#f5f7ff"
+            "--theme-color-base-100": "#FFFFFF",
+            "--theme-color-base-200": "#F9FAFB",
+            "--theme-color-base-300": "#F3F4F6",
+            "--theme-color-base-content": "#181A1F",
+            "--theme-color-primary": "#E0005B",
+            "--theme-color-primary-content": "#3A1A1C",
+            "--theme-color-secondary": "#E6F7E6",
+            "--theme-color-secondary-content": "#2A1A1C",
+            "--theme-color-accent": "#E2E8F0",
+            "--theme-color-accent-content": "#111827",
+            "--theme-color-neutral": "#5A5A5A",
+            "--theme-color-neutral-content": "#E5E7EB",
+            "--theme-color-info": "#F8F9FA",
+            "--theme-color-info-content": "#495057",
+            "--theme-color-success": "#4CAF50",
+            "--theme-color-success_content": "#F5F7FF",
+            "--theme-color-warning": "#FFC107",
+            "--theme-color-warning_content": "#F5F7FF",
+            "--theme-color-error": "#FF5252",
+            "--theme-color-error_content": "#F5F7FF",
+            "--theme-color-base-100-dark": "#0F1421",
+            "--theme-color-base-200-dark": "#0D121F",
+            "--theme-color-base-300-dark": "#0A0F1C",
+            "--theme-color-base-content-dark": "#F0F4FF",
+            "--theme-color-primary-dark": "#7D6BFF",
+            "--theme-color-primary-content-dark": "#F4F0FF",
+            "--theme-color-secondary-dark": "#FF7D8A",
+            "--theme-color-secondary-content-dark": "#FFF0F2",
+            "--theme-color-accent-dark": "#334155",
+            "--theme-color-accent-content-dark": "#1A3A32",
+            "--theme-color-neutral-dark": "#3F67B5",
+            "--theme-color-neutral-content-dark": "#8BC34A",
+            "--theme-color-info-dark": "#7269EF",
+            "--theme-color-info-content-dark": "#FFFFFF",
+            "--theme-color-success-dark": "#7DFFA7",
+            "--theme-color-success-content-dark": "#0F3A1A",
+            "--theme-color-warning-dark": "#FFE07D",
+            "--theme-color-warning-content-dark": "#3A2A0F",
+            "--theme-color-error-dark": "#FF7D7D",
+            "--theme-color-error-content-dark": "#3A0F0F"
           }
         },
         "scheme2": {
@@ -133,6 +153,12 @@
         "type": "text",
         "label": "t:schema.settings.brand.copyright.label",
         "info": "t:schema.settings.brand.copyright.info"
+      },
+      {
+        "id": "ai_search_completed_text",
+        "type": "text",
+        "label": "t:schema.settings.brand.ai_search_completed_text.label",
+        "info": "t:schema.settings.brand.ai_search_completed_text.info"
       }
     ]
   },
@@ -160,15 +186,15 @@
     ]
   },
   {
-    "name": "t:schema.custom_html.name",
+    "name": "t:schema.settings.custom_html.name",
     "settings": [
       {
-        "id": "menu_html",
+        "id": "quick_navigation_html",
         "type": "html",
-        "label": "t:schema.custom_html.settings.menu_html.label",
-        "info": "t:schema.custom_html.settings.menu_html.info",
+        "label": "t:schema.settings.custom_html.settings.quick_navigation_html.label",
+        "info": "t:schema.settings.custom_html.settings.quick_navigation_html.info",
         "rows": 6,
-        "placeholder": "t:schema.custom_html.settings.menu_html.placeholder"
+        "placeholder": "t:schema.settings.custom_html.settings.quick_navigation_html.placeholder"
       }
     ]
   }

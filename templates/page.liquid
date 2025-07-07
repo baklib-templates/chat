@@ -122,32 +122,6 @@
                 <div class="p-1 border-t border-base-content/15">
                 </div>
             </div>
-
-            <div class="hidden user-profile-sidebar">
-                <div class="px-3 pt-3 px-lg-4 pt-lg-4">
-                    <div class="user-chat-nav text-end">
-                        <button type="button" class="btn nav-btn" id="user-profile-hide">
-                            <i class="ri-close-line"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="p-4 text-center border-bottom">
-                    <div class="mb-4">
-                        <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-lg img-thumbnail"
-                            alt="">
-                    </div>
-
-                    <h5 class="mb-1 font-size-16 text-truncate">Doris Brown</h5>
-                    <p class="mb-1 text-muted text-truncate"><i
-                            class="ri-record-circle-fill font-size-10 text-success me-1 ms-0"></i> Active</p>
-                </div>
-                <!-- End profile user -->
-
-                <!-- Start user-profile-desc -->
-
-                <!-- end user-profile-desc -->
-            </div>
         </div>
         <!-- End User chat -->
     </turbo-frame>
@@ -156,8 +130,8 @@
 
 {% schema %}
 {
-"name": "t:schema.templates.help-center-list.name",
-"description": "t:schema.templates.help-center-list.description",
+"name": "t:schema.templates.page.name",
+"description": "t:schema.templates.page.description",
 "thumb_url": "",
 "sub_page_templates": ["page"],
 "settings": [
@@ -173,13 +147,12 @@
 "type": "image_picker",
 "ratio": "1:1",
 "width": 100,
-"label": "t:schema.templates.page.settings.thumb_image_url.label",
-"info": "t:schema.templates.page.settings.thumb_image_url.info"
+"label": "t:schema.templates.page.settings.thumb_image_url.label"
 },
 {
 "id": "title",
 "type": "text",
-"readonly": false,
+"readonly": true,
 "label": "t:schema.templates.page.settings.title.label",
 "info": "t:schema.templates.page.settings.title.info"
 },
@@ -192,7 +165,7 @@
 "id": "content",
 "type": "richtext",
 "label": "t:schema.templates.page.settings.content.label",
-"readonly": false,
+"readonly": true,
 "info": "t:schema.templates.page.settings.content.info"
 }
 ]

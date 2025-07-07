@@ -1,5 +1,5 @@
 <div class="sm:flex">
-    {% render 'sidebar' %}
+    {% render 'sidebar', tag: tag %}
 
     <!-- start chat-leftsidebar -->
     <div
@@ -25,7 +25,6 @@
             {% else %}
             {% render 'empty', title: '暂无标签', description: '请在后台添加标签' %}
             {% endfor %}
-
         </ul>
     </div>
     <!-- end chat-leftsidebar -->
@@ -36,7 +35,7 @@
         <!-- 抽屉侧边栏 -->
         <div class="z-20 drawer-side">
             <label for="my-drawer" class="drawer-overlay"></label>
-            <div class="overflow-auto p-4 w-80 h-screen menu bg-base-200 text-base-content">
+            <div class="overflow-auto p-4 w-80 h-screen bg-base-200 text-base-content">
                 <!-- 点击任何链接都会关闭抽屉（因为 checkbox 被取消选中） -->
                 <!-- 标签列表 -->
                 <ul class="space-y-2" x-data="">

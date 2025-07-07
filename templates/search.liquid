@@ -1,18 +1,15 @@
 {% assign chat_messages = site.chat_messages | order_by: '-created_at' | limit: 10 %}
-
 {% assign avatar = 'images/avatar.png' | asset_url %}
 <div class="sm:flex">
     {% render 'sidebar' %}
-
-    {% assign extends_size = search.extends | size %}
-    {% assign items_size = search.pages | size %}
-    {% assign total_size = extends_size | plus: items_size %}
-    {% assign top_5_paths = items | map: 'path' | limit: 5 | join: ',' %}
     <!-- start chat-leftsidebar -->
     <div class="min-w-[380px] max-w-[400px] bg-base-200 border-r border-base-300 px-8 py-8 h-screen overflow-y-auto hidden sm:block">
         <h2 class="mb-4 text-xl font-bold">AI 智能搜索</h2>
 
         <turbo-frame id="frame--search-results" class="overflow-hidden flex-1">
+            {% assign extends_size = search.extends | size %}
+            {% assign items_size = search.pages | size %}
+            {% assign total_size = extends_size | plus: items_size %}
             <!-- 搜索框 -->
             <label class="flex gap-2 items-center mb-4 w-full input input-bordered">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24"
@@ -85,11 +82,14 @@
     </div>
     <!-- end chat-leftsidebar -->
 
+
+    {% assign ai_search_thinking_text = 'ai.thinking' | t: 'AI 正在思考...' %}
+    {% assign ai_search_canceled_text = 'ai.canceled' | t: "已取消回答" %}
     <!-- Start User chat -->
-    <div class="overflow-hidden w-full bg-base-100" id="js--ai-search-completion-container" x-data="{ tab: 'chat' }" data-turbo-permanent>
+    <div class="overflow-hidden w-full bg-base-100" id="js--ai-search-completion-container"  x-data="{ tab: 'chat' }" >
         <div class="sm:flex" :class="{'hidden': tab !== 'chat'}" id="js--ai-search-completion" data-controller="ai-search-completion"
             data-ai-search-completion-hidden-class="hidden opacity-0"
-            data-ai-search-completion-messages-value='{"started":"{{ ai_search_started_text }}","reading":"{{ ai_search_reading_text }}","thinking":"{{ ai_search_thinking_text }}"}'
+            data-ai-search-completion-messages-value='{"thinking":"{{ ai_search_thinking_text }}","completed":"{{ site.settings.ai_search_completed_text | escape_once }}","canceled":"{{ ai_search_canceled_text }}"}'
             data-ai-search-completion-url-value="/-/ai-search-completion"
             data-ai-search-completion-auto-submit-value="true">
             <div class="flex flex-col flex-1 min-h-screen">
@@ -98,9 +98,9 @@
                     <!-- 左侧绿色小圆点 -->
                     <span class="hidden sm:block">会话中 <i class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i>
                     </span>
-                    <button class="pb-2 ml-2 w-1/2 text-sm border-b-2" :class="{'border-primary text-primary': tab === 'chat'}" @click="tab = 'chat'">AI 对话</button>
+                    <button class="pb-2 ml-2 w-1/2 text-sm border-b-2 sm:hidden" :class="{'border-primary text-primary': tab === 'chat'}" @click="tab = 'chat'">AI 对话</button>
                     <div class="flex w-full sm:hidden">
-                    <button class="pb-2 w-1/2 text-sm border-b-2" :class="{'border-primary text-primary': tab === 'search'}" @click="tab = 'search'">搜索结果</button>
+                    <button class="pb-2 w-1/2 text-sm border-b-2 sm:hidden" :class="{'border-primary text-primary': tab === 'search'}" @click="tab = 'search'">搜索结果</button>
                     </div>
                     <!-- 右侧更多操作 -->
                 </div>
@@ -189,16 +189,16 @@
                             })()
                         </script>
                         <script>
-                            let searchInput = null;
-                            let chatInput = null;
-                            let sendBtn = null;
+                            var searchInput = null;
+                            var chatInput = null;
+                            var sendBtn = null;
 
                             function updateSearchInput() {
                                 var frame = document.getElementById('frame--search-results');
                                 searchInput = frame ? frame.querySelector('#js--search-input') : null;
                             }
 
-                            document.addEventListener('DOMContentLoaded', function () {
+                            function initializeChat() {
                                 chatInput = document.getElementById('js--ai-chat-input');
                                 sendBtn = document.getElementById('js--ai-chat-send');
                                 updateSearchInput();
@@ -221,6 +221,7 @@
                                                 var form = searchInput.form;
                                                 if (form) form.requestSubmit();
                                             }
+                                            e.preventDefault();
                                         }
                                     });
                                 }
@@ -235,11 +236,14 @@
                                         }
                                     });
                                 }
-                            });
+                            };
 
-                            // turbo frame 局部刷新后，更新 searchInput 并同步内容
-                            document.addEventListener('turbo:frame-load', function () {
-                                updateSearchInput();
+                            // Turbo 导航完成后重新初始化
+                            document.addEventListener('turbo:load', initializeChat);
+                            document.addEventListener('turbo:frame-load', function (event) {
+                                if (event.target.id === 'frame--search-results') {
+                                    updateSearchInput(); // 仅当搜索结果 Frame 刷新时，更新 input
+                                }
                             });
 
                             function scrollToMessages() {
@@ -258,9 +262,9 @@
                 <div class="p-1 sm:border-t border-base-content/15 chat-mobile">
                     <div class="flex items-center p-4 rounded-b-2xl sm:bg-base-100">
                         <!-- 输入框 -->
-                        <input type="text" placeholder="请输入你的问题…" id="js--ai-chat-input"
-                            data-ai-search-completion-target="input" autocomplete="off"
-                            class="flex-1 mr-4 rounded-md border-0 bg-base-300 text-base-content/50 input input-bordered focus:outline-none focus:ring-0 placeholder:text-base-content/60" />
+                        <textarea id="js--ai-chat-input"
+                        data-ai-search-completion-target="input" autocomplete="off"
+                        class="flex-1 p-2 mr-4 rounded-md border-0 bg-base-300 sm:min-h-20 text-base-content/50 input input-bordered focus:outline-none focus:ring-0 placeholder:text-base-content/60" placeholder="请输入你的问题…"></textarea>
 
                         <button id="js--ai-chat-send" data-ai-search-completion-target="send" type="button"
                             class="text-base btn btn-primary">
@@ -356,5 +360,4 @@
     </div>
     <!-- end  layout wrapper -->
 </div>
-
 

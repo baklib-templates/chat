@@ -2074,14 +2074,8 @@
       border-width: var(--border, 1px) 0 var(--border, 1px) var(--border, 1px);
     }
   }
-  .ms-0 {
-    margin-inline-start: calc(var(--spacing) * 0);
-  }
   .ms-1 {
     margin-inline-start: calc(var(--spacing) * 1);
-  }
-  .me-1 {
-    margin-inline-end: calc(var(--spacing) * 1);
   }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
@@ -2985,9 +2979,6 @@
   .py-16 {
     padding-block: calc(var(--spacing) * 16);
   }
-  .pt-3 {
-    padding-top: calc(var(--spacing) * 3);
-  }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
   }
@@ -2999,9 +2990,6 @@
   }
   .text-center {
     text-align: center;
-  }
-  .text-end {
-    text-align: end;
   }
   .text-left {
     text-align: left;
@@ -3453,9 +3441,9 @@
       display: none;
     }
   }
-  .sm\:inline {
+  .sm\:min-h-20 {
     @media (width >= 40rem) {
-      display: inline;
+      min-height: calc(var(--spacing) * 20);
     }
   }
   .sm\:flex-col {

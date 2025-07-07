@@ -1,9 +1,9 @@
 {% assign logo_url = site.settings.logo_url | presence %}
 {% assign avatar = 'images/avatar.png' | asset_url %}
 <!-- Start left sidebar-menu -->
-<div class="flex flex-col flex-shrink-0 min-h-screen shadow-md bg-base-100 w-19" >
+<div class="flex z-10 flex-shrink-0 min-h-screen shadow-md sm:flex-col bg-base-100 side-menu" >
   <!-- LOGO -->
-  <div class="flex flex-col justify-center items-center">
+  <div class="hidden justify-center items-center sm:flex">
     <a href="index.html">
       <span class="logo-sm">
         {% if logo_url %}
@@ -26,8 +26,8 @@
   <!-- end navbar-brand-box -->
 
   <!-- Start side-menu nav -->
-  <div class="flex my-auto lg:flex-col">
-    <ul class="flex flex-col justify-center items-center" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
+  <div class="flex justify-center my-auto sm:flex-col">
+    <ul class="flex justify-center items-center sm:flex-col" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
       <li class="m-2" >
         <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300" href="/"
           role="tab" data-nav-tree-target="item">
@@ -58,18 +58,33 @@
         </a>
       </li>
 
-      <li class="inline-block m-2 dropdown profile-user-dropdown sm:hidden">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          <img src="" alt="" class="profile-user rounded-circle">
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Profile <i class="ri-profile-line float-end text-muted"></i></a>
-          <a class="dropdown-item" href="#">Setting <i class="ri-settings-3-line float-end text-muted"></i></a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Log out <i class="ri-logout-circle-r-line float-end text-muted"></i></a>
-        </div>
-      </li>
+      {% if current_user %}
+        <li class="m-2 btn-group dropdown dropdown-top sm:hidden">
+          <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300" href="#"
+            role="button" tabindex="0">
+            <img
+              src="{{ current_user.image | default: avatar }}"
+              alt="" class="w-9 h-9 rounded-full">
+          </a>
+          <ul tabindex="0" class="p-2 w-44 shadow-sm dropdown-content menu bg-base-100 rounded-box z-1">
+            <a class="px-4 py-2 font-normal text-left rounded cursor-pointer text-base-content/80 hover:bg-base-300 focus:bg-base-300"  href="{{ current_user.profile_url }}">  {{ 'generic.profile' | t }} <i class="ri-profile-line float-end text-muted"></i></a>
+            {% form_tag 'sign_out' %}
+              <button class="px-4 py-2 w-full font-normal text-left rounded cursor-pointer text-base-content/80 hover:bg-base-300 focus:bg-base-300" href="auth-login.html">{{ 'buttons.logout' | t }}  <i
+                class="ri-logout-circle-r-line float-end text-muted"></i></button>
+            {% endform_tag %}
+          </ul>
+        </li>
+      {% else %}
+        <li class="m-2 sm:hidden" title="点击登录">
+          <a class="flex relative justify-center items-center w-12 h-12 rounded-md hover:bg-base-300" >
+            <i class="text-2xl text-base-content/50 ri-user-line"></i>
+            {% form_tag 'sign_in_with_baklib' %}
+              <button
+                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"> </button>
+            {% endform_tag %}
+          </a>
+        </li>
+      {% endif %}
     </ul>
   </div>
   <!-- end side-menu nav -->

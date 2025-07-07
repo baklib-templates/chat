@@ -3,10 +3,10 @@
     {% render 'sidebar' %}
 
     <!-- start chat-leftsidebar -->
-    <div class=" min-w-[320px] max-w-[400px] h-full bg-base-200 border-r border-base-300 px-8 py-8">
+    <div class=" min-w-[320px] max-w-[400px]  bg-base-200 border-r border-base-300 px-8 py-8 hidden sm:block">
 
         <div class="mb-6">
-            <div class="flex justify-center items-center p-6 bg-base-100 rounded-lg shadow-sm">
+            <div class="flex justify-center items-center p-6 rounded-lg shadow-sm bg-base-100">
                 {% if logo_url %}
                 <img src="{{ logo_url }}" alt="{{ site.name | escape_once }}" class="mr-4 w-12 h-12">
                 {% else %}
@@ -37,7 +37,7 @@
             </p>
         </div>
 
-        <div class="w-full max-w-md bg-base-100 shadow-md rounded-box">
+        <div class="w-full max-w-md shadow-md bg-base-100 rounded-box">
         <div class="bg-base-100 collapse collapse-arrow">
             <input type="checkbox" class="peer" checked/>
             <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
@@ -60,7 +60,7 @@
         <div class="sm:flex">
             <div class="flex flex-col flex-1 min-h-screen">
                 <!-- 欢迎语 -->
-                <div class="flex justify-between items-center px-8 h-20 bg-base-100 border-b border-base-content/15">
+                <div class="flex justify-between items-center px-8 h-20 border-b bg-base-100 border-base-content/15">
                     <!-- 左侧绿色小圆点 -->
                     <span><i class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i></span>
                     <!-- 右侧更多操作 -->
@@ -76,7 +76,7 @@
                     {% form_tag 'search', class: 'w-full' %}
                     <div class="flex justify-center items-center mb-6">
                         <div class="relative w-full max-w-md">
-                            <span class="absolute left-3 top-1/2 text-base-content/60 -translate-y-1/2">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/60">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
                                     viewBox="0 0 24 24">
                                     <circle cx="11" cy="11" r="8" />

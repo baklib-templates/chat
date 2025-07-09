@@ -1,10 +1,14 @@
 {% assign logo_url = site.settings.logo_url | presence %}
 {% assign avatar = 'images/avatar.png' | asset_url %}
+{% for tag in site.tags %}
+  {% assign first_tag = tag %}
+  {% break %}
+{% endfor %}
 <!-- Start left sidebar-menu -->
 <div class="flex z-10 flex-shrink-0 min-h-screen shadow-md sm:flex-col bg-base-100 side-menu" >
   <!-- LOGO -->
   <div class="hidden justify-center items-center sm:flex">
-    <a href="index.html">
+    <a href="/">
       <span class="logo-sm">
         {% if logo_url %}
           <img
@@ -28,30 +32,30 @@
   <!-- Start side-menu nav -->
   <div class="flex justify-center my-auto sm:flex-col">
     <ul class="flex justify-center items-center sm:flex-col" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
-      <li class="m-2" >
+      <li class="m-2 tooltip tooltip-right" data-tip="首页" >
         <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300" href="/"
           role="tab" data-nav-tree-target="item">
           <i class="text-2xl text-base-content/50 ri-home-2-line"></i>
         </a>
       </li>
-      <li class="m-2" title="AI 智能搜索" >
+      <li class="m-2 tooltip tooltip-right" data-tip="AI 智能搜索" >
         <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300" href="/-/search"
           role="tab" data-nav-tree-target="item">
           <i class="text-2xl text-base-content/50 ri-message-3-line"></i>
         </a>
       </li>
-      <li class="m-2" title="标签分类">
+      <li class="m-2 tooltip tooltip-right" data-tip="标签分类">
         <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 {% if tag %}
           sidebar-active
         {% endif %}"
-        href="/s/tags"
+        href="{% if first_tag %}{{ first_tag.path }}{% else %}/s/tags{% endif %}"
           role="tab" data-nav-tree-target="item">
           <i class="text-2xl text-base-content/50 ri-bookmark-line"></i>
         </a>
       </li>
 
       {% assign page = site.pages['/'].children |first %}
-      <li class="m-2" title="目录" data-nav-tree-target="item">
+      <li class="m-2 tooltip tooltip-right" data-tip="目录" data-nav-tree-target="item">
         <a class="flex justify-center items-center w-12 h-12 rounded-m d hover:bg-base-300" href="{{ page.path }}"
           role="tab" data-nav-tree-target="item">
           <i class="text-2xl text-base-content/50 ri-list-ordered-2"></i>

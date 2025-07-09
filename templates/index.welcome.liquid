@@ -23,10 +23,12 @@
         <div class="mb-6">
             <div class="text-center">
                 <div class="mb-1 text-xl font-bold">{{ site.name }}</div>
+                {% if site.settings.company_name %}
                 <div class="flex justify-center items-center text-base text-base-content/50">
-                    <span class="inline-block mr-2 w-2 h-2 bg-green-400 rounded-full"></span>
+                    <span class="inline-block mr-2 w-2 h-2 rounded-full bg-secondary"></span>
                     {{ site.settings.company_name }}
                 </div>
+                {% endif %}
             </div>
         </div>
 
@@ -37,17 +39,19 @@
             </p>
         </div>
 
-        <div class="w-full max-w-md shadow-md bg-base-100 rounded-box">
-            <div class="bg-base-100 collapse collapse-arrow">
-                <input type="checkbox" class="peer" checked />
-                <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
-                    快捷导航
-                </div>
-                <div class="leading-6 text-base-content/80 collapse-content">
-                    {{ site.settings.quick_navigation_html }}
+        {% if site.settings.quick_navigation_html %}
+            <div class="w-full max-w-md shadow-md bg-base-100 rounded-box">
+                <div class="bg-base-100 collapse collapse-arrow">
+                    <input type="checkbox" class="peer" checked />
+                    <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
+                        快捷导航
+                    </div>
+                    <div class="leading-6 text-base-content/80 collapse-content">
+                        {{ site.settings.quick_navigation_html }}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
     <!-- end chat-leftsidebar -->
 
@@ -58,7 +62,7 @@
                 <!-- 欢迎语 -->
                 <div class="flex justify-between items-center px-8 h-20 border-b bg-base-100 border-base-content/15">
                     <!-- 左侧绿色小圆点 -->
-                    <span><i class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i></span>
+                    <span><i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i></span>
                     <!-- 右侧更多操作 -->
                 </div>
 

@@ -1,3 +1,4 @@
+{% assign avatar = 'images/avatar2.png' | asset_url %}
 <div class="sm:flex">
     {% render 'sidebar', tag: tag %}
 
@@ -72,7 +73,7 @@
                     </label>
                     <!-- 左侧绿色小圆点 -->
                     <span> {{ tag.name }}
-                        <i class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i>
+                        <i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i>
                     </span>
                 </div>
                 {% paginate_tag tag.pages, as: 'items', per: 12 %}
@@ -80,7 +81,7 @@
                     <div class="p-6">
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                             {% for page in items %}
-                            {% render 'tag/card', page: page %}
+                            {% render 'tag/card', page: page, avatar: avatar %}
                             {% else %}
                             {% render 'empty', message: '暂无内容', icon: 'document' %}
                             {% endfor %}

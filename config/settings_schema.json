@@ -155,6 +155,13 @@
         "info": "t:schema.settings.brand.copyright.info"
       },
       {
+        "id": "robot_name",
+        "type": "text",
+        "label": "t:schema.settings.brand.robot_name.label",
+        "info": "t:schema.settings.brand.robot_name.info",
+        "default": "t:schema.settings.brand.robot_name.default"
+      },
+      {
         "id": "ai_search_completed_text",
         "type": "text",
         "label": "t:schema.settings.brand.ai_search_completed_text.label",

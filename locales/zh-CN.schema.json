@@ -39,6 +39,11 @@
         "info": "欢迎描述将显示在首页 ",
         "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
       },
+      "robot_name": {
+        "label": "机器人名称",
+        "info": "搜索页机器人名字",
+        "default": "gpt-4o"
+      },
       "ai_search_completed_text": {
         "label": "AI 回答底部提示语",
         "info": "会自动追加在每条 AI 回答的结尾处，用于引导用户联系人工客服。可包含 HTML 链接。"

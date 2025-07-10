@@ -6,6 +6,9 @@
     }
   },
   "snippets": {
+    "footer": {
+      "copyright": "版权所有"
+    },
     "feedback_form": {
       "title": "提交反馈",
       "message_label": "留言",

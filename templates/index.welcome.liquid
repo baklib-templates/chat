@@ -107,8 +107,17 @@
                     </div>
                 </div>
 
-
+                {% assign company_name = site.settings.company_name | presence %}
+                {% assign copyright_info = site.settings.copyright_info | presence %}
                 <div class="p-1 sm:border-t border-base-content/15">
+                    <div class="w-full text-center text-xs text-base-content/60 py-4">
+                        {% if company_name %}
+                        <span>© {{ company_name }} {{ 'snippets.footer.copyright' | t }}</span>
+                        {% endif %}
+                         {% if copyright_info %}
+                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"  class="hover:underline">{{ copyright_info }}</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

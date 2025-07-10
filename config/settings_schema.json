@@ -10,11 +10,11 @@
     "theme_author": "Baklib",
     "theme_documentation_url": "https://www.baklib.com/blog",
     "theme_support_url": "https://www.baklib.com/",
-    "theme_thumb_url": "images/theme/${lang}/thumb.png",
+    "theme_thumb_url": "images/theme/thumb.png",
     "theme_preview_images": [
-      "images/theme/${lang}/preview1.png",
-      "images/theme/${lang}/preview2.png",
-      "images/theme/${lang}/preview3.png"
+      "images/theme/preview1.png",
+      "images/theme/preview2.png",
+      "images/theme/preview3.png"
     ],
     "theme_languages": [
       {

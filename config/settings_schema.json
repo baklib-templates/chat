@@ -4,7 +4,7 @@
     "theme_name": "ai_chat",
     "theme_label": "t:schema.theme_label",
     "theme_description": "t:schema.theme_description",
-    "theme_version": "0.0.1",
+    "theme_version": "0.0.2",
     "theme_syntax_version": "v2",
     "theme_scope": "wiki",
     "theme_author": "Baklib",
@@ -12,9 +12,9 @@
     "theme_support_url": "https://help.baklib.cn/themes/ai-chat",
     "theme_thumb_url": "images/theme/thumb.png",
     "theme_preview_images": [
-      "images/theme/preview1.png",
-      "images/theme/preview2.png",
-      "images/theme/preview3.png"
+      "images/theme/index.webp",
+      "images/theme/chat.webp",
+      "images/theme/list.webp"
     ],
     "theme_languages": [
       {
@@ -134,7 +134,8 @@
       {
         "id": "company_name",
         "label": "t:schema.settings.brand.company_name.label",
-        "type": "text"
+        "type": "text",
+        "default": "t:schema.settings.brand.company_name.default"
       },
       {
         "id": "welcome_title",
@@ -149,12 +150,6 @@
         "default": "t:schema.settings.brand.welcome_description.default"
       },
       {
-        "id": "copyright",
-        "type": "text",
-        "label": "t:schema.settings.brand.copyright.label",
-        "info": "t:schema.settings.brand.copyright.info"
-      },
-      {
         "id": "robot_name",
         "type": "text",
         "label": "t:schema.settings.brand.robot_name.label",
@@ -165,7 +160,16 @@
         "id": "ai_search_completed_text",
         "type": "text",
         "label": "t:schema.settings.brand.ai_search_completed_text.label",
-        "info": "t:schema.settings.brand.ai_search_completed_text.info"
+        "info": "t:schema.settings.brand.ai_search_completed_text.info",
+        "default": "t:schema.settings.brand.ai_search_completed_text.default"
+      },
+      {
+        "id": "section_menu",
+        "type": "textarea",
+        "label": "首页自定义导航",
+        "rows": 10,
+        "info": "格式：channel_name[slug{sub_name[slug|sub_name2[slug，每行一个分栏。",
+        "default": "快速导航[/#{返回官网[https://www.baklib.cn|开发者中心[https://dev.baklib.cn\n友情链接[/{Deepseek[https://www.deepseek.com|豆包[https://www.doubao.com|Gemini[https://gemini.google.com"
       }
     ]
   },
@@ -173,10 +177,11 @@
     "name": "t:schema.settings.policy.title",
     "settings": [
       {
-        "id": "icp_beian",
+        "id": "copyright",
         "type": "text",
-        "label": "t:schema.settings.policy.icp_beian.label",
-        "required": true
+        "label": "t:schema.settings.brand.copyright.label",
+        "info": "t:schema.settings.brand.copyright.info",
+        "default": "t:schema.settings.brand.copyright.default"
       },
       {
         "id": "service_term_url",
@@ -193,15 +198,26 @@
     ]
   },
   {
-    "name": "t:schema.settings.custom_html.name",
+    "name": "标签版块(Tags)",
     "settings": [
       {
-        "id": "quick_navigation_html",
+        "id": "section_tags_on",
+        "type": "checkbox",
+        "label": "是否显示tags版块",
+        "info": "如果选中，则在左侧导航显示tags版块；否则不显示",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Head版块",
+    "settings": [
+      {
+        "id": "head_html",
         "type": "html",
-        "label": "t:schema.settings.custom_html.settings.quick_navigation_html.label",
-        "info": "t:schema.settings.custom_html.settings.quick_navigation_html.info",
-        "rows": 6,
-        "placeholder": "t:schema.settings.custom_html.settings.quick_navigation_html.placeholder"
+        "label": "<head>标签内 HTML 代码",
+        "info": "用于添加自定义的 <head> 标签内的 HTML 代码，例如添加第三方脚本、样式等。",
+        "rows": 6
       }
     ]
   }

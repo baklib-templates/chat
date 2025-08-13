@@ -14,15 +14,18 @@
       },
       "copyright": {
         "label": "备案号/版权信息",
-        "info": "备案号/版权信息将显示在网站底部"
+        "info": "备案号/版权信息将显示在网站底部",
+        "default": "蜀备20240001号"
       },
       "company_name": {
         "label": "公司名称",
-        "info": "公司名称将显示在首页 "
+        "info": "公司名称将显示在首页",
+        "default": "公司名称"
       },
       "brand_name": {
         "label": "品牌名称",
-        "info": "品牌名称将显示在首页 "
+        "info": "品牌名称将显示在首页",
+        "default": "品牌名称"
       },
       "site_description": {
         "label": "站点描述",
@@ -57,11 +60,13 @@
       },
       "service_term_url": {
         "label": "服务条款链接",
-        "info": "服务条款链接将显示在网站底部"
+        "info": "服务条款链接将显示在网站底部",
+        "default": "https://www.baklib.com/terms"
       },
       "privacy_policy_url": {
         "label": "隐私政策链接",
-        "info": "隐私政策链接将显示在网站底部"
+        "info": "隐私政策链接将显示在网站底部",
+        "default": "https://www.baklib.com/privacy"
       }
     },
     "custom_html": {

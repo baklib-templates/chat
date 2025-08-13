@@ -71,9 +71,7 @@
             </svg>
           </label>
           <!-- 左侧绿色小圆点 -->
-          <span> {{ tag.name }}
-            <i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i>
-          </span>
+          <span> {{ tag.name }} </span>
         </div>
         {% paginate_tag tag.pages, as: 'items', per: 12 %}
         <div class="h-[calc(100vh-184px)] overflow-y-auto p-4 relative first-letter:text">

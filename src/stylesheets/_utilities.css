@@ -91,19 +91,19 @@
 }
 
 .sidebar-menu-active {
-  @apply bg-base-300;
+  @apply bg-base-300/25;
 }
 
-.sidebar-menu-active > i {
-  @apply text-primary;
+.sidebar-menu-active > svg {
+  @apply text-white;
 }
 
 .sidebar-active {
-  @apply bg-base-300;
+  @apply bg-base-300/25;
 }
 
-.sidebar-active > i {
-  @apply text-primary;
+.sidebar-active > svg {
+  @apply text-white;
 }
 
 .ProseMirror [bke-role="column"] {

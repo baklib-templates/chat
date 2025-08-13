@@ -1,0 +1,18 @@
+{% assign company_name = site.settings.company_name | presence %}
+{% assign copyright = site.settings.copyright | presence %}
+<div class="p-1 sm:border-t border-base-content/15">
+    <div class="w-full text-center text-base-content/60 py-4 space-x-3">
+        {% if  site.settings.company_name %}
+        <span>© {{  site.settings.company_name }} {{ 'snippets.footer.copyright' | t }}</span>
+        {% endif %}
+        {% if copyright %}
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"  class="hover:underline">{{ copyright }}</a>
+        {% endif %}
+        {% if site.settings.service_term_url %}
+            <a href="{{ site.settings.service_term_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">服务条款</a>
+        {% endif %}
+        {% if site.settings.privacy_policy_url %}
+            <a href="{{ site.settings.privacy_policy_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">隐私政策</a>
+        {% endif %}
+    </div>
+</div>

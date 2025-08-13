@@ -11,20 +11,7 @@
             {% assign items_size = search.pages | size %}
             {% assign total_size = extends_size | plus: items_size %}
             <!-- 搜索框 -->
-            <label class="flex gap-2 items-center mb-4 w-full input input-bordered">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 10-14 0 7 7 0 0014 0z" />
-                </svg>
-
-                {% form_tag 'search', class: 'w-full' %}
-                <input type="text" class="grow" id="js--search-input" placeholder="输入关键词过滤"
-                    name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" placeholder="{{ "
-                    layout.theme.search_input_placeholder" | t }}" autocomplete="off" />
-                <button type="submit" class="hidden"></button>
-                {% endform_tag %}
-            </label>
+            
             {% if total_size > 0 %}
             {% paginate_tag search.pages, as: 'items', per: 10 %}
             <!-- 搜索结果 -->
@@ -96,7 +83,9 @@
                 <!-- 欢迎语 -->
                 <div class="flex justify-between items-center px-8 h-16 border-b border-base-content/15 bg-base-100">
                     <!-- 左侧绿色小圆点 -->
-                    <span class="hidden sm:block">会话中 <i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i>
+                    <span class="relative flex size-3 hidden sm:block">
+                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex size-3 rounded-full bg-primary-500"> </span>
                     </span>
                     <button class="pb-2 ml-2 w-1/2 text-sm border-b-2 sm:hidden" :class="{'border-primary text-primary': tab === 'chat'}" @click="tab = 'chat'">AI 对话</button>
                     <div class="flex w-full sm:hidden">
@@ -116,7 +105,7 @@
                                 <div class="flex gap-3 justify-end items-start">
                                     <div class="text-right">
                                         <div
-                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-base-200 text-base-content ai-user-message">
+                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-info text-info-content ai-user-message">
                                             {{ message.content }}
                                         </div>
                                         <div class="mt-2 text-sm font-medium text-base-content/80"> {{ current_user.name }} </div>
@@ -126,12 +115,15 @@
                                 {% else %}
                                 <div class="flex gap-3 items-start">
                                     <div class="avatar avatar-online avatar-placeholder">
-                                        <div class="w-10 rounded-full bg-neutral text-neutral-content">
-                                            <span class="text-xl">AI</span>
+                                        <div class="">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-8 h-8 text-primary">
+                                                <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8a8.009 8.009 0 0 1-8 8z" />
+                                                <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+                                            </svg>
                                         </div>
                                     </div>
                                     <div class="flex-1 min-w-0" data-controller="markdown-renderer">
-                                        <div class="p-3 break-words rounded-xl rounded-bl-none text-info-content bg-info w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror"
+                                        <div class="p-3 break-words rounded-xl rounded-bl-none text-info-content w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror"
                                             data-markdown-renderer-target="content">{{ message.content }}
                                         </div>
 
@@ -152,7 +144,7 @@
                                 <div class="flex gap-3 justify-end items-start">
                                     <div class="text-right">
                                         <div
-                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-base-200 text-base-content ai-user-message">
+                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-info text-info-content ai-user-message">
                                         </div>
                                         <div class="mt-2 text-sm font-medium text-base-content/80"> {{ current_user.name }} </div>
                                     </div>
@@ -162,13 +154,14 @@
                             <template data-ai-search-completion-target="assistantMessageTemplate">
                                 <div class="flex gap-3 items-start">
                                     <div class="avatar avatar-online avatar-placeholder">
-                                        <div class="w-10 rounded-full bg-neutral text-neutral-content">
-                                            <span class="text-xl">AI</span>
-                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-8 h-8 text-primary">
+                                            <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8a8.009 8.009 0 0 1-8 8z" />
+                                            <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+                                        </svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div
-                                            class="p-3 break-words rounded-xl rounded-bl-none text-info-content bg-info w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror">
+                                            class="p-3 break-words rounded-xl rounded-bl-none text-info-content bg-base-300 dark:text-white w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror">
                                         </div>
                                         <div class="mt-1 text-sm font-medium text-base-content/80">
                                             {{ site.settings.robot_name }}
@@ -262,16 +255,17 @@
                     </div>
                 </div>
 
-                <div class="p-1 sm:border-t border-base-content/15 chat-mobile">
-                    <div class="flex items-center p-4 rounded-b-2xl sm:bg-base-100">
+                <div class="p-1 chat-mobile">
+                    <div class="flex items-center p-4 bg-gradient-to-b from-primary/15 to-secondary/15 border border-base-content/15">
                         <!-- 输入框 -->
                         <textarea id="js--ai-chat-input"
                         data-ai-search-completion-target="input" autocomplete="off"
-                        class="flex-1 p-2 mr-4 rounded-md border-0 bg-base-300 sm:min-h-20 text-base-content/50 input input-bordered focus:outline-none focus:ring-0 placeholder:text-base-content/60" placeholder="请输入你的问题…"></textarea>
+                        class="flex-1 p-2 mr-4 rounded-md border-2 bg-primary/5 sm:min-h-20 text-base-content input input-bordered focus:outline-none focus:ring-0 placeholder:text-base-content/60" placeholder="请输入你的问题…"></textarea>
 
-                        <button id="js--ai-chat-send" data-ai-search-completion-target="send" type="button"
-                            class="text-base btn btn-primary">
-                            <i class="ri-send-plane-2-fill"></i>
+                        <button id="js--ai-chat-send" data-ai-search-completion-target="send" type="button" class="bg-primary text-white rounded-md p-2 px-4 md:py-4 hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6 md:w-12 md:h-12">
+                                <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                     </div>
                 </div>

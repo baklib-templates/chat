@@ -21,24 +21,8 @@
 
 <div class="px-4 py-16 mx-auto">
   <div class="flex flex-col justify-center items-center text-center">
-    {%- if icon -%}
-      <div class="mb-6 text-base-content/60">
-        <svg class="mx-auto w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          {%- case icon -%}
-            {%- when 'search' -%}
-              <i class="text-7xl ri-search-2-line"></i>
-            {%- when 'document' -%}
-              <i class="text-7xl ri-article-line"></i>
-            {%- when 'video' -%}
-              <i class="text-7xl ri-movie-2-line"></i>
-            {%- else -%}
-              <i class="text-7xl ri-information-line"></i>
-          {%- endcase -%}
-        </svg>
-      </div>
-    {%- endif -%}
-
-    <h2 class="mb-3 text-2xl font-semibold text-base-content">
+    
+    <h2 class="mb-3 text-xl text-base-content">
       {{ title | default: default_title }}
     </h2>
 

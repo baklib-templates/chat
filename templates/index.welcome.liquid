@@ -2,20 +2,20 @@
 <div class="sm:flex">
     {% render 'sidebar' %}
 
-    <!-- start chat-leftsidebar -->
-    <div class=" min-w-[320px] max-w-[400px]  bg-base-200 border-r border-base-300 px-8 py-8 hidden sm:block">
+    <!-- start chat-left sidebar -->
+    <div class=" min-w-[320px] max-w-[400px] bg-base-200 border-r border-base-300 px-8 py-8 hidden sm:block">
 
         <div class="mb-6">
-            <div class="flex justify-center items-center p-6 rounded-lg shadow-sm bg-base-100">
+            <div class="flex justify-center items-center p-6">
                 {% if logo_url %}
-                <img src="{{ logo_url }}" alt="{{ site.name | escape_once }}" class="mr-4 w-12 h-12">
+                    <img src="{{ logo_url }}" alt="{{ site.name | escape_once }}" class="h-12 md:h-24">
                 {% else %}
-                {% assign favicon_url = site.favicon_url | presence %}
-                {% if favicon_url %}
-                <img src="{{ favicon_url }}" alt="{{ site.name | escape_once }}" class="mr-4 w-12 h-12">
+                    {% assign favicon_url = site.favicon_url | presence %}
+                    {% if favicon_url %}
+                        <img src="{{ favicon_url }}" alt="{{ site.name | escape_once }}" class="mr-2 h-12">
+                    {% endif %}
+                    <span class="text-4xl font-bold text-base-content/80"> {{ site.settings.brand_name }} </span>
                 {% endif %}
-                {% endif %}
-                <span class="text-4xl font-bold text-base-content/80"> {{ site.settings.brand_name }} </span>
             </div>
         </div>
 
@@ -39,49 +39,66 @@
             </p>
         </div>
 
-        {% if site.settings.quick_navigation_html %}
-            <div class="w-full max-w-md shadow-md bg-base-100 rounded-box">
-                <div class="bg-base-100 collapse collapse-arrow">
-                    <input type="checkbox" class="peer" checked />
-                    <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
-                        快捷导航
-                    </div>
-                    <div class="leading-6 text-base-content/80 collapse-content">
-                        {{ site.settings.quick_navigation_html }}
+        {% assign section_menu = site.settings.section_menu | newline_to_br | split: '<br />' %}
+        {% for menu_line in section_menu %}
+            {%  assign p_menu_arr = menu_line | split: '{' %}
+            {%  assign parent_menu = p_menu_arr[0] | split: '[' %}
+            {%  assign sub_menus = p_menu_arr[1] | split: '|' %}
+            {%  assign sub_menus_count =  sub_menus | size %}
+
+            {% if sub_menus_count > 0 %}
+                <div class="w-full max-w-md shadow-md bg-base-100 rounded-box mb-2">
+                    <div class="bg-base-100 collapse collapse-arrow">
+                        <input type="checkbox" class="peer" checked />
+                        <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
+                            {{ parent_menu[0] }}
+                        </div>
+                        <div class="leading-6 text-base-content/80 collapse-content">
+                            <ul class="list-disc pl-6">
+                                {% for menu in sub_menus %}
+                                    {% assign parts = menu | split: '[' %}
+                                    {% assign name = parts[0] | strip %}
+                                    {% assign url = parts[1] | strip %}
+                                    <li>
+                                        <a href="{{ url }}" class="text-primary hover:underline">{{ name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% else %}
+                <div class="">
+                    <a class="" href="{{ parent_menu[1] | default: '#'}}">{{ parent_menu[0] }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    
     </div>
-    <!-- end chat-leftsidebar -->
+    <!-- end chat-left sidebar -->
 
     <!-- Start User chat -->
-    <div class="overflow-hidden w-full bg-base-100">
+    <div class="overflow-hidden w-full">
         <div class="sm:flex">
             <div class="flex flex-col flex-1 min-h-screen">
                 <!-- 欢迎语 -->
-                <div class="flex justify-between items-center px-8 h-20 border-b bg-base-100 border-base-content/15">
-                    <!-- 左侧绿色小圆点 -->
-                    <span><i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i></span>
-                    <!-- 右侧更多操作 -->
-                </div>
+                
 
-                <div class="h-[calc(100vh-184px)] flex items-center justify-center px-4 py-16 text-center">
+                <div class="h-[calc(100vh-60px)] flex items-center justify-center px-4 py-16 text-center">
                     <div class="-mt-20 w-full">
                         <!-- 顶部欢迎区域 -->
                         <div class="mb-10 text-center">
-                            <h1 class="text-3xl font-semibold">
+                            <h1 class="text-xl md:text-3xl font-semibold">
                                 {{ site.settings.welcome_title }}
                             </h1>
-                            <p
-                                class="mx-auto mt-4 max-w-3xl text-lg font-normal text-left text-base-content/50 indent-8">
+                            <p class="mx-auto mt-4 max-w-3xl text-center text-gray-500">
                                 {{ site.settings.welcome_description }}
                             </p>
                         </div>
 
                         <!-- 输入框 -->
                         {% form_tag 'search', class: 'mx-auto w-full max-w-3xl' %}
-                        <div class="flex flex-col px-6 pt-6 pb-3 rounded-2xl shadow bg-base-300">
+                        <div class="group flex flex-col px-6 pt-6 pb-3 rounded-2xl shadow bg-gradient-to-b from-primary/5 to-secondary/5 border border-base-content/15">
                             <!-- 输入区 -->
                             <textarea rows="1"
                                 class="w-full resize-none bg-transparent border-none outline-none text-base font-normal  min-h-[40px] max-h-32"
@@ -103,22 +120,12 @@
                                 </button>
                             </div>
                         </div>
+                        <div><span class="text-sm text-gray-400">* AI 会根据当前知识库中的内容进行总结回答，而不会引用外部数据。</span></div>
                         {% endform_tag %}
                     </div>
                 </div>
 
-                {% assign company_name = site.settings.company_name | presence %}
-                {% assign copyright = site.settings.copyright | presence %}
-                <div class="p-1 sm:border-t border-base-content/15">
-                    <div class="w-full text-center text-xs text-base-content/60 py-4">
-                        {% if  site.settings.company_name %}
-                        <span>© {{  site.settings.company_name }} {{ 'snippets.footer.copyright' | t }}</span>
-                        {% endif %}
-                         {% if copyright %}
-                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"  class="hover:underline">{{ copyright }}</a>
-                        {% endif %}
-                    </div>
-                </div>
+                {% render 'footer', page: page %}
             </div>
         </div>
         <!-- End User chat -->
@@ -127,12 +134,15 @@
 </div>
 
 {% schema %}
-{
-"name": "t:schema.templates.index.name",
-"description": "t:schema.templates.index.description",
-"thumb_url": "images/theme/index-preview.png",
-"sub_page_templates": [
-"page"
-]
-}
+    {
+        "name": "t:schema.templates.index.name",
+        "description": "t:schema.templates.index.description",
+        "thumb_url": "images/theme/index.webp",
+        "preview_image_urls": [
+            "images/theme/index.webp"
+        ],
+        "sub_page_templates": [
+            "page"
+        ]
+    }
 {% endschema %}

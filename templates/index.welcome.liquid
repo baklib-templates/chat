@@ -1,4 +1,6 @@
 {% assign logo_url = site.settings.logo_url | presence %}
+{% assign popular_searches =  site.settings.popular_searches | newline_to_br | split: '<br />' %}
+
 <div class="sm:flex">
     {% render 'sidebar' %}
 
@@ -25,7 +27,6 @@
                 <div class="mb-1 text-xl font-bold">{{ site.name }}</div>
                 {% if site.settings.company_name %}
                 <div class="flex justify-center items-center text-base text-base-content/50">
-                    <span class="inline-block mr-2 w-2 h-2 rounded-full bg-secondary"></span>
                     {{ site.settings.company_name }}
                 </div>
                 {% endif %}
@@ -60,7 +61,7 @@
                                     {% assign name = parts[0] | strip %}
                                     {% assign url = parts[1] | strip %}
                                     <li>
-                                        <a href="{{ url }}" class="text-primary hover:underline">{{ name }}</a>
+                                        <a href="{{ url }}" target="_blank" class="text-primary hover:underline">{{ name }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -85,13 +86,21 @@
                 <div class="h-[calc(100vh-60px)] flex items-center justify-center px-4 py-16 text-center">
                     <div class="-mt-20 w-full">
                         <!-- 顶部欢迎区域 -->
-                        <div class="mb-10 text-center">
+                        <div class="mb-4 text-center">
                             <h1 class="text-xl md:text-3xl font-semibold">
                                 {{ site.settings.welcome_title }}
                             </h1>
                             <p class="mx-auto mt-4 max-w-3xl text-center text-gray-500">
                                 {{ site.settings.welcome_description }}
                             </p>
+                            <!-- 热门问题 -->
+                            <!-- FAQ Categories -->
+                            <div class="mt-t mx-auto max-w-3xl flex flex-wrap justify-center gap-3">
+                                {% for question in popular_searches %}
+                                        <a href="/-/search?q={{ question }}" class="text-sm text-neutral hover:underline rounded-full px-3 py-2 bg-base-100 border border-base-300 hover:bg-primary hover:text-primary-content transition">{{ question }}</a>
+                                {% endfor %}
+                            </div>
+                            
                         </div>
 
                         <!-- 输入框 -->
@@ -118,7 +127,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div><span class="text-sm text-gray-400">* AI 会根据当前知识库中的内容进行总结回答，而不会引用外部数据。</span></div>
+                        <div><span class="text-sm text-gray-400 mt-1">* AI 会根据当前知识库中的内容进行总结回答，而不会引用外部数据。</span></div>
                         {% endform_tag %}
                     </div>
                 </div>

@@ -35,7 +35,7 @@
       "welcome_title": {
         "label": "欢迎标题",
         "info": "欢迎标题将显示在首页 ",
-        "default": "👏 欢迎"
+        "default": "AI 知识问答助手"
       },
       "welcome_description": {
         "label": "欢迎描述",
@@ -49,7 +49,8 @@
       },
       "ai_search_completed_text": {
         "label": "AI 回答底部提示语",
-        "info": "会自动追加在每条 AI 回答的结尾处，用于引导用户联系人工客服。可包含 HTML 链接。"
+        "info": "会自动追加在每条 AI 回答的结尾处，用于引导用户联系人工客服。可包含 HTML 链接。",
+        "default": "如果您有更多问题或需要进一步帮助，请<a href='#' class='text-blue-600'>联系客服团队</a>。"
       }
     },
     "policy": {

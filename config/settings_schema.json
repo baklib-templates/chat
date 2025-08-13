@@ -158,10 +158,17 @@
       },
       {
         "id": "ai_search_completed_text",
-        "type": "text",
+        "type": "textarea",
         "label": "t:schema.settings.brand.ai_search_completed_text.label",
         "info": "t:schema.settings.brand.ai_search_completed_text.info",
         "default": "t:schema.settings.brand.ai_search_completed_text.default"
+      },
+      {
+        "id": "popular_searches",
+        "type": "textarea",
+        "label": "热搜问题",
+        "info": "将展示在首页的热搜问题列表中，每行一个问题。",
+        "default": "如何创建知识库?\n如何使用 AI 聊天?\n如何添加文档?\n如何管理用户?"
       },
       {
         "id": "section_menu",
@@ -169,7 +176,7 @@
         "label": "首页自定义导航",
         "rows": 10,
         "info": "格式：channel_name[slug{sub_name[slug|sub_name2[slug，每行一个分栏。",
-        "default": "快速导航[/#{返回官网[https://www.baklib.cn|开发者中心[https://dev.baklib.cn\n友情链接[/{Deepseek[https://www.deepseek.com|豆包[https://www.doubao.com|Gemini[https://gemini.google.com"
+        "default": "快速导航[/#{返回官网[https://www.baklib.cn|开发者中心[https://help.baklib.cn/themes/ai-chat\n友情链接[/{Deepseek[https://www.deepseek.com|豆包[https://www.doubao.com|Gemini[https://gemini.google.com"
       }
     ]
   },

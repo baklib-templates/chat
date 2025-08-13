@@ -9,8 +9,10 @@
       "Courier New", monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-amber-600: oklch(66.6% 0.179 58.318);
-    --color-sky-400: oklch(74.6% 0.16 232.661);
-    --color-sky-500: oklch(68.5% 0.169 237.323);
+    --color-blue-600: oklch(54.6% 0.245 262.881);
+    --color-indigo-50: oklch(96.2% 0.018 272.314);
+    --color-indigo-600: oklch(51.1% 0.262 276.966);
+    --color-indigo-700: oklch(45.7% 0.24 277.023);
     --color-pink-100: oklch(94.8% 0.028 342.258);
     --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-slate-50: oklch(98.4% 0.003 247.858);
@@ -3227,6 +3229,9 @@
       color: color-mix(in oklab, var(--color-base-content) 90%, transparent);
     }
   }
+  .text-blue-600 {
+    color: var(--color-blue-600);
+  }
   .text-gray-400 {
     color: var(--color-gray-400);
   }
@@ -3235,6 +3240,9 @@
   }
   .text-info-content {
     color: var(--color-info-content);
+  }
+  .text-neutral {
+    color: var(--color-neutral);
   }
   .text-pink-500 {
     color: var(--color-pink-500);
@@ -3449,6 +3457,13 @@
       }
     }
   }
+  .hover\:bg-primary {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-primary);
+      }
+    }
+  }
   .hover\:bg-primary\/3 {
     &:hover {
       @media (hover: hover) {
@@ -3500,6 +3515,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-primary);
+      }
+    }
+  }
+  .hover\:text-primary-content {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-primary-content);
       }
     }
   }

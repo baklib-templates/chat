@@ -7,7 +7,7 @@
 <div class="flex z-10 flex-shrink-0 min-h-screen sm:flex-col glass side-menu" >
   <!-- LOGO -->
   <div class="hidden justify-center items-center sm:flex">
-    <a href="/" class="">
+    <a href="/" class="tooltip tooltip-top" data-tip="{{ site.name | escape_once }}">
       <span class="logo-sm">
           {% assign favicon_url = site.favicon_url | presence %}
           {% if favicon_url %}
@@ -22,21 +22,32 @@
   <div class="flex justify-center my-auto sm:flex-col">
     <ul class="flex justify-center items-center sm:flex-col gap-8 md:gap-4" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
       {%- assign current_path = page.path | default: "/" -%}
-      <li class="m-2 tooltip tooltip-top" data-tip="首页" >
+      <li class="m-2 tooltip tooltip-top" data-tip="新会话" >
         <a
           class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary {% if current_path == "" %} bg-primary/90 text-primary-content {% endif %}"
           href="/"
           role="tab"
           data-nav-tree-target="item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6{% if current_path == "" %} text-primary-content {% endif %}">
-            <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
-            <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-6 h-6{% if current_path == "" %} text-primary-content {% endif %}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+          </svg>
+        </a>
+      </li>
+
+      <li class="m-2 tooltip tooltip-top" data-tip="历史会话" >
+        <a
+          class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary {% if current_path == "" %} bg-primary/90 text-primary-content {% endif %}"
+          href="/-/search"
+          role="tab"
+          data-nav-tree-target="item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-6 h-6{% if current_path == "" %} text-primary-content {% endif %}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
           </svg>
         </a>
       </li>
     
       {% assign item = site.pages['/'].children_in_list | first %}
-      <li class="m-2 tooltip tooltip-top" data-tip="目录" data-nav-tree-target="item">
+      <li class="m-2 tooltip tooltip-top" data-tip="知识库" data-nav-tree-target="item">
         <a
           class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary{% if current_path == item.path %} bg-primary/90 text-primary-content{% endif %}"
           href="{{ item.path }}"
@@ -99,7 +110,7 @@
 
   <div class="hidden justify-center sm:flex">
     <ul class="nav side-menu-nav justify-content-center">
-      <li class="m-2">
+      <li class="m-2 tooltip tooltip-top" data-tip="切换主题">
         <label class="items-center w-12 h-12 swap swap-rotate">
           <!-- this hidden checkbox controls the state -->
           <input type="checkbox" class="theme-controller" value="dark" />
@@ -115,7 +126,6 @@
 
         </label>
       </li>
-
 
       {% if current_user %}
         <li class="m-2 btn-group dropdown dropdown-top">

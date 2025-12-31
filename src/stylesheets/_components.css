@@ -173,7 +173,7 @@
 }
 
 [data-theme="dark"] .ai-assistant-message.chat-bubble::after {
-  border-color: var(--glass-bg) transparent transparent transparent;
+  border-color: transparent transparent transparent;
 }
 
 .ai-user-message {

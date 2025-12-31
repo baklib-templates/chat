@@ -34,8 +34,9 @@
         </a>
       </li>
 
-      <li class="m-2 tooltip tooltip-top" data-tip="历史会话" >
+      <li class="m-2 tooltip tooltip-top" data-tip="历史会话">
         <a
+          id="js-history-link"
           class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary {% if current_path == "" %} bg-primary/90 text-primary-content {% endif %}"
           href="/-/search"
           role="tab"
@@ -73,37 +74,6 @@
         </li>
       {% endif %}
 
-      {% if current_user %}
-        <li class="m-2 btn-group dropdown dropdown-top sm:hidden">
-          <a class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary" href="#"
-            role="button" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6">
-              <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
-            </svg>
-          </a>
-          <ul tabindex="0" class="p-2 w-44 shadow-glass dropdown-content menu rounded-glass glass space-y-2 z-1">
-            <a class="px-4 py-2 font-normal text-left rounded bg-base-100 cursor-pointer text-base-content/80 hover:bg-base-300 hover:text-primary focus:bg-base-300"  href="{{ current_user.profile_url }}">  
-              {{ 'generic.profile' | t }}
-            </a>
-            {% form_tag 'sign_out' %}
-              <button class="px-4 py-2 w-full font-normal text-left rounded bg-base-100 cursor-pointer text-base-content/80 hover:bg-base-300 hover:text-primary focus:bg-base-300" href="auth-login.html">
-              {{ 'buttons.logout' | t }} </button>
-            {% endform_tag %}
-          </ul>
-        </li>
-      {% else %}
-        <li class="m-2 sm:hidden" title="点击登录">
-          <div class="flex relative justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary" >
-            {% form_tag 'sign_in_with_baklib' %}
-              <button type="submit" data-disable-with=" ... ">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6">
-                  <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            {% endform_tag %}
-          </div>
-        </li>
-      {% endif %}
     </ul>
   </div>
   <!-- end side-menu nav -->

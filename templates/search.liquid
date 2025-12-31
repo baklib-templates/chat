@@ -4,7 +4,7 @@
 <div class="sm:flex min-h-screen" x-data="{ searchSidebarOpen: false }">
     {% render 'sidebar' %}
     <!-- start chat-leftsidebar -->
-    <div class="fixed inset-y-0 left-0 lg:relative lg:left-0 z-30 max-w-[600px] bg-accent/20 glass border-r border-base-content/10 px-6 py-6 h-screen overflow-y-auto transform transition-all duration-300 ease-in-out"
+    <div class="fixed inset-y-0 left-0 lg:relative lg:left-0 z-30 min-w-[400px] max-w-[600px] bg-accent/20 glass border-r border-base-content/10 px-6 py-6 h-screen overflow-y-auto transform transition-all duration-300 ease-in-out"
          :class="searchSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'"
          style="display: none;"
          x-show="searchSidebarOpen"
@@ -23,12 +23,26 @@
             </button>
         </div>
 
+        <!-- 搜索框 -->
+        {% form_tag 'search', class: 'w-full mb-4', data: { turbo_frame: 'frame--search-results' } %}
+            <label class="flex gap-2 items-center glass rounded-glass-sm px-3 py-2 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-base-content/50" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 10-14 0 7 7 0 0014 0z" />
+                </svg>
+                <input type="text" id="js--search-input" class="grow bg-transparent border-0 outline-none text-sm placeholder:text-base-content/40" 
+                    placeholder="输入关键词过滤" name="{{form.keywords_field_name}}" 
+                    value="{{ search.keywords | escape_once }}" autocomplete="off" />
+                <button type="submit" class="hidden"></button>
+            </label>
+        {% endform_tag %}
+
         <turbo-frame id="frame--search-results" class="overflow-hidden flex-1">
             {% assign extends_size = search.extends | size %}
             {% assign items_size = search.pages | size %}
             {% assign total_size = extends_size | plus: items_size %}
-            <!-- 搜索框 -->
-            
+
             {% if total_size > 0 %}
             {% paginate_tag search.pages, as: 'items', per: 10 %}
             <!-- 搜索结果 -->
@@ -40,7 +54,7 @@
 
                     {% if search.page_number == 1 and extends_size > 0 %}
                         {% for link in search.extends %}
-                        <div class="flex bg-white gap-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
+                        <div class="flex bg-white dark:bg-transparent gap-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
                             <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
                             <div class="flex-grow min-w-0">
                                 <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
@@ -56,7 +70,7 @@
                     {% endif %}
 
                     {% for page in items %}
-                    <div class="flex  bg-white gap-3 space-y-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
+                    <div class="flex  bg-white dark:bg-transparent  gap-3 space-y-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
                         <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
                         <div class="flex-grow min-w-0">
                             <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
@@ -73,13 +87,13 @@
                     {% endfor %}
                 </div>
 
-                <div class="flex  bg-white relative justify-center px-3 my-8">
+                <div class="flex  bg-white dark:bg-transparent  relative justify-center px-3 my-8">
                     {% render 'paginate', paginate: paginate %}
                 </div>
             </div>
             {% endpaginate_tag %}
             {% else %}
-                <div class="flex  bg-white justify-center items-center h-full">
+                <div class="flex justify-center items-center h-full">
                     <div class="text-center text-base-content/50">
                         <p>无引用来源</p>
                     </div>
@@ -91,7 +105,7 @@
     
     <!-- 展开搜索侧边栏按钮（仅在折叠时显示，位于最左侧sidebar和chat-leftsidebar之间） -->
     <button @click="searchSidebarOpen = true" 
-            class="fixed  bg-white top-4 left-[10px] lg:absolute lg:top-4 lg:left-[88px] z-20 p-2 rounded-glass-sm glass shadow-glass hover:shadow-lg transition-all duration-200 text-base-content/70 hover:text-base-content tooltip tooltip-right" data-tip="查看引用来源"
+            class="fixed top-4 left-[10px] lg:absolute lg:top-4 lg:left-[88px] z-20 p-2 rounded-glass-sm glass shadow-glass hover:shadow-lg transition-all duration-200 text-base-content/70 hover:text-base-content tooltip tooltip-right" data-tip="查看引用来源"
             title="显示搜索结果"
             x-show="!searchSidebarOpen"
             style="display: none;">
@@ -172,7 +186,7 @@
                                     <div class="avatar avatar-online avatar-placeholder flex-shrink-0">
                                         <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full glass flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-primary ai-icon-spin">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                                             </svg>
                                         </div>
                                     </div>

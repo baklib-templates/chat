@@ -35,7 +35,7 @@
             "--theme-color-primary-content": "#FFFFFF",
             "--theme-color-secondary": "#5856D6",
             "--theme-color-secondary-content": "#FFFFFF",
-            "--theme-color-accent": "#34C759",
+            "--theme-color-accent": "#007AFF",
             "--theme-color-accent-content": "#FFFFFF",
             "--theme-color-primary-dark": "#0A84FF",
             "--theme-color-primary-content-dark": "#FFFFFF",

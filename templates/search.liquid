@@ -1,10 +1,27 @@
 {% assign chat_messages = site.chat_messages | order_by: '-created_at' | limit: 10 %}
 {% assign avatar = 'images/avatar2.png' | asset_url %}
-<div class="sm:flex">
+{% assign robot_name = site.settings.robot_name | default: "AI 助手" %}
+<div class="sm:flex min-h-screen" x-data="{ searchSidebarOpen: false }">
     {% render 'sidebar' %}
     <!-- start chat-leftsidebar -->
-    <div class="min-w-[380px] max-w-[400px] bg-base-200 border-r border-base-300 px-8 py-8 h-screen overflow-y-auto hidden sm:block">
-        <h2 class="mb-4 text-xl font-bold">AI 智能搜索</h2>
+    <div class="fixed inset-y-0 left-[76px] lg:relative lg:left-0 z-30 min-w-[320px] max-w-[400px] glass border-r border-base-content/10 px-6 py-6 h-screen overflow-y-auto transform transition-all duration-300 ease-in-out"
+         :class="searchSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'"
+         style="display: none;"
+         x-show="searchSidebarOpen"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="-translate-x-full opacity-0"
+         x-transition:enter-end="translate-x-0 opacity-100"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="translate-x-0 opacity-100"
+         x-transition:leave-end="-translate-x-full opacity-0">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-semibold text-base-content">AI 智能搜索</h2>
+            <button @click="searchSidebarOpen = false" class="p-2 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content/70 hover:text-base-content">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
 
         <turbo-frame id="frame--search-results" class="overflow-hidden flex-1">
             {% assign extends_size = search.extends | size %}
@@ -19,21 +36,19 @@
                 <h3 class="mb-4 text-sm text-base-content/50">搜索结果</h3>
 
                 <!-- 单条搜索结果 -->
-                <div class="space-y-5">
+                <div class="space-y-3">
 
                     {% if search.page_number == 1 and extends_size > 0 %}
                     {% for link in search.extends %}
-                    <div class="flex gap-3 items-start">
-                        <div class="flex-none text-lg font-semibold text-primary">{{ forloop.index }}</div>
-                        <div class="flex-grow">
-                            <a class="text-base font-medium search-highlight-block" href="{{ page.url }}"
+                    <div class="flex gap-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
+                        <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
+                        <div class="flex-grow min-w-0">
+                            <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
                                 data-turbo-frame="_top">
                                 {{ link.link_text }}
                             </a>
-
-                            <a class="text-sm leading-6 break-all text-base-content/50 line-clamp-2" href="{{ page.url }}"
-                                data-turbo-frame="_top" x-cloak>{{ {{ link.url
-                                }}
+                            <a class="text-xs leading-5 break-all text-base-content/50 line-clamp-2 mt-1 block" href="{{ page.url }}"
+                                data-turbo-frame="_top" x-cloak>{{ link.url }}
                             </a>
                         </div>
                     </div>
@@ -41,17 +56,16 @@
                     {% endif %}
 
                     {% for page in items %}
-                    <div class="flex gap-3 items-start">
-                        <div class="flex-none text-lg font-semibold text-primary">{{ forloop.index }}</div>
-                        <div class="flex-grow">
-                            <a class="text-base font-medium search-highlight-block" href="{{ page.url }}"
+                    <div class="flex gap-3 items-start p-3 glass rounded-glass-sm hover:shadow-glass transition-all duration-200">
+                        <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
+                        <div class="flex-grow min-w-0">
+                            <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
                                 data-turbo-frame="_top">
                                 {{ page.highlighted_search_title }}
                             </a>
                             {% unless page.highlighted_search_content == empty %}
-                            <a class="text-sm leading-6 break-all text-base-content/50 line-clamp-2 search-highlight-block"
-                                href="{{ page.url }}" data-turbo-frame="_top" x-cloak>{{ page.highlighted_search_content
-                                }}
+                            <a class="text-xs leading-5 break-all text-base-content/50 line-clamp-2 search-highlight-block mt-1 block"
+                                href="{{ page.url }}" data-turbo-frame="_top" x-cloak>{{ page.highlighted_search_content }}
                             </a>
                             {% endunless %}
                         </div>
@@ -70,65 +84,70 @@
     <!-- end chat-leftsidebar -->
 
 
-    {% assign ai_search_thinking_text = 'ai.thinking' | t: 'AI 正在思考...' %}
+    {% assign ai_search_thinking_text = 'ai.thinking' | t: 'AI 正在思考' %}
     {% assign ai_search_canceled_text = 'ai.canceled' | t: "已取消回答" %}
     <!-- Start User chat -->
-    <div class="overflow-hidden w-full bg-base-100" id="js--ai-search-completion-container"  x-data="{ tab: 'chat' }" >
+    <div class="overflow-hidden w-full bg-base-100 relative" id="js--ai-search-completion-container"  x-data="{ tab: 'chat' }" >
+        <!-- 展开/折叠搜索侧边栏按钮 -->
+        <button @click="searchSidebarOpen = !searchSidebarOpen" 
+                class="absolute top-4 left-4 z-20 p-2 rounded-glass-sm glass shadow-glass hover:shadow-lg transition-all duration-200 text-base-content/70 hover:text-base-content"
+                title="切换搜索结果侧边栏"
+                x-bind:title="searchSidebarOpen ? '隐藏搜索结果' : '显示搜索结果'">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" x-show="!searchSidebarOpen">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" x-show="searchSidebarOpen">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <!-- 遮罩层 -->
+        <div @click="searchSidebarOpen = false" 
+             class="fixed inset-0 bg-black/20 backdrop-blur-sm z-10 transition-opacity duration-300"
+             :class="searchSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+             x-show="searchSidebarOpen"
+             style="display: none;"></div>
         <div class="sm:flex" :class="{'hidden': tab !== 'chat'}" id="js--ai-search-completion" data-controller="ai-search-completion"
             data-ai-search-completion-hidden-class="hidden opacity-0"
             data-ai-search-completion-messages-value='{"thinking":"{{ ai_search_thinking_text }}","completed":"{{ site.settings.ai_search_completed_text | escape_once }}","canceled":"{{ ai_search_canceled_text }}"}'
             data-ai-search-completion-url-value="/-/ai-search-completion"
             data-ai-search-completion-auto-submit-value="true">
             <div class="flex flex-col flex-1 min-h-screen">
-                <!-- 欢迎语 -->
-                <div class="flex justify-between items-center px-8 h-16 border-b border-base-content/15 bg-base-100">
-                    <!-- 左侧绿色小圆点 -->
-                    <span class="relative flex size-3 hidden sm:block">
-                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex size-3 rounded-full bg-primary-500"> </span>
-                    </span>
-                    <button class="pb-2 ml-2 w-1/2 text-sm border-b-2 sm:hidden" :class="{'border-primary text-primary': tab === 'chat'}" @click="tab = 'chat'">AI 对话</button>
-                    <div class="flex w-full sm:hidden">
-                    <button class="pb-2 w-1/2 text-sm border-b-2 sm:hidden" :class="{'border-primary text-primary': tab === 'search'}" @click="tab = 'search'">搜索结果</button>
-                    </div>
-                    <!-- 右侧更多操作 -->
-                </div>
-
-                <div class="h-[calc(100vh-184px)] overflow-y-auto p-4 relative ">
+            
+                <div class="h-[calc(100vh-120px)] overflow-y-auto p-2 relative">
                     {% comment %} AI 搜索结果区域 {% endcomment %}
                     <div class="flex-grow-0 order-1 w-full md:order-2 md:w-full">
-                        <div class="py-4 space-y-2 rounded bg-primary-50 chat-container">
+                        <div class="py-4 space-y-4 chat-container">
                             <div
                                 class="overflow-y-auto gap-2 ai-response prose scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                                 {% for message in chat_messages reversed %}
                                 {% if message.role == 'user' %}
                                 <div class="flex gap-3 justify-end items-start">
-                                    <div class="text-right">
+                                    <div class="text-right max-w-full">
                                         <div
-                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-info text-info-content ai-user-message">
+                                            class="inline-block p-2 break-words rounded-glass rounded-br-sm bg-primary text-primary-content ai-user-message shadow-sm">
                                             {{ message.content }}
                                         </div>
-                                        <div class="mt-2 text-sm font-medium text-base-content/80"> {{ current_user.name }} </div>
+                                        <div class="mt-2 text-xs text-base-content/60"> {{ current_user.name }} </div>
                                     </div>
-                                    <img src="{{ current_user.image |  default: avatar }}" class="w-10 h-10 rounded-full" />
+                                    <img src="{{ current_user.image |  default: avatar }}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0" />
                                 </div>
                                 {% else %}
                                 <div class="flex gap-3 items-start">
-                                    <div class="avatar avatar-online avatar-placeholder">
-                                        <div class="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-8 h-8 text-primary">
+                                    <div class="avatar avatar-online avatar-placeholder flex-shrink-0">
+                                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full glass flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 sm:size-6 text-primary ai-icon-spin">
                                                 <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8a8.009 8.009 0 0 1-8 8z" />
                                                 <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
                                             </svg>
                                         </div>
                                     </div>
-                                    <div class="flex-1 min-w-0" data-controller="markdown-renderer">
-                                        <div class="p-3 break-words rounded-xl rounded-bl-none text-info-content w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror"
+                                    <div class="flex-1 min-w-0 max-w-full" data-controller="markdown-renderer">
+                                        <div class="p-2 break-words rounded-bl-sm glass text-base-content w-fit max-w-full ai-assistant-message chat-bubble prose ProseMirror shadow-sm rounded-2xl border-2 border-primary/50"
                                             data-markdown-renderer-target="content">{{ message.content }}
                                         </div>
 
-                                        <div class="mt-1 text-sm font-medium text-base-content/80">
-                                            {{ site.settings.robot_name }}
+                                        <div class="mt-2 text-xs text-base-content/60">
+                                            {{ robot_name }}
                                         </div>
                                     </div>
                                 </div>
@@ -142,30 +161,31 @@
                             </div>
                             <template data-ai-search-completion-target="userMessageTemplate">
                                 <div class="flex gap-3 justify-end items-start">
-                                    <div class="text-right">
+                                    <div class="text-right max-w-full">
                                         <div
-                                            class="inline-block p-3 max-w-xs break-words rounded-xl rounded-br-none bg-info text-info-content ai-user-message">
+                                            class="inline-block p-3 sm:p-4 break-words rounded-glass rounded-br-sm bg-primary text-primary-content ai-user-message shadow-sm">
                                         </div>
-                                        <div class="mt-2 text-sm font-medium text-base-content/80"> {{ current_user.name }} </div>
+                                        <div class="mt-2 text-xs text-base-content/60"> {{ current_user.name }} </div>
                                     </div>
-                                    <img src="{{ current_user.image | default: avatar }}" class="w-10 h-10 rounded-full" />
+                                    <img src="{{ current_user.image | default: avatar }}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex-shrink-0" />
                                 </div>
                             </template>
                             <template data-ai-search-completion-target="assistantMessageTemplate">
                                 <div class="flex gap-3 items-start">
-                                    <div class="avatar avatar-online avatar-placeholder">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-8 h-8 text-primary">
-                                            <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8a8.009 8.009 0 0 1-8 8z" />
-                                            <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
-                                        </svg>
+                                    <div class="avatar avatar-online avatar-placeholder flex-shrink-0">
+                                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded-full glass flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-primary ai-icon-spin">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="flex-1 min-w-0">
+                                    <div class="flex-1 min-w-0 max-w-full">
                                         <div
-                                            class="p-3 break-words rounded-xl rounded-bl-none text-info-content bg-base-300 dark:text-white w-fit max-w-3/4 ai-assistant-message chat-bubble prose ProseMirror">
+                                            class="p-3 sm:p-4 break-words rounded-2xl rounded-bl-sm glass text-base-content w-fit max-w-full ai-assistant-message chat-bubble prose ProseMirror shadow-sm border-2 bg-primary/10 border-primary/60">
                                         </div>
-                                        <div class="mt-1 text-sm font-medium text-base-content/80">
-                                            {{ site.settings.robot_name }}
-                                        </div>
+                                        <div class="mt-2 text-xs text-base-content/60">
+                                            {{ robot_name }}
+                                        </div>  
                                     </div>
                                 </div>
                             </template>
@@ -174,6 +194,55 @@
                         </div>
                         <script>
                             (function () {
+                                // 添加思考消息动画效果
+                                function addThinkingAnimation() {
+                                    const messagesContainer = document.querySelector('[data-ai-search-completion-target="messages"]');
+                                    if (!messagesContainer) return;
+
+                                    // 检查并更新思考消息
+                                    function updateThinkingMessages() {
+                                        const assistantMessages = messagesContainer.querySelectorAll('.ai-assistant-message');
+                                        assistantMessages.forEach(function(msg) {
+                                            const text = msg.textContent || '';
+                                            if (text.includes('AI 正在思考') && !msg.querySelector('.ai-thinking-dots')) {
+                                                // 使用 innerHTML 替换，保留原有结构
+                                                const html = msg.innerHTML;
+                                                if (!html.includes('ai-thinking-dots')) {
+                                                    msg.innerHTML = html.replace(
+                                                        /AI 正在思考/g,
+                                                        'AI 正在思考<span class="ai-thinking-dots"><span></span><span></span><span></span></span>'
+                                                    );
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    // 使用 MutationObserver 监听消息变化
+                                    const observer = new MutationObserver(function() {
+                                        updateThinkingMessages();
+                                    });
+
+                                    observer.observe(messagesContainer, {
+                                        childList: true,
+                                        subtree: true,
+                                        characterData: true
+                                    });
+
+                                    // 初始检查
+                                    setTimeout(updateThinkingMessages, 100);
+                                    setInterval(updateThinkingMessages, 500); // 定期检查
+                                }
+
+                                // 页面加载后初始化
+                                if (document.readyState === 'loading') {
+                                    document.addEventListener('DOMContentLoaded', addThinkingAnimation);
+                                } else {
+                                    addThinkingAnimation();
+                                }
+
+                                // Turbo 导航后重新初始化
+                                document.addEventListener('turbo:load', addThinkingAnimation);
+
                                 setTimeout(function () {
                                     const aiSearchCompletionContainer = document.getElementById('js--ai-search-completion-container');
                                     const aiSearchCompletion = document.getElementById('js--ai-search-completion');
@@ -255,47 +324,50 @@
                     </div>
                 </div>
 
-                <div class="p-1 chat-mobile">
-                    <div class="flex items-center p-4 bg-gradient-to-b from-primary/15 to-secondary/15 border border-base-content/15">
+                <div class="p-2 sm:p-4 mb-6 chat-mobile">
+                    <div class="flex items-end justify-center gap-2 p-2 bg-primary-50 glass rounded-glass-lg shadow-glass group focus-within:bg-primary-200">
                         <!-- 输入框 -->
                         <textarea id="js--ai-chat-input"
                         data-ai-search-completion-target="input" autocomplete="off"
-                        class="flex-1 p-2 mr-4 rounded-md border-2 bg-primary/5 sm:min-h-20 text-base-content input input-bordered focus:outline-none focus:ring-0 placeholder:text-base-content/60" placeholder="请输入你的问题…"></textarea>
+                        class="flex-1 p-3 rounded-glass-sm border-0 bg-transparent text-sm sm:text-base text-base-content input-glass focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-base-content/40 resize-none min-h-[44px]" 
+                        placeholder="请输入你的问题…" rows="2"></textarea>
 
-                        <button id="js--ai-chat-send" data-ai-search-completion-target="send" type="button" class="bg-primary text-white rounded-md p-2 px-4 md:py-4 hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary/50">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6 md:w-12 md:h-12">
-                                <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+                        <button id="js--ai-chat-send" data-ai-search-completion-target="send" type="button" 
+                        class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-strong bg-primary text-white hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                             </svg>
                         </button>
                     </div>
+                    <style>
+                    /* 改变输入外框背景为 bg-primary-200 当 textarea 聚焦时 */
+                    .group:focus-within {
+                      background-color: var(--color-primary-200,#f6f1eb) !important;
+                    }
+                    </style>
                 </div>
             </div>
         </div>
 
-        <div class="px-8 sm:hidden" :class="{'hidden': tab !== 'search'}">
-            <div class="flex justify-between items-center px-8 h-16 border-b border-base-content/15 bg-base-100">
-                <!-- 左侧绿色小圆点 -->
-                <span class="hidden sm:block">会话中 <i class="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i>
-                </span>
-                <button class="pb-2 ml-2 w-1/2 text-sm border-b-2" :class="{'border-primary text-primary': tab === 'chat'}" @click="tab = 'chat'">AI 对话</button>
-                <div class="flex w-full sm:hidden">
-                <button class="pb-2 w-1/2 text-sm border-b-2" :class="{'border-primary text-primary': tab === 'search'}" @click="tab = 'search'">搜索结果</button>
+        <div class="px-4 sm:hidden" :class="{'hidden': tab !== 'search'}">
+            <div class="flex justify-between items-center px-4 h-16 glass border-b border-base-content/10">
+                <button class="pb-2 ml-2 w-1/2 text-sm border-b-2 transition-colors" :class="{'border-primary text-primary': tab === 'chat', 'border-transparent text-base-content/60': tab !== 'chat'}" @click="tab = 'chat'">AI 对话</button>
+                <div class="flex w-full">
+                <button class="pb-2 w-1/2 text-sm border-b-2 transition-colors" :class="{'border-primary text-primary': tab === 'search', 'border-transparent text-base-content/60': tab !== 'search'}" @click="tab = 'search'">搜索结果</button>
                 </div>
-                <!-- 右侧更多操作 -->
             </div>
-            <turbo-frame id="frame--search-results-mobile" class="overflow-hidden flex-1">
+            <turbo-frame id="frame--search-results-mobile" class="overflow-hidden flex-1 p-4">
                 <!-- 搜索框 -->
-                <label class="flex gap-2 items-center mb-4 w-full input input-bordered">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24"
+                <label class="flex gap-2 items-center mb-4 w-full glass rounded-glass-sm px-3 py-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-base-content/50" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 10-14 0 7 7 0 0014 0z" />
                     </svg>
 
                     {% form_tag 'search', class: 'w-full' %}
-                    <input type="text" class="grow"  placeholder="输入关键词过滤"
-                        name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" placeholder="{{ "
-                        layout.theme.search_input_placeholder" | t }}" autocomplete="off" />
+                    <input type="text" class="grow bg-transparent border-0 outline-none text-sm placeholder:text-base-content/40"  placeholder="输入关键词过滤"
+                        name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" autocomplete="off" />
                     <button type="submit" class="hidden"></button>
                     {% endform_tag %}
                 </label>
@@ -306,20 +378,18 @@
                     <h3 class="mb-4 text-sm text-base-content/50">搜索结果</h3>
 
                     <!-- 单条搜索结果 -->
-                    <div class="space-y-5">
+                    <div class="space-y-3">
                         {% if search.page_number == 1 and extends_size > 0 %}
                         {% for link in search.extends %}
-                        <div class="flex gap-3 items-start">
-                            <div class="flex-none text-lg font-semibold text-primary">{{ forloop.index }}</div>
-                            <div class="flex-grow">
-                                <a class="text-base font-medium search-highlight-block" href="{{ page.url }}"
+                        <div class="flex gap-3 items-start p-3 glass rounded-glass-sm">
+                            <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
+                            <div class="flex-grow min-w-0">
+                                <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
                                     data-turbo-frame="_top">
                                     {{ link.link_text }}
                                 </a>
-
-                                <a class="text-sm leading-6 break-all text-base-content/50 line-clamp-2" href="{{ page.url }}"
-                                    data-turbo-frame="_top" x-cloak>{{ {{ link.url
-                                    }}
+                                <a class="text-xs leading-5 break-all text-base-content/50 line-clamp-2 mt-1 block" href="{{ page.url }}"
+                                    data-turbo-frame="_top" x-cloak>{{ link.url }}
                                 </a>
                             </div>
                         </div>
@@ -327,17 +397,16 @@
                         {% endif %}
 
                         {% for page in items %}
-                        <div class="flex gap-3 items-start">
-                            <div class="flex-none text-lg font-semibold text-primary">{{ forloop.index }}</div>
-                            <div class="flex-grow">
-                                <a class="text-base font-medium search-highlight-block" href="{{ page.url }}"
+                        <div class="flex gap-3 items-start p-3 glass rounded-glass-sm">
+                            <div class="flex-none text-sm font-semibold text-primary w-6">{{ forloop.index }}</div>
+                            <div class="flex-grow min-w-0">
+                                <a class="text-sm font-medium search-highlight-block text-base-content hover:text-primary transition-colors" href="{{ page.url }}"
                                     data-turbo-frame="_top">
                                     {{ page.highlighted_search_title }}
                                 </a>
                                 {% unless page.highlighted_search_content == empty %}
-                                <a class="text-sm leading-6 break-all text-base-content/50 line-clamp-2 search-highlight-block"
-                                    href="{{ page.url }}" data-turbo-frame="_top" x-cloak>{{ page.highlighted_search_content
-                                    }}
+                                <a class="text-xs leading-5 break-all text-base-content/50 line-clamp-2 search-highlight-block mt-1 block"
+                                    href="{{ page.url }}" data-turbo-frame="_top" x-cloak>{{ page.highlighted_search_content }}
                                 </a>
                                 {% endunless %}
                             </div>

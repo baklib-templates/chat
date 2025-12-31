@@ -4,7 +4,7 @@
 {% endfor %}
 
 <!-- Start left sidebar-menu -->
-<div class="flex z-10 flex-shrink-0 min-h-screen shadow-md sm:flex-col bg-gradient-to-b from-primary to-secondary text-white side-menu" >
+<div class="flex z-10 flex-shrink-0 min-h-screen sm:flex-col glass side-menu" >
   <!-- LOGO -->
   <div class="hidden justify-center items-center sm:flex">
     <a href="/" class="">
@@ -21,10 +21,14 @@
   <!-- Start side-menu nav -->
   <div class="flex justify-center my-auto sm:flex-col">
     <ul class="flex justify-center items-center sm:flex-col gap-8 md:gap-4" data-controller="nav-tree" data-nav-tree-active-class="sidebar-menu-active">
+      {%- assign current_path = page.path | default: "/" -%}
       <li class="m-2 tooltip tooltip-top" data-tip="首页" >
-        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 hover:text-primary" href="/"
-          role="tab" data-nav-tree-target="item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8 text-white">
+        <a
+          class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary {% if current_path == "" %} bg-primary/90 text-primary-content {% endif %}"
+          href="/"
+          role="tab"
+          data-nav-tree-target="item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6{% if current_path == "" %} text-primary-content {% endif %}">
             <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
             <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
           </svg>
@@ -33,9 +37,12 @@
     
       {% assign item = site.pages['/'].children_in_list | first %}
       <li class="m-2 tooltip tooltip-top" data-tip="目录" data-nav-tree-target="item">
-        <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 hover:text-primary" href="{{ item.path }}"
-          role="tab" data-nav-tree-target="item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8">
+        <a
+          class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary{% if current_path == item.path %} bg-primary/90 text-primary-content{% endif %}"
+          href="{{ item.path }}"
+          role="tab"
+          data-nav-tree-target="item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6{% if current_path == item.path %} text-primary-content{% endif %}">
             <path fill-rule="evenodd" d="M2.625 6.75a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0A.75.75 0 0 1 8.25 6h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75ZM2.625 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0ZM7.5 12a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12A.75.75 0 0 1 7.5 12Zm-4.875 5.25a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
           </svg>
         </a>
@@ -43,12 +50,12 @@
 
       {% if site.settings.section_tags_on %}
         <li class="m-2 tooltip tooltip-top" data-tip="标签分类">
-          <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 hover:text-primary {% if tag %}
+          <a class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary {% if tag %}
             sidebar-active
           {% endif %}"
           href="{% if first_tag %}{{ first_tag.path }}{% else %}/s/tags{% endif %}"
             role="tab" data-nav-tree-target="item">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6{% if tag %} text-primary-content{% endif %}">
               <path fill-rule="evenodd" d="M1.5 7.125c0-1.036.84-1.875 1.875-1.875h6c1.036 0 1.875.84 1.875 1.875v3.75c0 1.036-.84 1.875-1.875 1.875h-6A1.875 1.875 0 0 1 1.5 10.875v-3.75Zm12 1.5c0-1.036.84-1.875 1.875-1.875h5.25c1.035 0 1.875.84 1.875 1.875v8.25c0 1.035-.84 1.875-1.875 1.875h-5.25a1.875 1.875 0 0 1-1.875-1.875v-8.25ZM3 16.125c0-1.036.84-1.875 1.875-1.875h5.25c1.036 0 1.875.84 1.875 1.875v2.25c0 1.035-.84 1.875-1.875 1.875h-5.25A1.875 1.875 0 0 1 3 18.375v-2.25Z" clip-rule="evenodd" />
             </svg>
           </a>
@@ -57,13 +64,13 @@
 
       {% if current_user %}
         <li class="m-2 btn-group dropdown dropdown-top sm:hidden">
-          <a class="flex justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 hover:text-primary" href="#"
+          <a class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary" href="#"
             role="button" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6">
               <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
             </svg>
           </a>
-          <ul tabindex="0" class="p-2 w-44 shadow-sm dropdown-content menu rounded-box bg-primary space-y-2 z-1">
+          <ul tabindex="0" class="p-2 w-44 shadow-glass dropdown-content menu rounded-glass glass space-y-2 z-1">
             <a class="px-4 py-2 font-normal text-left rounded bg-base-100 cursor-pointer text-base-content/80 hover:bg-base-300 hover:text-primary focus:bg-base-300"  href="{{ current_user.profile_url }}">  
               {{ 'generic.profile' | t }}
             </a>
@@ -75,10 +82,10 @@
         </li>
       {% else %}
         <li class="m-2 sm:hidden" title="点击登录">
-          <div class="flex relative justify-center items-center w-12 h-12 rounded-md hover:bg-base-300 hover:text-primary" >
+          <div class="flex relative justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary" >
             {% form_tag 'sign_in_with_baklib' %}
               <button type="submit" data-disable-with=" ... ">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6">
                   <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
                 </svg>
               </button>
@@ -112,12 +119,12 @@
 
       {% if current_user %}
         <li class="m-2 btn-group dropdown dropdown-top">
-          <a class="flex justify-center items-center w-12 h-12" href="#" role="button" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 w-8 h-8">
+          <a class="flex justify-center items-center w-12 h-12 rounded-glass-sm glass hover:shadow-glass transition-all duration-200 text-base-content hover:text-primary" href="#" role="button" tabindex="0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 w-6 h-6">
               <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
             </svg>  
           </a>
-          <ul tabindex="0" class="p-2 w-44 shadow-sm dropdown-content menu bg-base-100 rounded-box z-1">
+          <ul tabindex="0" class="p-2 w-44 shadow-glass dropdown-content menu glass rounded-glass z-1">
             <a class="px-4 py-2 font-normal text-left rounded cursor-pointer text-base-content/80 hover:bg-base-300 hover:text-primary focus:bg-base-300"  href="{{ current_user.profile_url }}">  
             {{ 'generic.profile' | t }} 
             </a>
@@ -129,7 +136,7 @@
         </li>
       {% else %}
         <li class="m-2" title="点击登录">
-          <div class="flex justify-center items-center w-12 h-12">
+          <div class="flex justify-center items-center hover:text-primary">
             {% form_tag 'sign_in_with_baklib' %}
               <input value="true" type="hidden" name="sign_up">
               <button type="submit" data-disable-with=" ... ">

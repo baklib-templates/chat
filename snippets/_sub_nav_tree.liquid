@@ -2,7 +2,7 @@
 <ul>
   {% for tree in nav_tree %}
     {% if tree.children %}
-      <li class='mt-1'>
+      <li>
         <details>
           <summary data-nav-tree-target="item" class='hover:bg-transparent hover:text-primary'><a href="{{ tree.path }}"  data-turbo-frame="page-content" @click="isDrawerOpen = false">{{ tree.link_text }}</a></summary>
           {% assign newDepth = depth | plus: 1 %}
@@ -10,9 +10,9 @@
         </details>
       </li>
     {% else %}
-      <li class='mt-1'>
+      <li>
         <summary class='hover:bg-transparent hover:text-primary'>
-          <a data-nav-tree-target="item" href="{{ tree.path }}"  data-turbo-frame="page-content" @click="isDrawerOpen = false">{{ tree.link_text }}</a>
+          <a class="line-clamp-1" data-nav-tree-target="item" href="{{ tree.path }}"  data-turbo-frame="page-content" @click="isDrawerOpen = false">{{ tree.link_text }}</a>
         </summary>
       </li>
     {% endif %}

@@ -91,19 +91,23 @@
 }
 
 .sidebar-menu-active {
-  @apply bg-base-300/25;
+  @apply bg-primary/90 text-primary-content;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .sidebar-menu-active > svg {
-  @apply text-white;
+  @apply text-primary-content;
 }
 
 .sidebar-active {
-  @apply bg-base-300/25;
+  @apply bg-primary/90 text-primary-content;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .sidebar-active > svg {
-  @apply text-white;
+  @apply text-primary-content;
 }
 
 .ProseMirror [bke-role="column"] {

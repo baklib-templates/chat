@@ -1,138 +1,70 @@
-{% assign logo_url = site.settings.logo_url | presence %}
-{% assign popular_searches =  site.settings.popular_searches | newline_to_br | split: '<br />' %}
+{% assign popular_searches = site.settings.popular_searches %}
+{% assign welcome_title = site.settings.welcome_title | default: "AI 知识问答助手" %}
+{% assign welcome_description = site.settings.welcome_description | default: "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。" %}
 
-<div class="sm:flex">
+<div class="sm:flex min-h-screen">
     {% render 'sidebar' %}
-
-    <!-- start chat-left sidebar -->
-    <div class=" min-w-[320px] max-w-[400px] bg-base-200 border-r border-base-300 px-8 py-8 hidden sm:block">
-
-        <div class="mb-6">
-            <div class="flex justify-center items-center p-6">
-                {% if logo_url %}
-                    <img src="{{ logo_url }}" alt="{{ site.name | escape_once }}" class="h-12 md:h-24">
-                {% else %}
-                    {% assign favicon_url = site.favicon_url | presence %}
-                    {% if favicon_url %}
-                        <img src="{{ favicon_url }}" alt="{{ site.name | escape_once }}" class="mr-2 h-12">
-                    {% endif %}
-                    <span class="text-4xl font-bold text-base-content/80"> {{ site.settings.brand_name }} </span>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- 网站名称和公司 -->
-        <div class="mb-6">
-            <div class="text-center">
-                <div class="mb-1 text-xl font-bold">{{ site.name }}</div>
-                {% if site.settings.company_name %}
-                <div class="flex justify-center items-center text-base text-base-content/50">
-                    {{ site.settings.company_name }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- 简介 -->
-        <div class="mb-6">
-            <p class="leading-relaxed text-base-content/50">
-                {{ site.settings.site_description }}
-            </p>
-        </div>
-
-        {% assign section_menu = site.settings.section_menu | newline_to_br | split: '<br />' %}
-        {% for menu_line in section_menu %}
-            {%  assign p_menu_arr = menu_line | split: '{' %}
-            {%  assign parent_menu = p_menu_arr[0] | split: '[' %}
-            {%  assign sub_menus = p_menu_arr[1] | split: '|' %}
-            {%  assign sub_menus_count =  sub_menus | size %}
-
-            {% if sub_menus_count > 0 %}
-                <div class="w-full max-w-md shadow-md bg-base-100 rounded-box mb-2">
-                    <div class="bg-base-100 collapse collapse-arrow">
-                        <input type="checkbox" class="peer" checked />
-                        <div class="flex gap-2 items-center text-base font-semibold text-base-content/90 collapse-title">
-                            {{ parent_menu[0] }}
-                        </div>
-                        <div class="leading-6 text-base-content/80 collapse-content">
-                            <ul class="list-disc pl-6">
-                                {% for menu in sub_menus %}
-                                    {% assign parts = menu | split: '[' %}
-                                    {% assign name = parts[0] | strip %}
-                                    {% assign url = parts[1] | strip %}
-                                    <li>
-                                        <a href="{{ url }}" target="_blank" class="text-primary hover:underline">{{ name }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="">
-                    <a class="" href="{{ parent_menu[1] | default: '#'}}">{{ parent_menu[0] }}</a>
-                </div>
-            {% endif %}
-        {% endfor %}
-    
-    </div>
-    <!-- end chat-left sidebar -->
-
     <!-- Start User chat -->
     <div class="overflow-hidden w-full bg-base-100">
         <div class="sm:flex">
             <div class="flex flex-col flex-1 min-h-screen">
                 <!-- 欢迎语 -->
-                <div class="h-[calc(100vh-60px)] flex items-center justify-center px-4 py-16 text-center">
-                    <div class="-mt-20 w-full">
+                <div class="h-[calc(100vh-60px)] flex items-center justify-center px-4 py-8 sm:py-16 text-center">
+                    <div class="w-full max-w-3xl">
                         <!-- 顶部欢迎区域 -->
-                        <div class="mb-4 text-center">
-                            <h1 class="text-xl md:text-3xl font-semibold">
-                                {{ site.settings.welcome_title }}
+                        <div class="mb-8 text-center">
+                            <h1 class="text-2xl sm:text-4xl md:text-5xl font-semibold mb-4 text-base-content">
+                                {{ welcome_title }}
                             </h1>
-                            <p class="mx-auto mt-4 max-w-3xl text-center text-gray-500">
-                                {{ site.settings.welcome_description }}
+                            <p class="mx-auto mt-4 max-w-2xl text-center text-base text-base-content/70 leading-relaxed">
+                                {{ welcome_description }}
                             </p>
                             <!-- 热门问题 -->
-                            <!-- FAQ Categories -->
-                            <div class="mt-t mx-auto max-w-3xl flex flex-wrap justify-center gap-3">
+                            <div class="mt-8 mx-auto max-w-3xl flex flex-wrap justify-center gap-2 sm:gap-3">
                                 {% for question in popular_searches %}
-                                        <a href="/-/search?q={{ question }}" class="text-sm text-neutral hover:underline rounded-full px-3 py-2 bg-base-100 border border-base-300 hover:bg-primary hover:text-primary-content transition">{{ question }}</a>
+                                    {% if question != blank %}
+                                    <a href="/-/search?q={{ question | url_encode }}" class="text-xs sm:text-sm text-base-content/80 hover:text-primary rounded-full px-4 py-2 glass rounded-glass hover:shadow-glass transition-all duration-200 hover:scale-105 active:scale-95">
+                                        {{ question }}
+                                    </a>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
-                            
                         </div>
 
                         <!-- 输入框 -->
                         {% form_tag 'search', class: 'mx-auto w-full max-w-3xl' %}
-                        <div class="group flex flex-col px-6 pt-6 pb-3 rounded-2xl shadow bg-gradient-to-b from-primary/5 to-secondary/5 border border-base-content/15">
-                            <!-- 输入区 -->
-                            <textarea rows="1"
-                                class="w-full resize-none bg-transparent border-none outline-none text-base font-normal  min-h-[40px] max-h-32"
-                                placeholder="输入问题"   name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" autocomplete="off"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.form.submit();}"
-                                ></textarea>
-                            <!-- 底部按钮区 -->
-                            <div class="flex items-center mt-4">
-                                <div class="flex-1"></div>
-                                <!-- 右侧按钮 -->
-                                <button type="submit"
-                                    class="flex justify-center items-center ml-2 w-9 h-9 rounded-full transition cursor-pointer text-primary bg-primary/10 hover:bg-primary/20">
-                                    <!-- 发送icon -->
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </button>
+                            <div class="group flex flex-col px-4 sm:px-6 pt-5 pb-4 rounded-glass-lg glass shadow-glass focus-within:bg-primary-200">
+                                <!-- 输入区 -->
+                                <textarea rows="1"
+                                    class="w-full resize-none bg-transparent border-none outline-none text-sm sm:text-base font-normal min-h-[44px] placeholder:text-base-content/60"
+                                    placeholder="输入您的问题..." name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}" autocomplete="off"
+                                    onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); this.form.submit();}"
+                                    ></textarea>
+                                <!-- 底部按钮区 -->
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="text-xs text-base-content/50 hidden sm:block">
+                                        <span>按 Enter 发送，Shift + Enter 换行</span>
+                                    </div>
+                                    <!-- 右侧按钮 -->
+                                    <button type="submit"
+                                        class="flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-strong bg-primary text-primary-content hover:scale-110 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-md">
+                                        <!-- 发送icon -->
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.5"
+                                            viewBox="0 0 24 24">
+                                            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div><span class="text-sm text-gray-400 mt-1">* AI 会根据当前知识库中的内容进行总结回答，而不会引用外部数据。</span></div>
+                            <div class="mt-3 text-xs text-base-content/50 text-center">
+                                <span>* AI 会根据当前知识库中的内容进行总结回答，而不会引用外部数据。</span>
+                            </div>
                         {% endform_tag %}
                     </div>
                 </div>
 
-                {% render 'footer', page: page %}
+                {%# render 'footer', page: page %}
             </div>
         </div>
         <!-- End User chat -->

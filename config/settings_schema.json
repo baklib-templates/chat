@@ -29,73 +29,37 @@
     "recommendations": {
       "color_schemas": {
         "scheme1": {
-          "name": "配色方案1",
+          "name": "现代蓝色",
           "colors": {
-            "--theme-color-base-100": "#FFFFFF",
-            "--theme-color-base-200": "#F9FAFB",
-            "--theme-color-base-300": "#F3F4F6",
-            "--theme-color-base-content": "#181A1F",
-            "--theme-color-primary": "#E0005B",
-            "--theme-color-primary-content": "#3A1A1C",
-            "--theme-color-secondary": "#4AD44F",
-            "--theme-color-secondary-content": "#2A1A1C",
-            "--theme-color-accent": "#E2E8F0",
-            "--theme-color-accent-content": "#111827",
-            "--theme-color-neutral": "#5A5A5A",
-            "--theme-color-neutral-content": "#E5E7EB",
-            "--theme-color-info": "#F8F9FA",
-            "--theme-color-info-content": "#495057",
-            "--theme-color-success": "#4CAF50",
-            "--theme-color-success_content": "#F5F7FF",
-            "--theme-color-warning": "#FFC107",
-            "--theme-color-warning_content": "#F5F7FF",
-            "--theme-color-error": "#FF5252",
-            "--theme-color-error_content": "#F5F7FF",
-            "--theme-color-base-100-dark": "#0F1421",
-            "--theme-color-base-200-dark": "#191E24",
-            "--theme-color-base-300-dark": "#15191E",
-            "--theme-color-base-content-dark": "#F0F4FF",
-            "--theme-color-primary-dark": "#7D6BFF",
-            "--theme-color-primary-content-dark": "#F4F0FF",
-            "--theme-color-secondary-dark": "#FF7D8A",
-            "--theme-color-secondary-content-dark": "#FFF0F2",
-            "--theme-color-accent-dark": "#334155",
-            "--theme-color-accent-content-dark": "#1A3A32",
-            "--theme-color-neutral-dark": "#3F67B5",
-            "--theme-color-neutral-content-dark": "#8BC34A",
-            "--theme-color-info-dark": "#7269EF",
-            "--theme-color-info-content-dark": "#FFFFFF",
-            "--theme-color-success-dark": "#7DFFA7",
-            "--theme-color-success-content-dark": "#0F3A1A",
-            "--theme-color-warning-dark": "#FFE07D",
-            "--theme-color-warning-content-dark": "#3A2A0F",
-            "--theme-color-error-dark": "#FF7D7D",
-            "--theme-color-error-content-dark": "#3A0F0F"
+            "--theme-color-primary": "#007AFF",
+            "--theme-color-primary-content": "#FFFFFF",
+            "--theme-color-secondary": "#5856D6",
+            "--theme-color-secondary-content": "#FFFFFF",
+            "--theme-color-accent": "#34C759",
+            "--theme-color-accent-content": "#FFFFFF",
+            "--theme-color-primary-dark": "#0A84FF",
+            "--theme-color-primary-content-dark": "#FFFFFF",
+            "--theme-color-secondary-dark": "#5E5CE6",
+            "--theme-color-secondary-content-dark": "#FFFFFF",
+            "--theme-color-accent-dark": "#30D158",
+            "--theme-color-accent-content-dark": "#000000"
           }
         },
         "scheme2": {
-          "name": "配色方案2",
+          "name": "优雅紫色",
           "colors": {
-            "--theme-color-base-100": "#181a2a",
-            "--theme-color-base-200": "#23234a",
-            "--theme-color-base-300": "#2e2e6a",
-            "--theme-color-base-content": "#f5f6fa",
-            "--theme-color-primary": "#4ad7c8",
-            "--theme-color-primary-content": "#2e3a3f",
-            "--theme-color-secondary": "#000000",
-            "--theme-color-secondary-content": "#ffffff",
-            "--theme-color-accent": "#5fd3b3",
-            "--theme-color-accent-content": "#1a2a1c",
-            "--theme-color-neutral": "#3d3d5a",
-            "--theme-color-neutral-content": "#fafbff",
-            "--theme-color-info": "#3a8fff",
-            "--theme-color-info-content": "#f5f7ff",
-            "--theme-color-success": "#4fdc7b",
-            "--theme-color-success-content": "#f6fff9",
-            "--theme-color-warning": "#ffd966",
-            "--theme-color-warning-content": "#fffbe6",
-            "--theme-color-error": "#ff5252",
-            "--theme-color-error-content": "#f5f7ff"
+            "--theme-color-primary": "#AF52DE",
+            "--theme-color-primary-content": "#FFFFFF",
+            "--theme-color-secondary": "#FF2D55",
+            "--theme-color-secondary-content": "#FFFFFF",
+            "--theme-color-accent": "#FF9500",
+            "--theme-color-accent-content": "#FFFFFF",
+            "--theme-color-primary-dark": "#BF5AF2",
+            "--theme-color-primary-content-dark": "#FFFFFF",
+            "--theme-color-secondary-dark": "#FF375F",
+            "--theme-color-secondary-content-dark": "#FFFFFF",
+            "--theme-color-accent-dark": "#FF9F0A",
+            "--theme-color-accent-content-dark": "#000000"
           }
         }
       }
@@ -123,38 +87,39 @@
       {
         "id": "brand_name",
         "label": "t:schema.settings.brand.brand_name.label",
-        "type": "text"
+        "type": "text",
+        "default": "品牌名称"
       },
       {
         "id": "site_description",
         "label": "t:schema.settings.brand.site_description.label",
         "type": "text",
-        "default": "t:schema.settings.brand.site_description.default"
+        "default": "支持智能问答、文档检索、标签筛选等功能，助您快速获取所需信息，为您提供 7×24 智能问答与帮助文档服务，提升工作效率与客户满意度。"
       },
       {
         "id": "company_name",
         "label": "t:schema.settings.brand.company_name.label",
         "type": "text",
-        "default": "t:schema.settings.brand.company_name.default"
+        "default": "公司名称"
       },
       {
         "id": "welcome_title",
         "label": "t:schema.settings.brand.welcome_title.label",
         "type": "text",
-        "default": "t:schema.settings.brand.welcome_title.default"
+        "default": "AI 知识问答助手"
       },
       {
         "id": "welcome_description",
         "label": "t:schema.settings.brand.welcome_description.label",
         "type": "text",
-        "default": "t:schema.settings.brand.welcome_description.default"
+        "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
       },
       {
         "id": "robot_name",
         "type": "text",
         "label": "t:schema.settings.brand.robot_name.label",
         "info": "t:schema.settings.brand.robot_name.info",
-        "default": "t:schema.settings.brand.robot_name.default"
+        "default": "AI 助手"
       },
       {
         "id": "ai_search_completed_text",
@@ -167,16 +132,7 @@
         "id": "popular_searches",
         "type": "textarea",
         "label": "热搜问题",
-        "info": "将展示在首页的热搜问题列表中，每行一个问题。",
-        "default": "如何创建知识库?\n如何使用 AI 聊天?\n如何添加文档?\n如何管理用户?"
-      },
-      {
-        "id": "section_menu",
-        "type": "textarea",
-        "label": "首页自定义导航",
-        "rows": 10,
-        "info": "格式：channel_name[slug{sub_name[slug|sub_name2[slug，每行一个分栏。",
-        "default": "快速导航[/#{返回官网[https://www.baklib.cn|开发者中心[https://help.baklib.cn/themes/ai-chat\n友情链接[/{Deepseek[https://www.deepseek.com|豆包[https://www.doubao.com|Gemini[https://gemini.google.com"
+        "info": "将展示在首页的热搜问题列表中，每行一个问题。"
       }
     ]
   },

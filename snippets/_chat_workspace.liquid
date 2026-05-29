@@ -25,9 +25,6 @@
   data-ai-pip-pop-out-label-value="独立窗口"
   data-ai-pip-dock-label-value="收回页面"
 >
-  {% search site.pages, keywords: initial_message, allow_empty_keywords: true, by_user: false %}
-    {% render 'search_sources_panel' %}
-  {% endsearch %}
 
   <div
     class="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"

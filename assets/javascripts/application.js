@@ -2096,7 +2096,7 @@
             }
           };
         })();
-        function render4(e, sliderMoved) {
+        function render6(e, sliderMoved) {
           if (updateIndexBeforeTransform) {
             updateIndex();
           }
@@ -2194,7 +2194,7 @@
               }
             }
             if (getAbsIndex(index) !== getAbsIndex(indexCached)) {
-              render4(e);
+              render6(e);
             }
           }
         }
@@ -2233,7 +2233,7 @@
             if (autoWidth) {
               index = Math.floor(index);
             }
-            render4(passEventObject || e && e.type === "keydown" ? e : null);
+            render6(passEventObject || e && e.type === "keydown" ? e : null);
           }
         }
         function onNavClick(e) {
@@ -2530,7 +2530,7 @@
                       }
                     }
                   }
-                  render4(e, dist);
+                  render6(e, dist);
                   events.emit(isTouchEvent(e) ? "touchEnd" : "dragEnd", info(e));
                 });
               } else {
@@ -6901,14 +6901,14 @@
   var ViewTransitioner = class {
     #viewTransitionStarted = false;
     #lastOperation = Promise.resolve();
-    renderChange(useViewTransition, render4) {
+    renderChange(useViewTransition, render6) {
       if (useViewTransition && this.viewTransitionsAvailable && !this.#viewTransitionStarted) {
         this.#viewTransitionStarted = true;
         this.#lastOperation = this.#lastOperation.then(async () => {
-          await document.startViewTransition(render4).finished;
+          await document.startViewTransition(render6).finished;
         });
       } else {
-        this.#lastOperation = this.#lastOperation.then(render4);
+        this.#lastOperation = this.#lastOperation.then(render6);
       }
       return this.#lastOperation;
     }
@@ -8642,10 +8642,10 @@
       const event = this.notifyApplicationBeforeRender(element, options);
       const {
         defaultPrevented,
-        detail: { render: render4 }
+        detail: { render: render6 }
       } = event;
-      if (this.view.renderer && render4) {
-        this.view.renderer.renderElement = render4;
+      if (this.view.renderer && render6) {
+        this.view.renderer.renderElement = render6;
       }
       return !defaultPrevented;
     }
@@ -9037,10 +9037,10 @@
       });
       const {
         defaultPrevented,
-        detail: { render: render4 }
+        detail: { render: render6 }
       } = event;
-      if (this.view.renderer && render4) {
-        this.view.renderer.renderElement = render4;
+      if (this.view.renderer && render6) {
+        this.view.renderer.renderElement = render6;
       }
       return !defaultPrevented;
     }
@@ -10840,24 +10840,24 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   function modifierValue(modifiers, key, fallback) {
     if (modifiers.indexOf(key) === -1)
       return fallback;
-    const rawValue = modifiers[modifiers.indexOf(key) + 1];
-    if (!rawValue)
+    const rawValue2 = modifiers[modifiers.indexOf(key) + 1];
+    if (!rawValue2)
       return fallback;
     if (key === "scale") {
-      if (isNaN(rawValue))
+      if (isNaN(rawValue2))
         return fallback;
     }
     if (key === "duration" || key === "delay") {
-      let match = rawValue.match(/([0-9]+)ms/);
+      let match = rawValue2.match(/([0-9]+)ms/);
       if (match)
         return match[1];
     }
     if (key === "origin") {
       if (["top", "right", "left", "center", "bottom"].includes(modifiers[modifiers.indexOf(key) + 2])) {
-        return [rawValue, modifiers[modifiers.indexOf(key) + 2]].join(" ");
+        return [rawValue2, modifiers[modifiers.indexOf(key) + 2]].join(" ");
       }
     }
-    return rawValue;
+    return rawValue2;
   }
   var isCloning = false;
   function skipDuringClone(callback, fallback = () => {
@@ -11013,14 +11013,14 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   function checkedAttrLooseCompare(valueA, valueB) {
     return valueA == valueB;
   }
-  function safeParseBoolean(rawValue) {
-    if ([1, "1", "true", "on", "yes", true].includes(rawValue)) {
+  function safeParseBoolean(rawValue2) {
+    if ([1, "1", "true", "on", "yes", true].includes(rawValue2)) {
       return true;
     }
-    if ([0, "0", "false", "off", "no", false].includes(rawValue)) {
+    if ([0, "0", "false", "off", "no", false].includes(rawValue2)) {
       return false;
     }
-    return rawValue ? Boolean(rawValue) : null;
+    return rawValue2 ? Boolean(rawValue2) : null;
   }
   var booleanAttributes = /* @__PURE__ */ new Set([
     "allowfullscreen",
@@ -12526,13 +12526,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       } else if (el.tagName.toLowerCase() === "select" && el.multiple) {
         if (modifiers.includes("number")) {
           return Array.from(event.target.selectedOptions).map((option) => {
-            let rawValue = option.value || option.text;
-            return safeParseNumber(rawValue);
+            let rawValue2 = option.value || option.text;
+            return safeParseNumber(rawValue2);
           });
         } else if (modifiers.includes("boolean")) {
           return Array.from(event.target.selectedOptions).map((option) => {
-            let rawValue = option.value || option.text;
-            return safeParseBoolean(rawValue);
+            let rawValue2 = option.value || option.text;
+            return safeParseBoolean(rawValue2);
           });
         }
         return Array.from(event.target.selectedOptions).map((option) => {
@@ -12561,9 +12561,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       }
     });
   }
-  function safeParseNumber(rawValue) {
-    let number = rawValue ? parseFloat(rawValue) : null;
-    return isNumeric2(number) ? number : rawValue;
+  function safeParseNumber(rawValue2) {
+    let number = rawValue2 ? parseFloat(rawValue2) : null;
+    return isNumeric2(number) ? number : rawValue2;
   }
   function checkedAttrLooseCompare2(valueA, valueB) {
     return valueA == valueB;
@@ -12766,8 +12766,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       if (items instanceof Map)
         items = Array.from(items);
       let oldLookup = templateEl._x_lookup;
-      let lookup = /* @__PURE__ */ new Map();
-      templateEl._x_lookup = lookup;
+      let lookup2 = /* @__PURE__ */ new Map();
+      templateEl._x_lookup = lookup2;
       let hasStringKeys = isObject2(items);
       let scopeEntries = Object.entries(items).map(([index, item]) => {
         if (!hasStringKeys)
@@ -12778,7 +12778,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           if (typeof innerKey === "object")
             warn("x-for key cannot be an object, it must be a string or an integer", templateEl);
           if (oldLookup.has(innerKey)) {
-            lookup.set(innerKey, oldLookup.get(innerKey));
+            lookup2.set(innerKey, oldLookup.get(innerKey));
             oldLookup.delete(innerKey);
           }
           key = innerKey;
@@ -12793,8 +12793,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         let added = /* @__PURE__ */ new Set();
         let prev = templateEl;
         scopeEntries.forEach(([key, scope2]) => {
-          if (lookup.has(key)) {
-            let el = lookup.get(key);
+          if (lookup2.has(key)) {
+            let el = lookup2.get(key);
             el._x_refreshXForScope(scope2);
             if (prev.nextElementSibling !== el) {
               if (prev.nextElementSibling)
@@ -12815,7 +12815,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           let reactiveScope = reactive(scope2);
           addScopeToNode(clone2, reactiveScope, templateEl);
           clone2._x_refreshXForScope = refreshScope(reactiveScope);
-          lookup.set(key, clone2);
+          lookup2.set(key, clone2);
           added.add(clone2);
           prev.after(clone2);
           prev = clone2;
@@ -14148,13 +14148,13 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         }
       }
     }
-    invokeChangedCallback(name, rawValue, rawOldValue) {
+    invokeChangedCallback(name, rawValue2, rawOldValue) {
       const changedMethodName = `${name}Changed`;
       const changedMethod = this.receiver[changedMethodName];
       if (typeof changedMethod == "function") {
         const descriptor = this.valueDescriptorNameMap[name];
         try {
-          const value = descriptor.reader(rawValue);
+          const value = descriptor.reader(rawValue2);
           let oldValue = rawOldValue;
           if (rawOldValue) {
             oldValue = descriptor.reader(rawOldValue);
@@ -15624,6 +15624,864 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
           item.classList.remove(this.activeClass);
         }
       });
+    }
+  };
+
+  // node_modules/mustache/mustache.mjs
+  var objectToString2 = Object.prototype.toString;
+  var isArray2 = Array.isArray || function isArrayPolyfill(object) {
+    return objectToString2.call(object) === "[object Array]";
+  };
+  function isFunction(object) {
+    return typeof object === "function";
+  }
+  function typeStr(obj) {
+    return isArray2(obj) ? "array" : typeof obj;
+  }
+  function escapeRegExp(string) {
+    return string.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
+  }
+  function hasProperty2(obj, propName) {
+    return obj != null && typeof obj === "object" && propName in obj;
+  }
+  function primitiveHasOwnProperty(primitive, propName) {
+    return primitive != null && typeof primitive !== "object" && primitive.hasOwnProperty && primitive.hasOwnProperty(propName);
+  }
+  var regExpTest = RegExp.prototype.test;
+  function testRegExp(re, string) {
+    return regExpTest.call(re, string);
+  }
+  var nonSpaceRe = /\S/;
+  function isWhitespace(string) {
+    return !testRegExp(nonSpaceRe, string);
+  }
+  var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+    "/": "&#x2F;",
+    "`": "&#x60;",
+    "=": "&#x3D;"
+  };
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function fromEntityMap(s) {
+      return entityMap[s];
+    });
+  }
+  var whiteRe = /\s*/;
+  var spaceRe = /\s+/;
+  var equalsRe = /\s*=/;
+  var curlyRe = /\s*\}/;
+  var tagRe = /#|\^|\/|>|\{|&|=|!/;
+  function parseTemplate(template, tags) {
+    if (!template)
+      return [];
+    var lineHasNonSpace = false;
+    var sections = [];
+    var tokens = [];
+    var spaces = [];
+    var hasTag = false;
+    var nonSpace = false;
+    var indentation = "";
+    var tagIndex = 0;
+    function stripSpace() {
+      if (hasTag && !nonSpace) {
+        while (spaces.length)
+          delete tokens[spaces.pop()];
+      } else {
+        spaces = [];
+      }
+      hasTag = false;
+      nonSpace = false;
+    }
+    var openingTagRe, closingTagRe, closingCurlyRe;
+    function compileTags(tagsToCompile) {
+      if (typeof tagsToCompile === "string")
+        tagsToCompile = tagsToCompile.split(spaceRe, 2);
+      if (!isArray2(tagsToCompile) || tagsToCompile.length !== 2)
+        throw new Error("Invalid tags: " + tagsToCompile);
+      openingTagRe = new RegExp(escapeRegExp(tagsToCompile[0]) + "\\s*");
+      closingTagRe = new RegExp("\\s*" + escapeRegExp(tagsToCompile[1]));
+      closingCurlyRe = new RegExp("\\s*" + escapeRegExp("}" + tagsToCompile[1]));
+    }
+    compileTags(tags || mustache.tags);
+    var scanner = new Scanner(template);
+    var start4, type, value, chr, token, openSection;
+    while (!scanner.eos()) {
+      start4 = scanner.pos;
+      value = scanner.scanUntil(openingTagRe);
+      if (value) {
+        for (var i = 0, valueLength = value.length; i < valueLength; ++i) {
+          chr = value.charAt(i);
+          if (isWhitespace(chr)) {
+            spaces.push(tokens.length);
+            indentation += chr;
+          } else {
+            nonSpace = true;
+            lineHasNonSpace = true;
+            indentation += " ";
+          }
+          tokens.push(["text", chr, start4, start4 + 1]);
+          start4 += 1;
+          if (chr === "\n") {
+            stripSpace();
+            indentation = "";
+            tagIndex = 0;
+            lineHasNonSpace = false;
+          }
+        }
+      }
+      if (!scanner.scan(openingTagRe))
+        break;
+      hasTag = true;
+      type = scanner.scan(tagRe) || "name";
+      scanner.scan(whiteRe);
+      if (type === "=") {
+        value = scanner.scanUntil(equalsRe);
+        scanner.scan(equalsRe);
+        scanner.scanUntil(closingTagRe);
+      } else if (type === "{") {
+        value = scanner.scanUntil(closingCurlyRe);
+        scanner.scan(curlyRe);
+        scanner.scanUntil(closingTagRe);
+        type = "&";
+      } else {
+        value = scanner.scanUntil(closingTagRe);
+      }
+      if (!scanner.scan(closingTagRe))
+        throw new Error("Unclosed tag at " + scanner.pos);
+      if (type == ">") {
+        token = [type, value, start4, scanner.pos, indentation, tagIndex, lineHasNonSpace];
+      } else {
+        token = [type, value, start4, scanner.pos];
+      }
+      tagIndex++;
+      tokens.push(token);
+      if (type === "#" || type === "^") {
+        sections.push(token);
+      } else if (type === "/") {
+        openSection = sections.pop();
+        if (!openSection)
+          throw new Error('Unopened section "' + value + '" at ' + start4);
+        if (openSection[1] !== value)
+          throw new Error('Unclosed section "' + openSection[1] + '" at ' + start4);
+      } else if (type === "name" || type === "{" || type === "&") {
+        nonSpace = true;
+      } else if (type === "=") {
+        compileTags(value);
+      }
+    }
+    stripSpace();
+    openSection = sections.pop();
+    if (openSection)
+      throw new Error('Unclosed section "' + openSection[1] + '" at ' + scanner.pos);
+    return nestTokens(squashTokens(tokens));
+  }
+  function squashTokens(tokens) {
+    var squashedTokens = [];
+    var token, lastToken;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      token = tokens[i];
+      if (token) {
+        if (token[0] === "text" && lastToken && lastToken[0] === "text") {
+          lastToken[1] += token[1];
+          lastToken[3] = token[3];
+        } else {
+          squashedTokens.push(token);
+          lastToken = token;
+        }
+      }
+    }
+    return squashedTokens;
+  }
+  function nestTokens(tokens) {
+    var nestedTokens = [];
+    var collector = nestedTokens;
+    var sections = [];
+    var token, section;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      token = tokens[i];
+      switch (token[0]) {
+        case "#":
+        case "^":
+          collector.push(token);
+          sections.push(token);
+          collector = token[4] = [];
+          break;
+        case "/":
+          section = sections.pop();
+          section[5] = token[2];
+          collector = sections.length > 0 ? sections[sections.length - 1][4] : nestedTokens;
+          break;
+        default:
+          collector.push(token);
+      }
+    }
+    return nestedTokens;
+  }
+  function Scanner(string) {
+    this.string = string;
+    this.tail = string;
+    this.pos = 0;
+  }
+  Scanner.prototype.eos = function eos() {
+    return this.tail === "";
+  };
+  Scanner.prototype.scan = function scan(re) {
+    var match = this.tail.match(re);
+    if (!match || match.index !== 0)
+      return "";
+    var string = match[0];
+    this.tail = this.tail.substring(string.length);
+    this.pos += string.length;
+    return string;
+  };
+  Scanner.prototype.scanUntil = function scanUntil(re) {
+    var index = this.tail.search(re), match;
+    switch (index) {
+      case -1:
+        match = this.tail;
+        this.tail = "";
+        break;
+      case 0:
+        match = "";
+        break;
+      default:
+        match = this.tail.substring(0, index);
+        this.tail = this.tail.substring(index);
+    }
+    this.pos += match.length;
+    return match;
+  };
+  function Context2(view, parentContext) {
+    this.view = view;
+    this.cache = { ".": this.view };
+    this.parent = parentContext;
+  }
+  Context2.prototype.push = function push(view) {
+    return new Context2(view, this);
+  };
+  Context2.prototype.lookup = function lookup(name) {
+    var cache2 = this.cache;
+    var value;
+    if (cache2.hasOwnProperty(name)) {
+      value = cache2[name];
+    } else {
+      var context = this, intermediateValue, names, index, lookupHit = false;
+      while (context) {
+        if (name.indexOf(".") > 0) {
+          intermediateValue = context.view;
+          names = name.split(".");
+          index = 0;
+          while (intermediateValue != null && index < names.length) {
+            if (index === names.length - 1)
+              lookupHit = hasProperty2(intermediateValue, names[index]) || primitiveHasOwnProperty(intermediateValue, names[index]);
+            intermediateValue = intermediateValue[names[index++]];
+          }
+        } else {
+          intermediateValue = context.view[name];
+          lookupHit = hasProperty2(context.view, name);
+        }
+        if (lookupHit) {
+          value = intermediateValue;
+          break;
+        }
+        context = context.parent;
+      }
+      cache2[name] = value;
+    }
+    if (isFunction(value))
+      value = value.call(this.view);
+    return value;
+  };
+  function Writer() {
+    this.templateCache = {
+      _cache: {},
+      set: function set3(key, value) {
+        this._cache[key] = value;
+      },
+      get: function get3(key) {
+        return this._cache[key];
+      },
+      clear: function clear2() {
+        this._cache = {};
+      }
+    };
+  }
+  Writer.prototype.clearCache = function clearCache() {
+    if (typeof this.templateCache !== "undefined") {
+      this.templateCache.clear();
+    }
+  };
+  Writer.prototype.parse = function parse(template, tags) {
+    var cache2 = this.templateCache;
+    var cacheKey = template + ":" + (tags || mustache.tags).join(":");
+    var isCacheEnabled = typeof cache2 !== "undefined";
+    var tokens = isCacheEnabled ? cache2.get(cacheKey) : void 0;
+    if (tokens == void 0) {
+      tokens = parseTemplate(template, tags);
+      isCacheEnabled && cache2.set(cacheKey, tokens);
+    }
+    return tokens;
+  };
+  Writer.prototype.render = function render(template, view, partials, config2) {
+    var tags = this.getConfigTags(config2);
+    var tokens = this.parse(template, tags);
+    var context = view instanceof Context2 ? view : new Context2(view, void 0);
+    return this.renderTokens(tokens, context, partials, template, config2);
+  };
+  Writer.prototype.renderTokens = function renderTokens(tokens, context, partials, originalTemplate, config2) {
+    var buffer = "";
+    var token, symbol, value;
+    for (var i = 0, numTokens = tokens.length; i < numTokens; ++i) {
+      value = void 0;
+      token = tokens[i];
+      symbol = token[0];
+      if (symbol === "#") value = this.renderSection(token, context, partials, originalTemplate, config2);
+      else if (symbol === "^") value = this.renderInverted(token, context, partials, originalTemplate, config2);
+      else if (symbol === ">") value = this.renderPartial(token, context, partials, config2);
+      else if (symbol === "&") value = this.unescapedValue(token, context);
+      else if (symbol === "name") value = this.escapedValue(token, context, config2);
+      else if (symbol === "text") value = this.rawValue(token);
+      if (value !== void 0)
+        buffer += value;
+    }
+    return buffer;
+  };
+  Writer.prototype.renderSection = function renderSection(token, context, partials, originalTemplate, config2) {
+    var self = this;
+    var buffer = "";
+    var value = context.lookup(token[1]);
+    function subRender(template) {
+      return self.render(template, context, partials, config2);
+    }
+    if (!value) return;
+    if (isArray2(value)) {
+      for (var j2 = 0, valueLength = value.length; j2 < valueLength; ++j2) {
+        buffer += this.renderTokens(token[4], context.push(value[j2]), partials, originalTemplate, config2);
+      }
+    } else if (typeof value === "object" || typeof value === "string" || typeof value === "number") {
+      buffer += this.renderTokens(token[4], context.push(value), partials, originalTemplate, config2);
+    } else if (isFunction(value)) {
+      if (typeof originalTemplate !== "string")
+        throw new Error("Cannot use higher-order sections without the original template");
+      value = value.call(context.view, originalTemplate.slice(token[3], token[5]), subRender);
+      if (value != null)
+        buffer += value;
+    } else {
+      buffer += this.renderTokens(token[4], context, partials, originalTemplate, config2);
+    }
+    return buffer;
+  };
+  Writer.prototype.renderInverted = function renderInverted(token, context, partials, originalTemplate, config2) {
+    var value = context.lookup(token[1]);
+    if (!value || isArray2(value) && value.length === 0)
+      return this.renderTokens(token[4], context, partials, originalTemplate, config2);
+  };
+  Writer.prototype.indentPartial = function indentPartial(partial, indentation, lineHasNonSpace) {
+    var filteredIndentation = indentation.replace(/[^ \t]/g, "");
+    var partialByNl = partial.split("\n");
+    for (var i = 0; i < partialByNl.length; i++) {
+      if (partialByNl[i].length && (i > 0 || !lineHasNonSpace)) {
+        partialByNl[i] = filteredIndentation + partialByNl[i];
+      }
+    }
+    return partialByNl.join("\n");
+  };
+  Writer.prototype.renderPartial = function renderPartial(token, context, partials, config2) {
+    if (!partials) return;
+    var tags = this.getConfigTags(config2);
+    var value = isFunction(partials) ? partials(token[1]) : partials[token[1]];
+    if (value != null) {
+      var lineHasNonSpace = token[6];
+      var tagIndex = token[5];
+      var indentation = token[4];
+      var indentedValue = value;
+      if (tagIndex == 0 && indentation) {
+        indentedValue = this.indentPartial(value, indentation, lineHasNonSpace);
+      }
+      var tokens = this.parse(indentedValue, tags);
+      return this.renderTokens(tokens, context, partials, indentedValue, config2);
+    }
+  };
+  Writer.prototype.unescapedValue = function unescapedValue(token, context) {
+    var value = context.lookup(token[1]);
+    if (value != null)
+      return value;
+  };
+  Writer.prototype.escapedValue = function escapedValue(token, context, config2) {
+    var escape3 = this.getConfigEscape(config2) || mustache.escape;
+    var value = context.lookup(token[1]);
+    if (value != null)
+      return typeof value === "number" && escape3 === mustache.escape ? String(value) : escape3(value);
+  };
+  Writer.prototype.rawValue = function rawValue(token) {
+    return token[1];
+  };
+  Writer.prototype.getConfigTags = function getConfigTags(config2) {
+    if (isArray2(config2)) {
+      return config2;
+    } else if (config2 && typeof config2 === "object") {
+      return config2.tags;
+    } else {
+      return void 0;
+    }
+  };
+  Writer.prototype.getConfigEscape = function getConfigEscape(config2) {
+    if (config2 && typeof config2 === "object" && !isArray2(config2)) {
+      return config2.escape;
+    } else {
+      return void 0;
+    }
+  };
+  var mustache = {
+    name: "mustache.js",
+    version: "4.2.0",
+    tags: ["{{", "}}"],
+    clearCache: void 0,
+    escape: void 0,
+    parse: void 0,
+    render: void 0,
+    Scanner: void 0,
+    Context: void 0,
+    Writer: void 0,
+    /**
+     * Allows a user to override the default caching strategy, by providing an
+     * object with set, get and clear methods. This can also be used to disable
+     * the cache by setting it to the literal `undefined`.
+     */
+    set templateCache(cache2) {
+      defaultWriter.templateCache = cache2;
+    },
+    /**
+     * Gets the default or overridden caching object from the default writer.
+     */
+    get templateCache() {
+      return defaultWriter.templateCache;
+    }
+  };
+  var defaultWriter = new Writer();
+  mustache.clearCache = function clearCache2() {
+    return defaultWriter.clearCache();
+  };
+  mustache.parse = function parse2(template, tags) {
+    return defaultWriter.parse(template, tags);
+  };
+  mustache.render = function render2(template, view, partials, config2) {
+    if (typeof template !== "string") {
+      throw new TypeError('Invalid template! Template should be a "string" but "' + typeStr(template) + '" was given as the first argument for mustache#render(template, view, partials)');
+    }
+    return defaultWriter.render(template, view, partials, config2);
+  };
+  mustache.escape = escapeHtml;
+  mustache.Scanner = Scanner;
+  mustache.Context = Context2;
+  mustache.Writer = Writer;
+  var mustache_default = mustache;
+
+  // src/javascripts/controllers/turbo_nav_tree_controller.js
+  var turbo_nav_tree_controller_default = class extends Controller {
+    static values = {
+      navTree: Array,
+      depth: Number,
+      parentPath: String,
+      url: String,
+      currentPath: String,
+      idPrefix: String,
+      containerStyle: String,
+      rootContainer: String,
+      // 整个栏目树的容器是什么，class
+      itemStyle: String,
+      itemActiveClass: String,
+      linkTurboFrame: String,
+      linkTurboFrameAction: String,
+      linkTurbo: Boolean,
+      // 新增参数
+      // expand: false | 0 — 仅路径相关展开；true | "all" — 全部展开；正整数 N — 展开 depth < N 的层级（0 起算）
+      expand: { type: String, default: "false" }
+    };
+    static targets = [
+      "itemTemplate"
+      // item 模板
+    ];
+    connect() {
+      this.currentPath = this.#normalizePathname(
+        this.hasCurrentPathValue ? this.currentPathValue : window.location.pathname
+      );
+      this.menuContainer = this.rootContainer();
+      if (!this.menuContainer) {
+        console.log("turbo_nav_tree_controller: menuContainer null");
+        return;
+      }
+      this.boundSyncNavFromUrl = () => {
+        if (!this.element?.isConnected || !this.menuContainer) return;
+        this.refreshActiveState();
+      };
+      document.addEventListener("turbo:load", this.boundSyncNavFromUrl);
+      document.addEventListener("turbo:render", this.boundSyncNavFromUrl);
+      document.addEventListener("turbo:frame-load", this.boundSyncNavFromUrl);
+      window.addEventListener("popstate", this.boundSyncNavFromUrl);
+      if (this.element.dataset.rendered === "true") {
+        this.refreshActiveState();
+        return;
+      }
+      this.element.dataset.rendered = "true";
+      this.itemTemplate = this.hasItemTemplateTarget ? this.itemTemplateTarget.innerHTML.trim() : null;
+      this.renderTree(this.navTreeValue, this.depthValue || 0, this.element);
+    }
+    disconnect() {
+      if (this.boundSyncNavFromUrl) {
+        document.removeEventListener("turbo:load", this.boundSyncNavFromUrl);
+        document.removeEventListener("turbo:render", this.boundSyncNavFromUrl);
+        document.removeEventListener("turbo:frame-load", this.boundSyncNavFromUrl);
+        window.removeEventListener("popstate", this.boundSyncNavFromUrl);
+      }
+    }
+    /** 与当前地址栏同步高亮（模板不会重跑 Mustache，只靠 [active] + CSS） */
+    refreshActiveState = () => {
+      if (!this.menuContainer) return;
+      this.#syncCurrentPathFromWindow();
+      const current = this.#normalizePathname(this.currentPath);
+      const aDom = this.#resolveActiveAnchorForPath(current);
+      if (!aDom) {
+        this.#clearTreeActiveState();
+        return;
+      }
+      this.menuContainer.querySelectorAll("li[active]").forEach((li) => {
+        li.querySelector("[turbo-nav-tree-children-container]")?.classList.remove("opacity-0");
+      });
+      this.getParents(aDom, "li", this.menuContainer).forEach((li) => {
+        this.treeContainerToggle(li, true);
+      });
+      this.click({ currentTarget: aDom });
+    };
+    /** 去掉树上所有 [active]（含 li 与行容器），不触发导航 */
+    #clearTreeActiveState() {
+      this.menuContainer?.querySelectorAll("[active]").forEach((el) => {
+        el.removeAttribute("active");
+      });
+    }
+    /**
+     * 在 `.custom-menu` 内根据当前 pathname 找到应对高亮的 a：先精确匹配，再最长前缀匹配（与 channelPathActive 语义一致）。
+     * @param {string} current normalize 后的 pathname
+     * @returns {HTMLAnchorElement | null}
+     */
+    #resolveActiveAnchorForPath(current) {
+      const links = [...this.menuContainer.querySelectorAll("a[href]")];
+      const norm = (a) => this.#normalizePathname(a.getAttribute("href"));
+      const exact = links.find((a) => norm(a) === current);
+      if (exact) return exact;
+      let best = null;
+      let bestLen = -1;
+      for (const a of links) {
+        const h = norm(a);
+        if (!this.#hrefCoversCurrent(h, current)) continue;
+        if (h.length > bestLen) {
+          bestLen = h.length;
+          best = a;
+        }
+      }
+      return best;
+    }
+    /**
+     * expand 配置：off | all | depth(N)
+     * @returns {{ mode: 'off' | 'all' | 'depth', depth?: number }}
+     */
+    #expandConfig() {
+      if (!this.hasExpandValue) return { mode: "off" };
+      const raw2 = this.expandValue;
+      if (raw2 === true || raw2 === false) {
+        return raw2 ? { mode: "all" } : { mode: "off" };
+      }
+      const v2 = String(raw2).trim().toLowerCase();
+      if (v2 === "" || v2 === "false" || v2 === "0" || v2 === "off") return { mode: "off" };
+      if (v2 === "true" || v2 === "all" || v2 === "yes") return { mode: "all" };
+      const n = Number.parseInt(v2, 10);
+      if (!Number.isNaN(n) && n > 0) return { mode: "depth", depth: n };
+      return { mode: "off" };
+    }
+    /** 是否按 expand 规则在 depth 层默认展开（与当前 URL 路径无关） */
+    #shouldExpandAtDepth(depth) {
+      const cfg = this.#expandConfig();
+      if (cfg.mode === "all") return true;
+      if (cfg.mode === "depth") return depth < cfg.depth;
+      return false;
+    }
+    /** 当前页是否落在该 href 对应路径下（含自身，不含用「/」吞掉所有页） */
+    #hrefCoversCurrent(hrefPath, current) {
+      if (!current) return false;
+      if (current === hrefPath) return true;
+      if (hrefPath === "/") return false;
+      return current.startsWith(hrefPath + "/");
+    }
+    renderTree(nodes, depth, container) {
+      if (container.rendered) return;
+      const ul = document.createElement("ul");
+      ul.className = this.hasContainerStyleValue ? this.containerStyleValue : "w-full space-y-1";
+      container.appendChild(ul);
+      const showIconColumn = nodes.some((n) => this.#nodeHasIconUrl(n));
+      nodes.forEach((node) => {
+        setTimeout(() => {
+          const liDom = document.createElement("li");
+          liDom.className = this.hasItemStyleValue ? this.itemStyleValue : "";
+          const isOnPath = this.isPathActive(node);
+          const isCurrent = this.isPathActive(node, false);
+          const shouldOpen = this.#shouldExpandAtDepth(depth) || isOnPath || this.hasActiveChild(node);
+          const useRenderChildren = node.children?.length > 0;
+          const useRenderTurboFrame = node.children?.length == 0 && node.children_count > 0 && this.hasUrlValue;
+          const itemHtml = this.renderItem(node, depth, shouldOpen, isCurrent, showIconColumn);
+          liDom.innerHTML = itemHtml;
+          const treeItem = liDom.children[0];
+          treeItem.setAttribute("turbo-nav-tree-item", "");
+          const childrenContainer = document.createElement("div");
+          childrenContainer.setAttribute("turbo-nav-tree-children-container", "");
+          childrenContainer.classList.add("transition-all", "duration-300");
+          childrenContainer.hidden = !shouldOpen;
+          if (isOnPath) {
+            liDom.setAttribute("active", "");
+            if (isCurrent) {
+              treeItem.setAttribute("active", "");
+              requestAnimationFrame(() => {
+                liDom.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }
+          }
+          if (useRenderChildren) {
+            this.renderTree(node.children, depth + 1, childrenContainer);
+          }
+          if (useRenderTurboFrame) {
+            this.appendTurboFrame(childrenContainer, node, depth + 1);
+          }
+          liDom.appendChild(childrenContainer);
+          ul.appendChild(liDom);
+        }, 50);
+      });
+      container.rendered = true;
+    }
+    // 懒加载 turbo-frame
+    appendTurboFrame(container, node, depth) {
+      const tf = document.createElement("turbo-frame");
+      tf.classList.add("w-full");
+      const idPrefix = this.hasIdPrefixValue ? this.idPrefixValue : "nav_tree_frame_";
+      tf.id = `${idPrefix}${node.path.replaceAll("/", "_")}`;
+      const urlBase = this.urlValue.split("?")[0];
+      const params = new URLSearchParams();
+      params.set("parent_path", node.path);
+      params.set("depth", depth);
+      if (this.hasExpandValue) {
+        params.set("expand", this.expandValue);
+      }
+      tf.src = `${urlBase}?${params.toString()}`;
+      tf.loading = "lazy";
+      tf.innerHTML = `
+      <div class="flex items-center justify-center h-12 text-base-content/60">
+        <span class="loading loading-spinner loading-sm"></span>
+      </div>
+    `;
+      container.appendChild(tf);
+    }
+    toggle(event) {
+      if (event.target?.closest?.("a[href]")) return;
+      const target = event.currentTarget;
+      let onlyOpen = false;
+      if (target == event.target) {
+        onlyOpen = event.params?.onlyOpen;
+      } else {
+        onlyOpen = event.target.getAttribute("data-turbo-nav-tree-only-open-param") == "true";
+      }
+      const li = target.closest("li");
+      if (onlyOpen && li.hasAttribute("active")) return;
+      const childrenContainer = li.querySelector("[turbo-nav-tree-children-container]");
+      this.treeContainerToggle(li, childrenContainer.hidden);
+    }
+    treeContainerToggle(li, status) {
+      const childrenContainer = li.querySelector("[turbo-nav-tree-children-container]");
+      if (!(childrenContainer && childrenContainer.children.length > 0)) return;
+      if (status) {
+        childrenContainer.hidden = false;
+        childrenContainer.classList.remove("opacity-0");
+      } else {
+        childrenContainer.hidden = true;
+        childrenContainer.classList.add("opacity-0");
+      }
+      const itemTargetIcon = li.querySelector("[turbo-nav-tree-item-target-icon]");
+      if (itemTargetIcon) {
+        itemTargetIcon.classList.add("transition-transform", "duration-300", "peer-hover:text-primary");
+        itemTargetIcon.classList.toggle("rotate-90", status);
+      }
+    }
+    // 作用：点击 item 后，激活当前 item 和其所有祖先 item（高亮仅依赖 [active]，不依赖 Mustache 初次渲染）
+    click(event) {
+      const target = event.currentTarget;
+      this.currentPath = this.#pathnameFromAnchor(target);
+      const turboFrameTarget = target.getAttribute("data-turbo-frame");
+      if (turboFrameTarget && turboFrameTarget !== "_top" && !document.getElementById(turboFrameTarget)) {
+        target.setAttribute("data-turbo-frame", "_top");
+      }
+      if (!this.menuContainer) return;
+      this.menuContainer.querySelectorAll("[active]").forEach((el) => {
+        el.removeAttribute("active");
+      });
+      const li = target.closest("li");
+      if (!li) return;
+      this.getParents(target, "li", this.menuContainer).forEach((el) => {
+        el.setAttribute("active", "");
+      });
+      li.querySelector("[turbo-nav-tree-item]")?.setAttribute("active", "");
+      this.treeContainerToggle(li, true);
+    }
+    /** @param {string} path href 或 pathname */
+    #normalizePathname(path2) {
+      if (path2 == null || path2 === "") return "/";
+      try {
+        const pathname = path2.startsWith("http") ? new URL(path2).pathname : path2.startsWith("/") ? path2 : `/${path2}`;
+        const trimmed = pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+        return trimmed || "/";
+      } catch {
+        return "/";
+      }
+    }
+    #pathnameFromAnchor(anchor) {
+      return this.#normalizePathname(anchor?.getAttribute?.("href") || "");
+    }
+    #syncCurrentPathFromWindow() {
+      this.currentPath = this.#normalizePathname(window.location.pathname);
+    }
+    /** @param {Record<string, unknown>} node */
+    #nodeIconUrl(node) {
+      const s = node?.settings;
+      if (!s || typeof s !== "object") return "";
+      const raw2 = (
+        /** @type {Record<string, unknown>} */
+        s.icon
+      );
+      return typeof raw2 === "string" && raw2.trim().length > 0 ? raw2.trim() : "";
+    }
+    /** @param {Record<string, unknown>} node */
+    #nodeHasIconUrl(node) {
+      return this.#nodeIconUrl(node).length > 0;
+    }
+    /** @param {string} linkText */
+    #parseMethodBadge(linkText) {
+      if (!linkText || typeof linkText !== "string") return null;
+      const match = linkText.match(/^(GET|POST|PUT|PATCH|DELETE|DEL)\b\s*/i);
+      if (!match) return null;
+      let type = match[1].toUpperCase();
+      if (type === "DEL") type = "DELETE";
+      return { type, title: linkText.slice(match[0].length).trim() || linkText };
+    }
+    // 单个 item 渲染；open：子级是否展开；isActive：是否为当前 URL 对应页（与 expand 无关）
+    renderItem(node, depth, open2 = false, isActive = false, showIconColumn = false) {
+      const hasChildren = this.hasUrlValue ? node.children_count : node.children?.length > 0;
+      let aAttrs = [];
+      if (this.hasLinkTurboFrameValue && this.linkTurboFrameValue) {
+        aAttrs.push(`data-turbo-frame="${this.linkTurboFrameValue}"`);
+      }
+      if (this.hasLinkTurboFrameActionValue && this.linkTurboFrameActionValue) {
+        aAttrs.push(`data-turbo-action="${this.linkTurboFrameActionValue}"`);
+      }
+      if (this.hasLinkTurboValue && this.linkTurboValue === false) {
+        aAttrs = [`data-turbo="false"`];
+      }
+      let template = "";
+      if (this.itemTemplate) {
+        template = this.itemTemplate;
+      } else {
+        template = `
+        <div class="flex items-center">
+          <a href="{{path}}"
+            ${aAttrs.join(" ")}
+            class="block hover:underline"
+            style="padding-left: {{padding}}rem">
+            {{link_text}}
+          </a>
+        </div>
+      `;
+        if (hasChildren) {
+          template = `
+          <div class="flex items-center" data-action="click->turbo-nav-tree#toggle">
+            <a href="{{path}}"
+              ${aAttrs.join(" ")}
+              class="block hover:underline"
+              style="padding-left: {{padding}}rem">
+              {{{link_text}}}
+            </a>
+            <!-- \u6709\u5B50\u8282\u70B9\u65F6\u663E\u793A toggle \u6309\u94AE -->
+            <div turbo-nav-tree-item-target-icon class="inline-block ml-auto mr-1 ${open2 ? "rotate-90" : ""}">
+              <svg class="w-4 h-4 text-primary/70 transition-transform duration-200"
+                  fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
+            </div>
+          </div>
+        `;
+        }
+      }
+      const methodBadge = this.#parseMethodBadge(node.link_text);
+      const display_link_text = methodBadge?.title ?? node.link_text;
+      return mustache_default.render(template, {
+        ...node,
+        depth,
+        padding: depth * 1.25,
+        hasChildren,
+        open: open2,
+        isActive,
+        show_icon_column: showIconColumn,
+        show_nav_icon: showIconColumn && !methodBadge,
+        icon_url: this.#nodeIconUrl(node),
+        display_link_text,
+        method_get: methodBadge?.type === "GET",
+        method_post: methodBadge?.type === "POST",
+        method_put: methodBadge?.type === "PUT",
+        method_patch: methodBadge?.type === "PATCH",
+        method_delete: methodBadge?.type === "DELETE"
+      });
+    }
+    // 激活判断
+    isPathActive(node, isPrefix = true) {
+      const current = this.#normalizePathname(this.currentPath);
+      const nodePath = this.#normalizePathname(node.path);
+      if (!current) return false;
+      if (isPrefix) {
+        const currentParts = current.split("/").filter(Boolean);
+        const nodeParts = nodePath.split("/").filter(Boolean);
+        if (nodeParts.length > currentParts.length) return false;
+        return nodeParts.every((part, idx) => currentParts[idx] === part);
+      } else {
+        return nodePath === current;
+      }
+    }
+    hasActiveChild(node) {
+      if (!node.children || node.children.length === 0) return false;
+      return node.children.some((child) => this.isPathActive(child) || this.hasActiveChild(child));
+    }
+    /**
+     * 从元素向上查找所有符合 selector 的父级元素
+     * @param {Element} el - 起始元素
+     * @param {string} selector - 父元素选择器
+     * @param {Element} [root=document.body] - 可选查找上限
+     * @returns {Element[]} - 符合条件的父级元素数组，按从近到远顺序
+    */
+    getParents(el, selector, root = null) {
+      if (!el) return [];
+      const parents = [];
+      let parent = el.parentElement;
+      while (parent && parent !== root) {
+        if (parent.matches(selector)) {
+          parents.push(parent);
+        }
+        parent = parent.parentElement;
+      }
+      return parents;
+    }
+    rootContainer() {
+      if (this.hasRootContainerValue) {
+        return this.element.closest(this.rootContainerValue);
+      } else {
+        return this.getParents(this.element.querySelector("li"), "ul")?.at(-1);
+      }
     }
   };
 
@@ -18790,7 +19648,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       })
     };
   }
-  function render(instance) {
+  function render3(instance) {
     var popper2 = div();
     var box = div();
     box.className = BOX_CLASS;
@@ -18845,7 +19703,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       onUpdate
     };
   }
-  render.$$tippy = true;
+  render3.$$tippy = true;
   var idCounter = 1;
   var mouseMoveListeners = [];
   var mountedInstances = [];
@@ -19625,7 +20483,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
     }
   });
   tippy.setDefaultProps({
-    render
+    render: render3
   });
   var tippy_esm_default = tippy;
 
@@ -24769,9 +25627,9 @@ ${n}</ol>
     };
   };
   var makeSymbol = function makeSymbol2(value, fontName, mode, options, classes) {
-    var lookup = lookupSymbol(value, fontName, mode);
-    var metrics = lookup.metrics;
-    value = lookup.value;
+    var lookup2 = lookupSymbol(value, fontName, mode);
+    var metrics = lookup2.metrics;
+    value = lookup2.value;
     var symbolNode;
     if (metrics) {
       var italic2 = metrics.italic;
@@ -33898,12 +34756,12 @@ ${n}</ol>
         this.gullet.macros.set("\\color", "\\textcolor");
       }
       try {
-        var parse = this.parseExpression(false);
+        var parse3 = this.parseExpression(false);
         this.expect("EOF");
         if (!this.settings.globalGroup) {
           this.gullet.endGroup();
         }
-        return parse;
+        return parse3;
       } finally {
         this.gullet.endGroups();
       }
@@ -33917,10 +34775,10 @@ ${n}</ol>
       this.consume();
       this.gullet.pushToken(new Token("}"));
       this.gullet.pushTokens(tokens);
-      var parse = this.parseExpression(false);
+      var parse3 = this.parseExpression(false);
       this.expect("}");
       this.nextToken = oldToken;
-      return parse;
+      return parse3;
     }
     /**
      * Parses an "expression", which is a list of atoms.
@@ -34685,7 +35543,7 @@ ${n}</ol>
     }
     return tree;
   };
-  var render2 = function render3(expression, baseNode, options) {
+  var render4 = function render5(expression, baseNode, options) {
     baseNode.textContent = "";
     var node = renderToDomTree(expression, options).toNode();
     baseNode.appendChild(node);
@@ -34693,7 +35551,7 @@ ${n}</ol>
   if (typeof document !== "undefined") {
     if (document.compatMode !== "CSS1Compat") {
       typeof console !== "undefined" && console.warn("Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.");
-      render2 = function render4() {
+      render4 = function render6() {
         throw new ParseError("KaTeX doesn't work in quirks mode.");
       };
     }
@@ -34751,7 +35609,7 @@ ${n}</ol>
      * Renders the given LaTeX into an HTML+MathML combination, and adds
      * it as a child to the specified DOM node.
      */
-    render: render2,
+    render: render4,
     /**
      * Renders the given LaTeX into an HTML+MathML combination string,
      * for sending to the client.
@@ -39691,6 +40549,7 @@ ${n}</ol>
   var application = window.Stimulus;
   application.register("load-more", load_more_controller_default);
   application.register("nav-tree", nav_tree_controller_default);
+  application.register("turbo-nav-tree", turbo_nav_tree_controller_default);
   application.register("markdown-renderer", markdown_renderer_controller_default);
   application.register("ai-search", ai_search_completion_controller_default);
   application.register("markdown", markdown_controller_default);
@@ -39899,5 +40758,11 @@ ${n}</ol>
   (*!
   Turbo 8.0.23
   Copyright © 2026 37signals LLC
+   *)
+
+mustache/mustache.mjs:
+  (*!
+   * mustache.js - Logic-less {{mustache}} templates with JavaScript
+   * http://github.com/janl/mustache.js
    *)
 */

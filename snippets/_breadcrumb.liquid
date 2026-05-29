@@ -8,13 +8,15 @@
 <div class="flex justify-start text-sm breadcrumbs">
   <ul>
     {% for item in breadcrumb %}
-      <li class="{% if forloop.last %}text-primary{% else %}text-base-content/60{% endif %}">
-        {% if item.path != '/' %}
-          <a href="{{ item.path }}">{{ item.link_text }}</a>
-        {% else %}
-          {{ item.link_text }}
-        {% endif %}
-      </li>
+      {% if item.path != '/' %}
+        <li class="{% if forloop.last %}text-primary{% else %}text-base-content/60{% endif %}">
+          {% if item.path != '/' %}
+            <a href="{{ item.path }}">{{ item.link_text }}</a>
+          {% else %}
+            {{ item.link_text }}
+          {% endif %}
+        </li>
+      {% endif %}
     {% endfor %}
   </ul>
 </div>

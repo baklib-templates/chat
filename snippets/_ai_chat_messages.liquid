@@ -1,0 +1,14 @@
+{% assign ai_variant = variant | default: 'main' %}
+{% assign ai_wrapper_class = wrapper_class | default: 'relative z-10 min-h-0 flex-1 overflow-y-auto' %}
+{% assign ai_messages_class = messages_class | default: 'mx-auto flex w-full max-w-[50rem] flex-col gap-6 px-4 py-4 sm:px-6' %}
+
+<div
+  class="{{ ai_wrapper_class }}"
+  data-ai-search-target="messagesScroll"
+  data-ai-search-variant="{{ ai_variant }}"
+>
+  <div class="chat-ai-empty-hint flex h-full min-h-[12rem] items-center justify-center px-4 text-center text-[0.8125rem] leading-relaxed text-base-content/50">
+    内容由 AI 生成，可能存在错误，请自行核实。
+  </div>
+  <div data-ai-search-target="messages" class="{{ ai_messages_class }}"></div>
+</div>

@@ -1,15 +1,15 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "ai_chat",
+    "theme_name": "chat",
     "theme_label": "t:schema.theme_label",
     "theme_description": "t:schema.theme_description",
-    "theme_version": "0.0.2",
+    "theme_version": "1.2.1",
     "theme_syntax_version": "v2",
     "theme_scope": "wiki",
     "theme_author": "Baklib",
-    "theme_documentation_url": "https://help.baklib.cn/themes/ai-chat/settings",
-    "theme_support_url": "https://help.baklib.cn/themes/ai-chat",
+    "theme_documentation_url": "",
+    "theme_support_url": "",
     "theme_thumb_url": "images/theme/thumb.png",
     "theme_preview_images": [
       "images/theme/index.webp",
@@ -133,6 +133,12 @@
         "type": "textarea",
         "label": "热搜问题",
         "info": "将展示在首页的热搜问题列表中，每行一个问题。"
+      },
+      {
+        "id": "help_url",
+        "type": "url",
+        "label": "帮助中心链接",
+        "info": "显示在侧栏左下角「帮助」入口，可填帮助文档或 FAQ 页面地址。"
       }
     ]
   },

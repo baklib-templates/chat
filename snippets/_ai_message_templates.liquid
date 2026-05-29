@@ -1,0 +1,61 @@
+<template data-ai-search-target="userMessageTemplate">
+  <div class="ai-chat-user-round mx-auto flex w-full max-w-[50rem] justify-end gap-3">
+    <div class="text-right">
+      <div class="max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-4 py-3 text-sm text-primary-content shadow-sm sm:text-base">
+        <p class="ai-user-message break-words"></p>
+      </div>
+      {% if current_user %}
+        <p class="mt-1.5 text-[11px] text-base-content/45">{{ current_user.name }}</p>
+      {% endif %}
+    </div>
+    {% assign avatar = 'images/avatar2.png' | asset_url %}
+    <img src="{{ current_user.image | default: avatar }}" alt="" class="h-9 w-9 shrink-0 rounded-full border-2 border-primary/20 object-cover sm:h-10 sm:w-10" />
+  </div>
+</template>
+
+<template data-ai-search-target="assistantMessageTemplate">
+  <div class="ai-chat-assistant-round mx-auto flex w-full max-w-[50rem] gap-3">
+    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-sm sm:h-10 sm:w-10">
+      <i class="ri-robot-2-line text-lg leading-none" aria-hidden="true"></i>
+    </div>
+    <div class="min-w-0 flex-1">
+      <div class="rounded-2xl rounded-tl-sm border border-base-content/10 bg-base-100 px-4 py-3 text-sm shadow-sm sm:text-base" data-controller="markdown">
+        <pre class="hidden" data-markdown-target="content"></pre>
+        <div class="chat-message max-w-none break-words text-base-content" data-markdown-target="renderedContent"></div>
+      </div>
+      <div class="ai-message-actions mt-1.5 hidden items-center gap-1">
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:text-base-content"
+          data-action="click->ai-search#copyResponse"
+          aria-label="复制回答"
+        >
+          <i class="ri-file-copy-line leading-none" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:text-base-content"
+          data-action="click->ai-search#retryLastResponse"
+          aria-label="重新生成"
+        >
+          <i class="ri-refresh-line leading-none" aria-hidden="true"></i>
+        </button>
+      </div>
+      {% if robot_name %}
+        <p class="mt-1.5 text-[11px] text-base-content/45">{{ robot_name }}</p>
+      {% endif %}
+    </div>
+  </div>
+</template>
+
+<button
+  type="button"
+  class="hidden btn btn-ghost btn-xs btn-square align-middle text-base-content/70"
+  data-ai-search-target="retryButton"
+  data-action="click->ai-search#retryFromButton"
+  aria-label="重新生成"
+>
+  <i class="ri-refresh-line leading-none" aria-hidden="true"></i>
+</button>
+
+<div data-ai-search-target="error" class="mx-auto hidden max-w-[50rem] px-4 text-sm text-error sm:px-6"></div>

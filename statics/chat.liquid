@@ -1,0 +1,8 @@
+{% assign chat_id = params.id | default: params.chat_id | strip %}
+{% assign initial_message = params.message | default: params.q | strip %}
+
+{% unless chat_id %}
+  <script>window.location.replace('/');</script>
+{% else %}
+  {% render 'chat_workspace', chat_id: chat_id, initial_message: initial_message %}
+{% endunless %}

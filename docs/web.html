@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>AI 知识问答 - 您的智能科研助手</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-primary-fixed": "#00174b",
+            "on-background": "#191c1e",
+            "on-secondary-fixed-variant": "#005049",
+            "secondary-fixed-dim": "#6bd8cb",
+            "outline-variant": "#c3c6d7",
+            "primary": "#004ac6",
+            "tertiary-container": "#bc4800",
+            "tertiary": "#943700",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "tertiary-fixed-dim": "#ffb596",
+            "on-surface": "#191c1e",
+            "tertiary-fixed": "#ffdbcd",
+            "surface": "#f7f9fb",
+            "on-error": "#ffffff",
+            "secondary": "#006a61",
+            "secondary-fixed": "#89f5e7",
+            "secondary-container": "#86f2e4",
+            "on-error-container": "#93000a",
+            "primary-container": "#2563eb",
+            "outline": "#737686",
+            "on-tertiary-container": "#ffede6",
+            "surface-bright": "#f7f9fb",
+            "error": "#ba1a1a",
+            "background": "#f7f9fb",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "inverse-primary": "#b4c5ff",
+            "surface-container-highest": "#e0e3e5",
+            "on-secondary-container": "#006f66",
+            "surface-container-high": "#e6e8ea",
+            "on-surface-variant": "#434655",
+            "on-secondary-fixed": "#00201d",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#003ea8",
+            "surface-dim": "#d8dadc",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-primary-container": "#eeefff",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#0053db",
+            "surface-container-low": "#f2f4f6",
+            "on-tertiary-fixed": "#360f00",
+            "inverse-surface": "#2d3133",
+            "primary-fixed": "#dbe1ff",
+            "inverse-on-surface": "#eff1f3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "xl": "48px",
+            "lg": "24px",
+            "xs": "4px",
+            "chat-max-width": "800px",
+            "sidebar-width": "280px",
+            "base": "4px",
+            "sm": "8px",
+            "md": "16px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "label-caps": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "code-sm": ["13px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .user-bubble {
+      border-bottom-right-radius: 4px;
+    }
+
+    .ai-bubble {
+      border-top-left-radius: 4px;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed overflow-hidden h-screen flex">
+  <!-- Left Side Navigation (SideNavBar Anchor) -->
+  <aside
+    class="h-screen w-sidebar-width fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col p-md z-30">
+    <div class="mb-xl px-sm">
+      <div class="flex items-center gap-sm">
+        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-on-primary text-[20px]" data-icon="hub">hub</span>
+        </div>
+        <div>
+          <h1 class="font-headline-sm text-headline-sm font-bold text-primary">AI Research Lab</h1>
+          <p class="text-[10px] uppercase tracking-wider text-outline">v2.4 Precise</p>
+        </div>
+      </div>
+    </div>
+    <button
+      class="mb-lg w-full py-md px-lg bg-primary text-on-primary rounded-xl flex items-center justify-center gap-sm font-bold hover:brightness-110 active:scale-95 transition-all shadow-sm">
+      <span class="material-symbols-outlined" data-icon="add_comment">add_comment</span>
+      <span class="">New Session</span>
+    </button>
+    <nav class="flex-1 space-y-xs overflow-y-auto scrollbar-hide">
+      <div class="text-label-caps font-label-caps text-outline mb-sm px-sm">MENU</div>
+      <a class="flex items-center gap-md p-md rounded-lg text-primary font-bold bg-surface-container-high transition-colors"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="add_comment">add_comment</span>
+        <span class="font-body-md">New Chat</span>
+      </a>
+      <a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="history">history</span>
+        <span class="font-body-md">History</span>
+      </a>
+      <a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="database">database</span>
+        <span class="font-body-md">Knowledge Base</span>
+      </a>
+    </nav>
+    <div class="mt-auto pt-md border-t border-outline-variant">
+
+      <a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="help">help</span>
+        <span class="font-body-md">Help</span>
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content Cluster -->
+  <main class="ml-sidebar-width flex-1 flex flex-col relative h-screen">
+    <!-- TopNavBar Anchor -->
+    <header
+      class="h-16 w-full glass-panel border-b border-outline-variant flex justify-between items-center px-lg z-20">
+      <div class="flex items-center gap-lg">
+        <span class="font-headline-md text-headline-md font-extrabold text-primary">Nexus AI</span>
+        <div class="h-4 w-px bg-outline-variant"></div>
+        <h2 class="font-body-lg text-body-lg text-on-surface-variant font-semibold">AI 知识问答 - 您的智能科研助手</h2>
+      </div>
+      <div class="flex items-center gap-md">
+        <div
+          class="flex items-center gap-sm px-md py-sm bg-surface-container rounded-full cursor-pointer hover:bg-surface-container-high transition-all">
+          <img alt="Alex Chen" class="w-6 h-6 rounded-full object-cover"
+            data-alt="A professional headshot of a young male researcher with a friendly expression. He is in a brightly lit modern office setting with blurred architectural lines in the background. The lighting is soft and professional, emphasizing a clean and corporate aesthetic consistent with high-end tech environments."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2NGmiXUgMLauiZMkfnZyWqC995oA_1yC4ftni6I4eRoN_V3tO6Fl7eb20bY4OA_CNK38vY0XNrtAM59w4KmRV8FKt2oEbWqu5Uq_53ytU7bPYnW-LCRZ98Vs2g9K-cyMLzZQbByAp6ZfiMZVTSZ1rArZvgTfadI48ou12TjJy4k6EHOvWA7t1u4-sKHGaZl6hJCcFObXLobUPLeJk-zINe1Ujhz3VMRH4DmLKR_RPXpvl5q4GuP1rb3eLLgICOrC40ygvH3klsmjP">
+          <span class="font-body-md font-semibold text-on-surface">Alex Chen</span>
+        </div>
+        <button
+          class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-all">
+
+        </button>
+
+      </div>
+    </header>
+    <!-- Chat Container -->
+    <div class="flex-1 overflow-y-auto px-lg pt-xl pb-32 scrollbar-hide" id="chat-viewport">
+      <div class="max-w-chat-max-width mx-auto space-y-xl">
+        <!-- User Message -->
+        <div class="flex flex-col items-end">
+          <div
+            class="max-w-[85%] bg-primary-container text-on-primary-container px-lg py-md rounded-2xl user-bubble shadow-sm">
+            <p class="font-body-lg text-body-lg">
+              请帮我分析一下2024年第一季度全球半导体市场的研究报告，重点关注AI芯片的需求增长情况，并结合我们的内部文档《Q1-Market-Internal.pdf》进行对比。</p>
+          </div>
+          <span class="text-[11px] text-outline mt-sm mr-sm">14:20</span>
+        </div>
+        <!-- AI Message -->
+        <div class="flex flex-col items-start">
+          <div class="flex gap-md w-full">
+            <div class="w-10 h-10 rounded-xl bg-primary flex-shrink-0 flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-primary" data-icon="smart_toy">smart_toy</span>
+            </div>
+            <div
+              class="flex-1 max-w-[90%] bg-surface-container-lowest border border-outline-variant p-lg rounded-2xl ai-bubble shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+              <div class="space-y-md">
+                <p class="font-body-lg text-body-lg leading-relaxed">
+                  根据2024年Q1的市场公开数据与您的内部文档对比，全球半导体市场呈现出明显的**非对称增长**态势：
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-md my-md">
+                  <div class="bg-surface-container-low p-md rounded-xl border border-outline-variant/30">
+                    <div class="flex items-center gap-sm text-primary mb-xs">
+                      <span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
+                      <span class="font-label-caps text-label-caps">公开市场数据</span>
+                    </div>
+                    <div class="text-headline-sm font-headline-sm text-on-surface">18.5% YoY</div>
+                    <p class="text-[12px] text-on-surface-variant">全球H100/H200出货量持续紧缺，推理端需求激增。</p>
+                  </div>
+                  <div class="bg-secondary-container/10 p-md rounded-xl border border-secondary-container/30">
+                    <div class="flex items-center gap-sm text-secondary mb-xs">
+                      <span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
+                      <span class="font-label-caps text-label-caps">内部对比数据</span>
+                    </div>
+                    <div class="text-headline-sm font-headline-sm text-secondary">+2.3% 溢价</div>
+                    <p class="text-[12px] text-on-surface-variant">公司在边缘侧AI芯片的自研投入效率高于行业均值。</p>
+                  </div>
+                </div>
+                <h4 class="font-headline-sm text-headline-sm text-primary">核心发现：</h4>
+                <ul class="list-disc ml-lg space-y-sm text-on-surface-variant">
+                  <li class=""><span class="font-bold text-on-surface">GPU供需缺口：</span> 预计到Q3，大型语言模型（LLM）的算力租赁价格将保持高位波动。
+                  </li>
+                  <li class=""><span class="font-bold text-on-surface">内部文档对齐：</span>
+                    《Q1-Market-Internal.pdf》中提到的供应链瓶颈已在公开报告中得到验证。</li>
+                </ul>
+                <div class="bg-[#1e293b] p-md rounded-xl font-code-sm text-code-sm text-white overflow-x-auto mt-lg">
+                  <div class="flex justify-between items-center mb-sm text-slate-400">
+                    <span class="">Data Analysis Script</span>
+                    <span class="material-symbols-outlined text-[16px] cursor-pointer"
+                      data-icon="content_copy">content_copy</span>
+                  </div>
+                  <code
+                    class="block text-indigo-300">import <span class="text-emerald-400">pandas</span> as pd<br>df = pd.read_csv(<span class="text-amber-200">'q1_semi_trends.csv'</span>)<br>ai_growth = df[df[<span class="text-amber-200">'segment'</span>] == <span class="text-amber-200">'AI'</span>].mean()<br>print(<span class="text-emerald-400">f"AI Segment Growth Index: {ai_growth}"</span>)</code>
+                </div>
+                <div class="flex flex-wrap gap-sm pt-md border-t border-outline-variant">
+                  <span
+                    class="px-md py-xs bg-secondary-container/20 text-on-secondary-container rounded-full text-label-caps font-label-caps flex items-center gap-xs cursor-pointer hover:bg-secondary-container/40 transition-all">
+                    <span class="material-symbols-outlined text-[14px]" data-icon="description">description</span>
+                    Q1-Market-Internal.pdf (Page 14)
+                  </span>
+                  <span
+                    class="px-md py-xs bg-secondary-container/20 text-on-secondary-container rounded-full text-label-caps font-label-caps flex items-center gap-xs cursor-pointer hover:bg-secondary-container/40 transition-all">
+                    <span class="material-symbols-outlined text-[14px]" data-icon="link">link</span>
+                    Semiconductor Quarterly Report 2024
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-14 flex items-center gap-md mt-sm">
+            <span class="text-[11px] text-outline">14:21</span>
+            <div class="flex gap-sm">
+              <button class="p-xs text-outline hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[18px]" data-icon="thumb_up">thumb_up</span>
+              </button>
+              <button class="p-xs text-outline hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+              </button>
+              <button class="p-xs text-outline hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-[18px]" data-icon="refresh">refresh</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Input Area -->
+    <div class="absolute bottom-0 left-0 right-0 p-lg z-20 pointer-events-none">
+      <div class="max-w-chat-max-width mx-auto pointer-events-auto">
+        <!-- Knowledge Base Popup -->
+        <div
+          class="mb-md w-72 glass-panel border border-outline-variant p-md rounded-2xl shadow-xl animate-in slide-in-from-bottom-4 duration-300"
+          id="knowledge-popup">
+          <div class="flex justify-between items-center mb-sm">
+            <span class="font-label-caps text-label-caps text-on-surface-variant">Active Knowledge</span>
+            <span class="material-symbols-outlined text-[16px] text-outline cursor-pointer"
+              onclick="toggleKnowledge()">close</span>
+          </div>
+          <div class="space-y-sm">
+            <div class="flex items-center gap-sm p-sm bg-surface-container rounded-lg border border-outline-variant/50">
+              <span class="material-symbols-outlined text-primary text-[20px]"
+                data-icon="picture_as_pdf">picture_as_pdf</span>
+              <div class="flex-1 overflow-hidden">
+                <p class="text-body-md truncate font-semibold">Q1-Market-Internal.pdf</p>
+                <p class="text-[10px] text-outline">Internal Research • 2.4MB</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-sm p-sm bg-surface-container rounded-lg border border-outline-variant/50">
+              <span class="material-symbols-outlined text-primary text-[20px]" data-icon="article">article</span>
+              <div class="flex-1 overflow-hidden">
+                <p class="text-body-md truncate font-semibold">Supply_Chain_Map_2024</p>
+                <p class="text-[10px] text-outline">Database • 12kb</p>
+              </div>
+            </div>
+            <button class="w-full py-sm text-primary font-label-caps text-[11px] hover:underline">Manage Knowledge
+              Base</button>
+          </div>
+        </div>
+        <div class="relative group">
+          <div class="absolute inset-0 bg-primary/5 blur-xl group-focus-within:bg-primary/10 transition-all"></div>
+          <div
+            class="relative bg-surface-container-lowest border border-outline-variant rounded-2xl p-sm flex items-end gap-sm shadow-lg transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10">
+            <button
+              class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl text-primary hover:bg-primary/10 transition-all"
+              onclick="toggleKnowledge()" title="Knowledge Base">
+
+            </button>
+            <textarea
+              class="flex-1 bg-transparent border-none focus:ring-0 resize-none py-sm font-body-lg text-body-lg max-h-32"
+              oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+              placeholder="输入您的问题，如：对比不同市场的供应链成本..." rows="1"></textarea>
+            <div class="flex items-center gap-sm pr-xs pb-xs">
+              <button
+                class="w-8 h-8 flex items-center justify-center rounded-lg text-outline hover:text-primary transition-colors">
+                <span class="material-symbols-outlined" data-icon="mic">mic</span>
+              </button>
+              <button
+                class="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center shadow-sm hover:brightness-110 active:scale-95 transition-all">
+                <span class="material-symbols-outlined" data-icon="send">send</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Floating Action Button (FAB) suppression on focused chat, but if it exists it would be here. -->
+  <script>
+    function toggleKnowledge() {
+      const popup = document.getElementById('knowledge-popup');
+      popup.classList.toggle('hidden');
+    }
+
+    // Simple typing simulation for AI for visual flair
+    document.addEventListener('DOMContentLoaded', () => {
+      const viewport = document.getElementById('chat-viewport');
+      viewport.scrollTop = viewport.scrollHeight;
+
+      // Auto-resize logic for textarea
+      const textarea = document.querySelector('textarea');
+      textarea.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>

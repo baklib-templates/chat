@@ -74,20 +74,32 @@ Alpine.start();
   });
 })();
 
-// 历史会话 URL 管理
+// 历史会话 URL 管理（AI 对话静态页）
 (function () {
-  const STORAGE_KEY = 'last_search_url';
-  const SEARCH_PATH = '/-/search';
-  const HISTORY_LINK_ID = 'js-history-link';
+  const STORAGE_KEY = "last_chat_url";
+  const HISTORY_LINK_ID = "js-history-link";
+
+  function chatBaseUrl() {
+    return document.body?.dataset?.chatUrl || "/s/chat";
+  }
+
+  function isChatPagePath(pathname) {
+    try {
+      const base = new URL(chatBaseUrl(), window.location.origin);
+      return pathname === base.pathname || pathname.endsWith("/chat");
+    } catch {
+      return pathname.includes("/chat");
+    }
+  }
 
   /**
-   * 检查 URL 是否包含 q 参数
+   * 检查 URL 是否包含会话 id
    */
-  function hasQueryParam(url) {
+  function hasChatId(url) {
     try {
       const urlObj = new URL(url, window.location.origin);
-      return urlObj.searchParams.has('q');
-    } catch (e) {
+      return urlObj.searchParams.has("id");
+    } catch {
       return false;
     }
   }
@@ -107,14 +119,12 @@ Alpine.start();
         return;
       }
 
-      const lastSearchUrl = localStorage.getItem(STORAGE_KEY);
-      
-      if (lastSearchUrl && lastSearchUrl.startsWith(SEARCH_PATH)) {
-        historyLink.setAttribute('href', lastSearchUrl);
-        console.log('History link updated to:', lastSearchUrl);
+      const lastChatUrl = localStorage.getItem(STORAGE_KEY);
+
+      if (lastChatUrl && hasChatId(lastChatUrl)) {
+        historyLink.setAttribute("href", lastChatUrl);
       } else {
-        // 如果没有保存的 URL，使用默认的搜索页面
-        historyLink.setAttribute('href', SEARCH_PATH);
+        historyLink.setAttribute("href", chatBaseUrl());
       }
     } catch (e) {
       console.error('Error updating history link:', e);
@@ -127,16 +137,12 @@ Alpine.start();
   function saveHistoryUrl() {
     try {
       const loc = window.location;
-      const isSearchPage = loc.pathname === SEARCH_PATH;
-      
-      if (isSearchPage) {
-        const fullUrl = loc.pathname + (loc.search || '');
-        
-        // 只保存包含 q 参数的 URL
-        if (hasQueryParam(fullUrl)) {
+
+      if (isChatPagePath(loc.pathname)) {
+        const fullUrl = loc.pathname + (loc.search || "");
+
+        if (hasChatId(fullUrl)) {
           localStorage.setItem(STORAGE_KEY, fullUrl);
-          console.log('History URL saved:', fullUrl);
-          // 保存后立即更新链接
           updateHistoryLink();
         }
       }
@@ -215,17 +221,17 @@ Alpine.start();
       const searchInput = document.getElementById('js--search-input');
       if (!searchInput) return;
 
-      const lastSearchUrl = localStorage.getItem(STORAGE_KEY);
-      if (lastSearchUrl && lastSearchUrl.startsWith(SEARCH_PATH)) {
+      const lastChatUrl = localStorage.getItem(STORAGE_KEY);
+      if (lastChatUrl && hasChatId(lastChatUrl)) {
         try {
-          const urlObj = new URL(lastSearchUrl, window.location.origin);
-          const qParam = urlObj.searchParams.get('q');
+          const urlObj = new URL(lastChatUrl, window.location.origin);
+          const qParam =
+            urlObj.searchParams.get("message") || urlObj.searchParams.get("q");
           if (qParam && searchInput.value !== qParam) {
             searchInput.value = qParam;
-            console.log('Search input synced from localStorage:', qParam);
           }
         } catch (e) {
-          console.error('Error parsing stored URL:', e);
+          console.error("Error parsing stored chat URL:", e);
         }
       }
     } catch (e) {

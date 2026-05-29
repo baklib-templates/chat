@@ -1,14 +1,17 @@
 @import "tailwindcss";
 @import "./_daisyui.css";
+
+@source "../../layout/*.liquid";
+@source "../../snippets/**/*.liquid";
+@source "../../statics/*.liquid";
+@source "../../templates/*.liquid";
+@source "../javascripts/**/*.js";
+
 @import "./_base.css" layer(base);
 @import "./_components.css" layer(components);
 @import "./_utilities.css" layer(utilities);
-
-
-/* tiny-slider */
-
+@import "remixicon/fonts/remixicon.css";
 @import "tiny-slider/dist/tiny-slider.css";
-
+@import "./ai_messages.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-

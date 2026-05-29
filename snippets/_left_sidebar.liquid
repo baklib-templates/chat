@@ -1,0 +1,52 @@
+<aside class="w-[var(--left-sidebar-width)] max-w-80 shrink-0 flex-col border-r border-base-content/5 bg-base-100 p-5 backdrop-blur-xl flex bg-base-100 h-full ">
+  <div class="mb-7 flex items-center gap-3">
+    <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center">
+      {% assign favicon_url = site.favicon_url | presence %}
+      {% if favicon_url %}
+        <img src="{{ favicon_url }}" alt="" class="h-10 w-10 object-contain" />
+      {% else %}
+        <div class="rounded-lg bg-primary text-primary-content shadow-md shadow-primary/20 h-10 w-10 flex items-center justify-center">
+          <i class="ri-sparkling-2-fill text-xl" aria-hidden="true"></i>
+        </div>
+      {% endif %}
+    </div>
+    <div class="min-w-0">
+      <p class="truncate text-base font-bold text-base-content">{{ site.name | escape_once }}</p>
+      <p class="text-[10px] font-semibold tracking-widest text-base-content/45 uppercase">Knowledge AI</p>
+    </div>
+  </div>
+
+  <a href="/" class="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border border-base-content/10 px-4 py-3 text-sm font-bold text-base-content transition-all hover:border-primary/25 hover:bg-primary/10 hover:text-primary">
+    <i class="ri-add-line text-lg" aria-hidden="true"></i>
+    <span>新建会话</span>
+  </a>
+  <p class="mb-2 px-2 text-[11px] font-semibold tracking-wider text-base-content/35 uppercase">菜单</p>
+
+  {%- assign current_path = page.path -%}
+  {%- assign is_home = false -%}
+  {%- if current_path == "/" -%}
+    {%- assign is_home = true -%}
+  {%- endif -%}
+  {%- assign kb_item = site.pages['/'].children_in_list | first -%}
+  {%- assign nav_link = 'flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-base-content/5 hover:text-base-content' -%}
+  {%- assign nav_active = 'bg-primary/10 font-semibold text-primary' -%}
+  {%- assign nav_icon = 'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-base-content/5 text-base' -%}
+  {%- assign nav_icon_active = 'bg-primary text-primary-content' -%}
+
+  <nav class="flex flex-1 flex-col gap-1 overflow-y-auto" data-controller="nav-tree" data-nav-tree-active-class="{{ nav_active }}">
+    <a href="/" class="{{ nav_link }}{% if is_home %} {{ nav_active }}{% endif %}" data-nav-tree-target="item">
+      <i class="{{ nav_icon }}{% if is_home %} {{ nav_icon_active }}{% endif %} ri-chat-new-line" aria-hidden="true"></i>
+      <span>新会话</span>
+    </a>
+    <a id="js-history-link" href="{{ statics['chats'] }}" class="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-base-content/5 hover:text-base-content">
+      <i class="{{ nav_icon }} ri-chat-history-line" aria-hidden="true"></i>
+      <span>历史会话</span>
+    </a>
+    <a href="{{ kb_item.path }}" class="{{ nav_link }}{% if current_path == kb_item.path %} {{ nav_active }}{% endif %}" data-nav-tree-target="item">
+      <i class="{{ nav_icon }}{% if current_path == kb_item.path %} {{ nav_icon_active }}{% endif %} ri-book-2-line" aria-hidden="true"></i>
+      <span>知识库</span>
+    </a>
+  </nav>
+
+  {% render 'left_sidebar_footer' %}
+</aside>

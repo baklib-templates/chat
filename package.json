@@ -1,6 +1,6 @@
 {
-  "name": "baklib-template-cms-base",
-  "version": "1.0.0",
+  "name": "chat",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "build": "npm-run-all --parallel build:css build:js",
@@ -13,19 +13,31 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.8",
-    "daisyui": "^5.0.43",
-    "esbuild": "^0.19.3",
+    "@tailwindcss/cli": "^4.3.0",
+    "daisyui": "^5.5.20",
+    "esbuild": "^0.28.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.5.3",
     "prettier-plugin-liquid": "^0.0.1-security",
     "prettier-plugin-tailwindcss": "^0.6.12",
-    "tailwindcss": "^4.1.8"
+    "tailwindcss": "^4.3.0"
   },
   "dependencies": {
-    "@hotwired/turbo": "^8.0.13",
-    "alpinejs": "^3.14.9",
-    "marked": "^16.0.0",
+    "@alpinejs/collapse": "^3.15.0",
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.23",
+    "alpinejs": "^3.15.12",
+    "baklib-theme-i18n-cli": "^1.0.5",
+    "highlight.js": "^11.11.1",
+    "katex": "^0.17.0",
+    "marked": "^18.0.4",
+    "marked-footnote": "^1.4.0",
+    "marked-highlight": "^2.2.4",
+    "marked-katex-extension": "^5.1.9",
+    "mustache": "^4.2.0",
+    "remixicon": "^4.9.1",
+    "tippy.js": "^6.3.7",
+    "viewerjs": "^1.11.7",
     "tiny-slider": "^2.9.4"
   }
 }

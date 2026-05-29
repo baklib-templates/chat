@@ -12,11 +12,15 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: oklch(54.1% 0.281 293.009);
+  --color-primary: hsl(var(--theme-color-primary));
+  --color-secondary: hsl(var(--theme-color-secondary));
+  --color-accent: hsl(var(--theme-color-accent));
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
   prefersdark: false;
-  --color-primary: oklch(54.1% 0.281 293.009);
+  --color-primary: hsl(var(--theme-color-primary-dark));
+  --color-secondary: hsl(var(--theme-color-secondary-dark));
+  --color-accent: hsl(var(--theme-color-accent-dark));
 }

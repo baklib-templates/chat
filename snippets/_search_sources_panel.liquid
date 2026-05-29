@@ -1,0 +1,68 @@
+<aside
+  class="fixed inset-y-0 left-0 z-30 flex h-full w-full max-w-md -translate-x-full flex-col border-r border-base-content/5 bg-base-100/95 p-5 opacity-0 shadow-xl backdrop-blur-xl transition-all duration-300 pointer-events-none lg:relative lg:max-w-sm lg:translate-x-0 lg:opacity-100 lg:shadow-none lg:pointer-events-auto"
+>
+  <div class="mb-5 flex items-center justify-between">
+    <h2 class="text-base font-bold text-base-content">引用来源</h2>
+    <button type="button" class="btn btn-square btn-ghost btn-sm lg:hidden" aria-label="关闭">
+      <i class="ri-close-line text-lg" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  {% form_tag 'search', class: 'mb-4 w-full', data: { turbo_frame: 'frame--search-results' } %}
+    <label class="flex w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 py-2 transition-all focus-within:border-primary/30 focus-within:ring-2 focus-within:ring-primary/10">
+      <i class="ri-search-line text-base text-base-content/40" aria-hidden="true"></i>
+      <input
+        type="search"
+        id="js--search-input"
+        class="grow border-none bg-transparent text-sm outline-none placeholder:text-base-content/40"
+        placeholder="过滤关键词"
+        name="{{ form.keywords_field_name }}"
+        value="{{ search.keywords | escape_once }}"
+        autocomplete="off"
+      />
+      <button type="submit" class="hidden">搜索</button>
+    </label>
+  {% endform_tag %}
+
+  <turbo-frame id="frame--search-results" class="min-h-0 flex-1 overflow-y-auto">
+    {% assign extends_size = search.extends | size %}
+    {% assign items_size = search.pages | size %}
+    {% assign total_size = extends_size | plus: items_size %}
+
+    {% if total_size > 0 %}
+      {% paginate_tag search.pages, as: 'items', per: 10 %}
+        <p class="mb-3 text-xs font-semibold tracking-wide text-base-content/40 uppercase">搜索结果</p>
+        <div class="space-y-2">
+          {% if search.page_number == 1 and extends_size > 0 %}
+            {% for link in search.extends %}
+              <article class="flex gap-3 rounded-xl border border-base-content/8 bg-base-100 p-3 transition-colors hover:border-primary/20 hover:bg-primary/5">
+                <span class="w-5 shrink-0 text-sm font-bold text-primary">{{ forloop.index }}</span>
+                <div class="min-w-0 flex-1">
+                  <a class="search-highlight-block block text-sm font-medium text-base-content hover:text-primary" href="{{ link.url }}" data-turbo-frame="_top">{{ link.link_text | remove: '<b>' | remove: '</b>' }}</a>
+                  <a class="mt-1 block truncate text-xs text-base-content/50" href="{{ link.url }}" data-turbo-frame="_top">{{ link.url }}</a>
+                </div>
+              </article>
+            {% endfor %}
+          {% endif %}
+          {% for page in items %}
+            <article class="flex gap-3 rounded-xl border border-base-content/8 bg-base-100 p-3 transition-colors hover:border-primary/20 hover:bg-primary/5">
+              <span class="w-5 shrink-0 text-sm font-bold text-primary">{{ forloop.index }}</span>
+              <div class="min-w-0 flex-1">
+                <a class="search-highlight-block block text-sm font-medium text-base-content hover:text-primary" href="{{ page.url }}" data-turbo-frame="_top">{{ page.highlighted_search_title | remove: '<b>' | remove: '</b>' | truncate: 100 }}</a>
+                {% unless page.highlighted_search_content == empty %}
+                  <a class="search-highlight-block mt-1 line-clamp-2 block text-xs text-base-content/50" href="{{ page.url }}" data-turbo-frame="_top">{{ page.highlighted_search_content | remove: '<b>' | remove: '</b>' | truncate: 200 }}</a>
+                {% endunless %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+        <div class="my-6 flex justify-center">{% render 'paginate', paginate: paginate %}</div>
+      {% endpaginate_tag %}
+    {% else %}
+      <div class="flex flex-1 flex-col items-center justify-center py-16 text-center text-sm text-base-content/50">
+        <i class="ri-file-search-line mb-2 text-3xl opacity-40" aria-hidden="true"></i>
+        <p>暂无引用来源</p>
+      </div>
+    {% endif %}
+  </turbo-frame>
+</aside>

@@ -13,46 +13,56 @@
     <!-- start head_html -->
     {{ site.settings.head_html }}
 
-    <style > :root
-    {
-      --color-base-100: hsl(var(--theme-color-base-100));
-      --color-base-200: hsl(var(--theme-color-base-200));
-      --color-base-300: hsl(var(--theme-color-base-300));
-      --color-base-content: hsl(var(--theme-color-base-content));
-      --color-primary: hsl(var(--theme-color-primary));
-      --color-secondary: hsl(var(--theme-color-secondary));
-      --color-accent: hsl(var(--theme-color-accent));
-      --color-neutral: hsl(var(--theme-color-neutral));
-      --color-info: hsl(var(--theme-color-info));
-      --color-success: hsl(var(--theme-color-success));
-      --color-warning: hsl(var(--theme-color-warning));
-      --color-error: hsl(var(--theme-color-error));
+    <style>
+      :root {
+        --color-base-100: hsl(var(--theme-color-base-100));
+        --color-base-200: hsl(var(--theme-color-base-200));
+        --color-base-300: hsl(var(--theme-color-base-300));
+        --color-base-content: hsl(var(--theme-color-base-content));
+        --color-primary: hsl(var(--theme-color-primary));
+        --color-secondary: hsl(var(--theme-color-secondary));
+        --color-accent: hsl(var(--theme-color-accent));
+        --color-neutral: hsl(var(--theme-color-neutral));
+        --color-info: hsl(var(--theme-color-info));
+        --color-success: hsl(var(--theme-color-success));
+        --color-warning: hsl(var(--theme-color-warning));
+        --color-error: hsl(var(--theme-color-error));
 
-      --max-content-width: {{ site.settings.screen_width.value | presence | default: '1200px' }};
-      --left-sidebar-width: {{ site.settings.left_sidebar_width.value | presence | default: '240px' }};
-      --right-sidebar-width: {{ site.settings.right_sidebar_width.value | presence | default: '240px' }};
-      --header-height: {{ site.settings.header_height.value | presence | default: '68px' }};
-    }
+        --max-content-width: {{ site.settings.screen_width.value | presence | default: '1200px' }};
+        --left-sidebar-width: {{ site.settings.left_sidebar_width.value | presence | default: '240px' }};
+        --right-sidebar-width: {{ site.settings.right_sidebar_width.value | presence | default: '240px' }};
+        --header-height: {{ site.settings.header_height.value | presence | default: '68px' }};
+        --chat-sidebar-width: 17.5rem;
+      }
 
-    :root:has(input.theme-controller[value=dark]:checked),
-    [data-theme="dark"] {
-      --color-base-100: hsl(var(--theme-color-base-100-dark));
-      --color-base-200: hsl(var(--theme-color-base-200-dark));
-      --color-base-300: hsl(var(--theme-color-base-300-dark));
-      --color-base-content: hsl(var(--theme-color-base-content-dark));
-      --color-primary: hsl(var(--theme-color-primary-dark));
-      --color-secondary: hsl(var(--theme-color-secondary-dark));
-      --color-accent: hsl(var(--theme-color-accent-dark));
-      --color-neutral: hsl(var(--theme-color-neutral-dark));
-      --color-info: hsl(var(--theme-color-info-dark));
-      --color-success: hsl(var(--theme-color-success-dark));
-      --color-warning: hsl(var(--theme-color-warning-dark));
-      --color-error: hsl(var(--theme-color-error-dark));
-    }
-  </style>
-    
+      :root:has(input.theme-controller[value=dark]:checked),
+      [data-theme="dark"] {
+        --color-base-100: hsl(var(--theme-color-base-100-dark));
+        --color-base-200: hsl(var(--theme-color-base-200-dark));
+        --color-base-300: hsl(var(--theme-color-base-300-dark));
+        --color-base-content: hsl(var(--theme-color-base-content-dark));
+        --color-primary: hsl(var(--theme-color-primary-dark));
+        --color-secondary: hsl(var(--theme-color-secondary-dark));
+        --color-accent: hsl(var(--theme-color-accent-dark));
+        --color-neutral: hsl(var(--theme-color-neutral-dark));
+        --color-info: hsl(var(--theme-color-info-dark));
+        --color-success: hsl(var(--theme-color-success-dark));
+        --color-warning: hsl(var(--theme-color-warning-dark));
+        --color-error: hsl(var(--theme-color-error-dark));
+      }
+    </style>
   </head>
-  <body id="js--body">
-      {{ content_for_layout }}
+  <body id="js--body" data-chat-url="{{ statics['chat'] }}">
+    <div class="drawer lg:drawer-open">
+      <input id="left-sidebar-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content flex flex-col items-center justify-center w-full">
+        {% render 'header' %}
+        {{ content_for_layout }}
+      </div>
+      <div class="drawer-side">
+        <label for="left-sidebar-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        {% render 'left_sidebar' %}
+      </div>
+    </div>
   </body>
 </html>

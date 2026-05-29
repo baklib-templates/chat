@@ -1,0 +1,137 @@
+{% comment %}
+  用户区展示：已登录为资料入口，未登录为默认头像 + 登录
+  variant: toolbar（顶栏胶囊）| sidebar（侧栏菜单项）
+{% endcomment %}
+{% assign variant = variant | default: 'toolbar' %}
+{% assign can_baklib_login = site.baklib_login_enabled %}
+{% assign can_sso_login = site.sso_login_enabled %}
+
+{% if current_user %}
+  {% if variant == 'sidebar' %}
+    <div class="dropdown dropdown-top w-full">
+      <button type="button" tabindex="0" class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-base-content/5 hover:text-base-content">
+        {% if current_user.image %}
+          <img src="{{ current_user.image }}" alt="" class="h-8 w-8 shrink-0 rounded-lg object-cover" />
+        {% else %}
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-content">
+            <i class="ri-user-line text-base" aria-hidden="true"></i>
+          </span>
+        {% endif %}
+        <span class="truncate">{{ current_user.name }}</span>
+      </button>
+      <ul tabindex="0" class="dropdown-content menu z-50 mb-2 w-52 rounded-xl border border-base-content/10 bg-base-100 p-2 shadow-lg">
+        <li><a href="{{ current_user.profile_url }}">{{ 'generic.profile' | t }}</a></li>
+        <li>
+          {% form_tag 'sign_out' %}
+            <button type="submit" class="w-full text-left">{{ 'buttons.logout' | t }}</button>
+          {% endform_tag %}
+        </li>
+      </ul>
+    </div>
+  {% else %}
+    <a href="{{ current_user.profile_url }}" class="flex items-center gap-2 rounded-full border border-base-content/8 bg-base-100 py-1 pr-3 pl-1 transition-colors hover:border-primary/20 hover:bg-primary/5">
+      {% if current_user.image %}
+        <img src="{{ current_user.image }}" alt="" class="h-8 w-8 rounded-full object-cover" />
+      {% else %}
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
+          <i class="ri-user-line text-base" aria-hidden="true"></i>
+        </span>
+      {% endif %}
+      <span class="hidden max-w-[7rem] truncate text-sm font-semibold sm:inline">{{ current_user.name }}</span>
+    </a>
+  {% endif %}
+{% else %}
+  {% comment %} 未登录：始终展示入口；form_tag 在登录未开启时输出为空，需分支处理 {% endcomment %}
+  {% if variant == 'sidebar' %}
+    {% if can_baklib_login %}
+      {% form_tag 'sign_in_with_baklib', class: 'w-full' %}
+        <input type="hidden" name="sign_up" value="true" />
+        <button
+          type="submit"
+          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary"
+          data-disable-with="..."
+          title="登录后同步历史会话"
+        >
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/20 bg-base-200/80 text-base-content/45">
+            <i class="ri-user-line text-base" aria-hidden="true"></i>
+          </span>
+          <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5 text-left">
+            <span class="font-semibold text-base-content">登录</span>
+            <span class="text-xs text-base-content/45">使用账号继续</span>
+          </span>
+          <i class="ri-arrow-right-s-line shrink-0 text-base-content/35" aria-hidden="true"></i>
+        </button>
+      {% endform_tag %}
+    {% elsif can_sso_login %}
+      {% form_tag 'sign_in_with_sso', class: 'w-full' %}
+        <button
+          type="submit"
+          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary"
+          data-disable-with="..."
+        >
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/20 bg-base-200/80 text-base-content/45">
+            <i class="ri-user-line text-base" aria-hidden="true"></i>
+          </span>
+          <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5 text-left">
+            <span class="font-semibold text-base-content">登录</span>
+            <span class="text-xs text-base-content/45">使用企业账号继续</span>
+          </span>
+          <i class="ri-arrow-right-s-line shrink-0 text-base-content/35" aria-hidden="true"></i>
+        </button>
+      {% endform_tag %}
+    {% else %}
+      <div class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm text-base-content/50" title="站点未开启登录">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/15 bg-base-200/60 text-base-content/40">
+          <i class="ri-user-line text-base" aria-hidden="true"></i>
+        </span>
+        <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+          <span class="font-medium">访客</span>
+          <span class="text-xs">可直接使用 AI 问答</span>
+        </span>
+      </div>
+    {% endif %}
+  {% else %}
+    {% if can_baklib_login %}
+      {% form_tag 'sign_in_with_baklib' %}
+        <input type="hidden" name="sign_up" value="true" />
+        <button
+          type="submit"
+          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm"
+          data-disable-with="..."
+          title="点击登录"
+          aria-label="登录"
+        >
+          <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/25 bg-base-100 text-base-content/40 transition-colors group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:text-primary">
+            <i class="ri-user-line text-base" aria-hidden="true"></i>
+          </span>
+          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">登录</span>
+        </button>
+      {% endform_tag %}
+    {% elsif can_sso_login %}
+      {% form_tag 'sign_in_with_sso' %}
+        <button
+          type="submit"
+          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm"
+          data-disable-with="..."
+          title="点击登录"
+          aria-label="登录"
+        >
+          <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/25 bg-base-100 text-base-content/40 transition-colors group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:text-primary">
+            <i class="ri-user-line text-base" aria-hidden="true"></i>
+          </span>
+          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">登录</span>
+        </button>
+      {% endform_tag %}
+    {% else %}
+      <span
+        class="flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/40 py-1 pr-3 pl-1 text-base-content/50"
+        title="站点未开启登录，当前为访客模式"
+      >
+        <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/20 bg-base-100 text-base-content/40">
+          <i class="ri-user-line text-base" aria-hidden="true"></i>
+        </span>
+        <span class="text-sm font-medium">访客</span>
+      </span>
+    {% endif %}
+  {% endif %}
+{% endif %}

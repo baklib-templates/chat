@@ -8,6 +8,13 @@ import MarkdownController from "./markdown_controller"
 import CopyButtonController from "./copy_button_controller"
 import AiPipController from "./ai_pip_controller"
 import WelcomeChatController from "./welcome_chat_controller"
+import HeaderSearchController from "./header_search_controller"
+import TocController from "./toc_controller"
+import ImagesViewerController from "./images_viewer_controller"
+import LinkTargetController from "./link_target_controller"
+import ClipboardController from "./clipboard_controller"
+import CopyPageController from "./copy_page_controller"
+import PageToolsController from "./page_tools_controller"
 
 if (!window.Stimulus) {
   window.Stimulus = Application.start()
@@ -22,3 +29,10 @@ application.register("markdown", MarkdownController)
 application.register("copy-button", CopyButtonController)
 application.register("ai-pip", AiPipController)
 application.register("welcome-chat", WelcomeChatController)
+application.register("header-search", HeaderSearchController)
+application.register("toc", TocController)
+application.register("images-viewer", ImagesViewerController)
+application.register("link-target", LinkTargetController)
+application.register("clipboard", ClipboardController)
+application.register("copy-page", CopyPageController)
+application.register("page-tools", PageToolsController)

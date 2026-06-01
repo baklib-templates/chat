@@ -30,10 +30,15 @@ export default class extends Controller {
     this.isStreaming = false;
     this.chatHistory = [];
     this.currentRound = null;
+    this.shouldAutoScroll = true;
     this.#hydrateLaunchParamsFromUrl();
     this.#hydrateFromDom();
+    this.#bindAutoScrollTracking();
     this.syncSendButton();
     this.#syncClearButtonVisibility();
+    if (this.chatHistory.length > 0) {
+      this.scrollToBottom(true);
+    }
   }
 
   #hydrateLaunchParamsFromUrl() {
@@ -93,7 +98,29 @@ export default class extends Controller {
   }
 
   disconnect() {
+    this.#unbindAutoScrollTracking();
     this.stopStreaming();
+  }
+
+  #bindAutoScrollTracking() {
+    const el = this.messagesScrollTargets[0];
+    if (!el || this.autoScrollElement === el) return;
+
+    this.#unbindAutoScrollTracking();
+    this.autoScrollElement = el;
+    this.onMessagesScroll = () => {
+      const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+      this.shouldAutoScroll = isAtBottom;
+    };
+    el.addEventListener("scroll", this.onMessagesScroll, { passive: true });
+  }
+
+  #unbindAutoScrollTracking() {
+    if (this.autoScrollElement && this.onMessagesScroll) {
+      this.autoScrollElement.removeEventListener("scroll", this.onMessagesScroll);
+    }
+    this.autoScrollElement = null;
+    this.onMessagesScroll = null;
   }
 
   messageValueChanged() {
@@ -252,6 +279,7 @@ export default class extends Controller {
     this.#stripOneShotMessageFromUrl();
 
     this.#toggleEmptyHint(false);
+    this.shouldAutoScroll = true;
 
     this.currentRound = {
       user: message,
@@ -271,10 +299,14 @@ export default class extends Controller {
   }
 
   async #streamAssistant(message, idx, { replaceLastAssistant = false, resendMessageId = null } = {}) {
+    const round = this.chatHistory[idx];
+    if (!round) return;
+
+    this.currentRound = round;
     this.isStreaming = true;
     this.syncSendButton();
-    this.currentRound.ai = "";
-    this.currentRound.status = "streaming";
+    round.ai = "";
+    round.status = "streaming";
     if (!replaceLastAssistant) {
       this.updateCurrentAssistantMessage("", "streaming", idx);
     }
@@ -328,12 +360,6 @@ export default class extends Controller {
 
       if (data.status === "completed") {
         this.currentRound.ai += data.message;
-        if (this.messagesValue.completed) {
-          this.currentRound.ai = this.#appendCompletionText(
-            this.currentRound.ai,
-            this.messagesValue.completed
-          );
-        }
         this.#assignMessageIdsFromSSE(data, idx);
         this.currentRound.status = "completed";
         this.#finishStreaming(idx);
@@ -353,17 +379,21 @@ export default class extends Controller {
   }
 
   #handleStreamError(message, idx) {
-    this.currentRound.ai = message;
-    this.currentRound.status = "error";
+    const round = this.chatHistory[idx];
+    if (!round) return;
+
+    this.currentRound = round;
+    round.ai = message;
+    round.status = "error";
     this.#finishStreaming(idx);
-    this.currentRound.retry = () => {
+    round.retry = () => {
       void this.#resendRound(idx);
     };
     this.updateCurrentAssistantMessage(
-      this.currentRound.ai,
+      round.ai,
       "error",
       idx,
-      this.currentRound.retry
+      round.retry
     );
   }
 
@@ -446,7 +476,7 @@ export default class extends Controller {
       container.appendChild(tpl);
     });
     if (status === "completed") this.#showAssistantActions(idx);
-    this.scrollToBottom(status !== "streaming");
+    this.scrollToBottom(true);
   }
 
   updateCurrentAssistantMessage(content, status, idx, retryFn) {
@@ -488,6 +518,7 @@ export default class extends Controller {
           retryFn();
         });
       }
+      this.scrollToBottom();
       return;
     }
 
@@ -497,6 +528,7 @@ export default class extends Controller {
         disableMarkdownStyle();
         renderedEl.innerHTML = `<span class="text-base-content/50">${this.escapeHTML(content)}</span>`;
       }
+      this.scrollToBottom();
       return;
     }
 
@@ -504,16 +536,38 @@ export default class extends Controller {
       enableMarkdownStyle();
       if (contentEl) contentEl.textContent = content;
       this.#triggerMarkdown(markdownRoot);
+      if (status === "completed") {
+        this.#renderCompletionHtml(markdownRoot, this.messagesValue?.completed);
+      } else {
+        this.#clearCompletionHtml(markdownRoot);
+      }
     } else if (renderedEl) {
       disableMarkdownStyle();
       renderedEl.innerHTML = `<span class="text-base-content/50">${this.messagesValue.thinking}</span>`;
     }
+
+    this.scrollToBottom();
   }
 
   #triggerMarkdown(markdownRoot) {
     if (!markdownRoot || !window.Stimulus) return;
     const ctrl = window.Stimulus.getControllerForElementAndIdentifier(markdownRoot, "markdown");
     ctrl?.renderContent();
+  }
+
+  #clearCompletionHtml(markdownRoot) {
+    markdownRoot?.querySelector(".ai-completed-text")?.remove();
+  }
+
+  #renderCompletionHtml(markdownRoot, html) {
+    this.#clearCompletionHtml(markdownRoot);
+    const tail = (html || "").trim();
+    if (!tail || !markdownRoot) return;
+
+    const el = document.createElement("div");
+    el.className = "ai-completed-text";
+    el.innerHTML = tail;
+    markdownRoot.appendChild(el);
   }
 
   #showAssistantActions(idx) {
@@ -547,6 +601,8 @@ export default class extends Controller {
     const round = this.chatHistory[idx];
     if (!round?.user) return;
     if (this.isStreaming) this.stopStreaming();
+
+    this.currentRound = round;
 
     await this.#ensureChatId();
 
@@ -704,14 +760,22 @@ export default class extends Controller {
   }
 
   scrollToBottom(force = false) {
-    const scrollEls = this.hasMessagesScrollTarget
-      ? this.messagesScrollTargets
-      : this.messagesTargets;
-    scrollEls.forEach((el) => {
-      const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
-      if (force || isAtBottom) {
+    const shouldScroll = force || this.shouldAutoScroll || this.isStreaming;
+    if (!shouldScroll) return;
+
+    const run = () => {
+      const scrollEls = this.hasMessagesScrollTarget
+        ? this.messagesScrollTargets
+        : this.messagesTargets;
+
+      scrollEls.forEach((el) => {
         el.scrollTop = el.scrollHeight;
-      }
+      });
+    };
+
+    requestAnimationFrame(() => {
+      run();
+      requestAnimationFrame(run);
     });
   }
 

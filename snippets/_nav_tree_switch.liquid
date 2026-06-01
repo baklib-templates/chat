@@ -1,8 +1,6 @@
 {%# locals: (page:, current_path:, show_method_badges: false) %}
-{% assign current_path = current_path | default: page.path | default: '' %}
 {% assign show_method_badges = show_method_badges | default: false %}
 {% assign child_count = page.children_in_list | size %}
-
 {% if child_count > 0 %}
   <div class="min-w-0 max-w-full">
     {% if child_count > 100 %}
@@ -10,7 +8,7 @@
       <turbo-frame
         class="w-full"
         id="nav_tree_frame_{{ parent_path | replace: '/', '_' }}"
-        src="{{ statics['nav_tree'] }}?parent_path={{ parent_path }}"
+        src="{{ statics['nav_tree'] }}?parent_path={{ parent_path | url_encode }}&current_path={{ current_path | url_encode }}"
         loading="lazy"
       >
         <div class="flex h-12 items-center justify-center text-base-content/50">

@@ -1,18 +1,55 @@
-{% assign company_name = site.settings.company_name | presence %}
+{% assign company_name = site.settings.company_name | presence | default: site.name %}
 {% assign copyright = site.settings.copyright | presence %}
-<div class="p-1 sm:border-t border-base-content/15">
-    <div class="w-full text-center text-base-content/60 py-4 space-x-3">
-        {% if  site.settings.company_name %}
-        <span>© {{  site.settings.company_name }} {{ 'snippets.footer.copyright' | t }}</span>
+{% assign service_term_url = site.settings.service_term_url | presence %}
+{% assign privacy_policy_url = site.settings.privacy_policy_url | presence %}
+{% assign year = 'now' | date: '%Y' %}
+
+{% if company_name or copyright or service_term_url or privacy_policy_url %}
+  <footer class="mt-10 border-t border-base-200 py-8 text-[0.85rem] text-base-content/60 print:hidden">
+    <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center sm:justify-start sm:text-left">
+        {% if company_name %}
+          <p class="m-0">
+            © {{ year }} {{ company_name }}
+            <span class="text-base-content/50">{{ 'snippets.footer.copyright' | t: '版权所有' }}</span>
+          </p>
         {% endif %}
         {% if copyright %}
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"  class="hover:underline">{{ copyright }}</a>
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link link-hover text-base-content/60 hover:text-base-content"
+          >
+            {{- copyright -}}
+          </a>
         {% endif %}
-        {% if site.settings.service_term_url %}
-            <a href="{{ site.settings.service_term_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">服务条款</a>
-        {% endif %}
-        {% if site.settings.privacy_policy_url %}
-            <a href="{{ site.settings.privacy_policy_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">隐私政策</a>
-        {% endif %}
+      </div>
+
+      {% if service_term_url or privacy_policy_url %}
+        <div class="flex flex-wrap items-center justify-center gap-4 sm:justify-end">
+          {% if service_term_url %}
+            <a
+              href="{{ service_term_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link link-hover text-base-content/60 hover:text-base-content"
+            >
+              {{ 'snippets.footer.service_terms' | t: '服务条款' }}
+            </a>
+          {% endif %}
+          {% if privacy_policy_url %}
+            <a
+              href="{{ privacy_policy_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link link-hover text-base-content/60 hover:text-base-content"
+            >
+              {{ 'snippets.footer.privacy_policy' | t: '隐私政策' }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
     </div>
-</div>
+  </footer>
+{% endif %}

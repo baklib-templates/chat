@@ -1,14 +1,62 @@
 {% assign ai_variant = variant | default: 'main' %}
 {% assign ai_wrapper_class = wrapper_class | default: 'relative z-10 min-h-0 flex-1 overflow-y-auto' %}
-{% assign ai_messages_class = messages_class | default: 'mx-auto flex w-full max-w-[50rem] flex-col gap-6 px-4 py-4 sm:px-6' %}
+{% assign ai_messages_class = messages_class | default: 'ai-chat-messages' %}
+{% assign avatar = 'images/avatar2.png' | asset_url %}
 
 <div
   class="{{ ai_wrapper_class }}"
   data-ai-search-target="messagesScroll"
   data-ai-search-variant="{{ ai_variant }}"
 >
-  <div class="chat-ai-empty-hint flex h-full min-h-[12rem] items-center justify-center px-4 text-center text-[0.8125rem] leading-relaxed text-base-content/50">
-    内容由 AI 生成，可能存在错误，请自行核实。
+  <div data-ai-search-target="messages" class="{{ ai_messages_class }}">
+    {% if chat %}
+      {% for message in chat.messages %}
+        {% if message.role == 'user' %}
+          <div class="ai-chat-user-round" data-user-message-id="{{ message.id }}">
+            <div class="ai-chat-user-content">
+              <p class="ai-user-message">{{ message.content }}</p>
+            </div>
+            <img src="{{ current_user.image | default: avatar }}" alt="" class="ai-chat-avatar ai-chat-avatar--user" />
+          </div>
+        {% elsif message.role == 'assistant' %}
+          <div class="ai-chat-assistant-round" data-assistant-message-id="{{ message.id }}">
+            <div class="ai-chat-avatar ai-chat-avatar--bot">
+              <i class="ri-robot-2-line text-base leading-none sm:text-lg" aria-hidden="true"></i>
+            </div>
+            <div class="ai-chat-assistant-body">
+              <div class="ai-chat-bubble ai-chat-bubble--assistant" data-controller="markdown">
+                <pre class="hidden" data-markdown-target="content">{{ message.content | escape }}</pre>
+                <div class="chat-message max-w-none break-words text-base-content" data-markdown-target="renderedContent"></div>
+                {% if ai_completed_text != blank %}
+                  <div class="ai-completed-text">{{ ai_completed_text | sanitize_html_relaxed }}</div>
+                {% endif %}
+              </div>
+              <div class="ai-message-actions hidden">
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+                  data-action="click->ai-search#copyResponse"
+                  aria-label="复制回答"
+                >
+                  <i class="ri-file-copy-line text-sm leading-none" aria-hidden="true"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+                  data-action="click->ai-search#retryLastResponse"
+                  aria-label="重新生成"
+                >
+                  <i class="ri-refresh-line text-sm leading-none" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="chat-ai-empty-hint flex h-full min-h-[12rem] items-center justify-center px-4 text-center text-[0.8125rem] leading-relaxed text-base-content/50">
+          内容由 AI 生成，可能存在错误，请自行核实。
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
-  <div data-ai-search-target="messages" class="{{ ai_messages_class }}"></div>
 </div>

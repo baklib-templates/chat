@@ -3,11 +3,41 @@
     "video-page": {
       "recent_videos": "最近视频",
       "recent_videos_description": "探索最新发布的精彩视频内容，为您带来前沿资讯和深度解析。"
+    },
+    "page": {
+      "copy_success": "链接已复制",
+      "page_toc": "页内目录",
+      "llm_prompt_template": "读取 %{url} 的内容，以便我可以询问关于它的问题。",
+      "llm_copying": "复制中...",
+      "llm_copied": "已复制"
     }
   },
   "snippets": {
     "footer": {
-      "copyright": "版权所有"
+      "copyright": "版权所有",
+      "service_terms": "服务条款",
+      "privacy_policy": "隐私政策"
+    },
+    "page_tools": {
+      "copy_page_label": "复制页面",
+      "copy_page_description": "将页面以 Markdown 格式复制给 LLMs",
+      "open_in_chatgpt": "在 ChatGPT 中打开",
+      "open_in_claude": "在 Claude 中打开",
+      "ask_about_page": "询问有关此页面的问题",
+      "copy_mcp_label": "复制 MCP 安装命令",
+      "copy_mcp_description": "复制 npx 命令以安装 MCP 服务器",
+      "connect_to_cursor": "连接到 Cursor",
+      "connect_to_cursor_description": "在 Cursor 中安装 MCP Server",
+      "connect_to_vscode": "连接到 VS Code",
+      "connect_to_vscode_description": "在 VS Code 中安装 MCP Server"
+    },
+    "page_feedback": {
+      "cancel": "取消",
+      "submit": "提交反馈",
+      "thanks": "感谢你的反馈，我们会持续优化内容体验。",
+      "other": "其他",
+      "other_prefix": "其他：",
+      "other_details_sr": "其他反馈详情"
     },
     "feedback_form": {
       "title": "提交反馈",
@@ -51,5 +81,12 @@
       "close": "关闭",
       "logout": "退出登录",
       "signin": "登录"
-    }
+    },
+  "page": {
+    "ask_ai": "向 AI 提问",
+    "ask_ai_message": "请介绍一下「%{title}」"
+  },
+  "search": {
+    "ask_ai_message": "请介绍一下「%{query}」"
+  }
 }

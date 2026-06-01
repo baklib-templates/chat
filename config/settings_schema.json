@@ -123,7 +123,7 @@
       },
       {
         "id": "ai_search_completed_text",
-        "type": "textarea",
+        "type": "html",
         "label": "t:schema.settings.brand.ai_search_completed_text.label",
         "info": "t:schema.settings.brand.ai_search_completed_text.info",
         "default": "t:schema.settings.brand.ai_search_completed_text.default"
@@ -136,7 +136,7 @@
       },
       {
         "id": "help_url",
-        "type": "url",
+        "type": "html",
         "label": "帮助中心链接",
         "info": "显示在侧栏左下角「帮助」入口，可填帮助文档或 FAQ 页面地址。"
       }
@@ -175,6 +175,43 @@
         "label": "是否显示tags版块",
         "info": "如果选中，则在左侧导航显示tags版块；否则不显示",
         "default": false
+      }
+    ]
+  },
+  {
+    "name": "t:schema.page_config.name",
+    "settings": [
+      {
+        "id": "show_published_at",
+        "type": "checkbox",
+        "label": "t:schema.page_config.settings.show_published_at.label",
+        "default": false
+      },
+      {
+        "id": "show_author",
+        "type": "checkbox",
+        "label": "t:schema.page_config.settings.show_author.label",
+        "default": false
+      },
+      {
+        "id": "feedback_enabled",
+        "type": "checkbox",
+        "label": "t:schema.page_config.settings.feedback_enabled.label",
+        "default": true
+      },
+      {
+        "id": "show_page_tools_dropdown",
+        "type": "checkbox",
+        "label": "t:schema.page_config.settings.show_page_tools_dropdown.label",
+        "default": true
+      },
+      {
+        "id": "feedback_helper_text",
+        "type": "textarea",
+        "label": "t:schema.page_config.settings.feedback_helper_text.label",
+        "rows": 3,
+        "info": "t:schema.page_config.settings.feedback_helper_text.info",
+        "default": "t:schema.page_config.settings.feedback_helper_text.default"
       }
     ]
   },

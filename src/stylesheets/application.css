@@ -12,6 +12,11 @@
 @import "./_utilities.css" layer(utilities);
 @import "remixicon/fonts/remixicon.css";
 @import "tiny-slider/dist/tiny-slider.css";
+
+@import "./tooltip.css";
+@import 'viewerjs/dist/viewer.css';
+
 @import "./ai_messages.css";
+@import "./page_content.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

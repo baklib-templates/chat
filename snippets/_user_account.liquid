@@ -1,35 +1,19 @@
 {% comment %}
-  用户区展示：已登录为资料入口，未登录为默认头像 + 登录
-  variant: toolbar（顶栏胶囊）| sidebar（侧栏菜单项）
+  用户区展示：已登录为胶囊 + 下拉菜单，未登录为登录/访客入口
+  variant: toolbar（顶栏）| sidebar（侧栏，仅未登录时使用）
 {% endcomment %}
 {% assign variant = variant | default: 'toolbar' %}
 {% assign can_baklib_login = site.baklib_login_enabled %}
 {% assign can_sso_login = site.sso_login_enabled %}
 
 {% if current_user %}
-  {% if variant == 'sidebar' %}
-    <div class="dropdown dropdown-top w-full">
-      <button type="button" tabindex="0" class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-base-content/5 hover:text-base-content">
-        {% if current_user.image %}
-          <img src="{{ current_user.image }}" alt="" class="h-8 w-8 shrink-0 rounded-lg object-cover" />
-        {% else %}
-          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-content">
-            <i class="ri-user-line text-base" aria-hidden="true"></i>
-          </span>
-        {% endif %}
-        <span class="truncate">{{ current_user.name }}</span>
-      </button>
-      <ul tabindex="0" class="dropdown-content menu z-50 mb-2 w-52 rounded-xl border border-base-content/10 bg-base-100 p-2 shadow-lg">
-        <li><a href="{{ current_user.profile_url }}">{{ 'generic.profile' | t }}</a></li>
-        <li>
-          {% form_tag 'sign_out' %}
-            <button type="submit" class="w-full text-left">{{ 'buttons.logout' | t }}</button>
-          {% endform_tag %}
-        </li>
-      </ul>
-    </div>
-  {% else %}
-    <a href="{{ current_user.profile_url }}" class="flex items-center gap-2 rounded-full border border-base-content/8 bg-base-100 py-1 pr-3 pl-1 transition-colors hover:border-primary/20 hover:bg-primary/5">
+  <div class="dropdown dropdown-end">
+    <button
+      type="button"
+      tabindex="0"
+      class="flex items-center gap-2 rounded-full border border-base-content/8 bg-base-100 py-1 pr-3 pl-1 transition-colors hover:border-primary/20 hover:bg-primary/5"
+      aria-label="{{ current_user.name | escape_once }}"
+    >
       {% if current_user.image %}
         <img src="{{ current_user.image }}" alt="" class="h-8 w-8 rounded-full object-cover" />
       {% else %}
@@ -38,8 +22,16 @@
         </span>
       {% endif %}
       <span class="hidden max-w-[7rem] truncate text-sm font-semibold sm:inline">{{ current_user.name }}</span>
-    </a>
-  {% endif %}
+    </button>
+    <ul tabindex="0" class="dropdown-content menu z-50 mt-2 w-52 rounded-xl border border-base-content/10 bg-base-100 p-2 shadow-lg">
+      <li><a href="{{ current_user.profile_url }}">{{ 'generic.profile' | t }}</a></li>
+      <li>
+        {% form_tag 'sign_out' %}
+          <button type="submit" class="w-full text-left">{{ 'buttons.logout' | t }}</button>
+        {% endform_tag %}
+      </li>
+    </ul>
+  </div>
 {% else %}
   {% comment %} 未登录：始终展示入口；form_tag 在登录未开启时输出为空，需分支处理 {% endcomment %}
   {% if variant == 'sidebar' %}
@@ -91,7 +83,7 @@
     {% endif %}
   {% else %}
     {% if can_baklib_login %}
-      {% form_tag 'sign_in_with_baklib' %}
+      {% form_tag 'sign_in_with_baklib', silent: false %}
         <input type="hidden" name="sign_up" value="true" />
         <button
           type="submit"

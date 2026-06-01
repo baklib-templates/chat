@@ -1,6 +1,63 @@
 @import "highlight.js/styles/github.css";
 @import "katex/dist/katex.min.css";
 
+/* ── Chat 消息区 ── */
+.ai-chat-messages {
+  @apply mx-auto flex w-full max-w-[50rem] flex-col gap-3 px-3 py-3 sm:gap-3.5 sm:px-6 sm:py-5;
+}
+
+.ai-chat-user-round {
+  @apply flex w-full items-start justify-end gap-2.5;
+}
+
+.ai-chat-user-content {
+  @apply max-w-[min(85%,32rem)] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-sm leading-relaxed text-primary-content shadow-sm shadow-primary/15 sm:text-[0.9375rem];
+}
+
+.ai-chat-user-round .ai-user-message {
+  @apply break-words whitespace-pre-wrap;
+}
+
+.ai-chat-assistant-round {
+  @apply flex w-full items-start gap-2.5;
+}
+
+.ai-chat-assistant-body {
+  @apply flex min-w-0 max-w-[min(85%,42rem)] flex-col gap-1;
+}
+
+.ai-chat-bubble--assistant {
+  @apply w-fit max-w-full rounded-2xl rounded-tl-md border border-base-content/8 bg-base-200/35 px-4 py-2.5 text-sm shadow-sm backdrop-blur-sm sm:text-[0.9375rem];
+}
+
+.ai-chat-avatar {
+  @apply shrink-0 object-cover;
+}
+
+.ai-chat-avatar--user {
+  @apply h-8 w-8 rounded-full border-2 border-primary/15 sm:h-9 sm:w-9;
+}
+
+.ai-chat-avatar--bot {
+  @apply flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-content shadow-sm shadow-primary/15 sm:h-9 sm:w-9;
+}
+
+.ai-message-actions {
+  @apply flex items-center gap-0.5 pl-0.5;
+}
+
+.ai-completed-text {
+  @apply mt-3 border-t border-base-content/8 pt-3 text-[0.8125rem] leading-relaxed text-base-content/55;
+}
+
+.ai-completed-text :where(p, ul, ol) {
+  @apply my-1 first:mt-0 last:mb-0;
+}
+
+.ai-completed-text a {
+  @apply text-primary hover:underline;
+}
+
 .ai-response a {
   @apply text-primary font-medium transition-colors;
 }
@@ -30,6 +87,14 @@
 
   p {
     @apply my-2 leading-[1.65];
+  }
+
+  p:first-child {
+    @apply mt-0;
+  }
+
+  p:last-child {
+    @apply mb-0;
   }
 
   ul {

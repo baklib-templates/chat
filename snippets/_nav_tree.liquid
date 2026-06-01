@@ -19,7 +19,7 @@
   data-turbo-nav-tree-root-container-value='{{ root_container }}'
   data-turbo-nav-tree-container-style-value="flex w-full flex-col"
   data-turbo-nav-tree-show-method-badges-value="{% if show_method_badges %}true{% else %}false{% endif %}"
-  data-turbo-nav-tree-expand-value="1"
+  data-turbo-nav-tree-expand-value="{% if expand == true or expand == 'true' or expand == 'all' %}true{% else %}{{ expand }}{% endif %}"
 >
   <template data-turbo-nav-tree-target="itemTemplate">
     {% raw %}

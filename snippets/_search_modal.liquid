@@ -1,0 +1,91 @@
+{% comment %} locals: hot_keywords {% endcomment %}
+<dialog
+  id="site-search-modal"
+  class="modal"
+  data-header-search-target="modal"
+  aria-label="搜索"
+>
+  <div
+    class="modal-box flex max-h-[min(85vh,720px)] w-[min(100vw-1rem,36rem)] max-w-none flex-col gap-0 overflow-hidden rounded-2xl border border-base-200 bg-base-100 p-0 shadow-2xl sm:max-w-[min(100vw-2rem,36rem)] fixed top-[5vh] left-1/2 -translate-x-1/2"
+  >
+    <div class="shrink-0 border-b border-base-200 bg-base-100 px-3 py-3 sm:px-4">
+      <label class="flex h-11 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-base-content focus-within:border-primary/30 focus-within:ring-2 focus-within:ring-primary/10">
+        <i class="ri-search-line shrink-0 text-lg leading-none text-base-content/45" aria-hidden="true"></i>
+        <input
+          type="search"
+          autocomplete="off"
+          class="grow truncate border-0 bg-transparent p-0 text-sm outline-none focus:outline-none"
+          placeholder="搜索文档、向 AI 提问…"
+          data-header-search-target="modalInput"
+          data-action="input->header-search#onModalInput keydown->header-search#onModalKeydown"
+        />
+        <kbd class="hidden text-[0.65rem] text-base-content/40 sm:inline">ESC</kbd>
+      </label>
+    </div>
+
+    <div
+      class="min-h-20 flex-1 overflow-y-auto overscroll-contain px-3 pb-3 pt-2 sm:px-4 hidden"
+      data-header-search-target="resultsScroll"
+      data-action="mouseleave->header-search#clearListSelection mouseenter->header-search#resultsEnter"
+    >
+      <div
+        class="mb-1 flex flex-col gap-2 {% unless hot_keywords.size > 0 %}hidden{% endunless %}"
+        data-header-search-target="hotSection"
+      >
+        {% if hot_keywords.size > 0 %}
+          <p class="px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">热门搜索</p>
+          <div class="flex flex-wrap gap-2" data-header-search-target="hotList">
+            {% for kw in hot_keywords %}
+              {% assign kw_trim = kw | strip %}
+              {% if kw_trim != blank %}
+                <button
+                  type="button"
+                  class="btn btn-sm rounded-full border border-base-200 bg-base-200/40 font-normal text-base-content/80 hover:border-primary/30 hover:bg-primary/10"
+                  data-action="click->header-search#applyHotKeyword"
+                  data-kw="{{ kw_trim | escape_once }}"
+                >
+                  {{ kw_trim }}
+                </button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <turbo-frame
+        id="search_preview_frame"
+        class="flex min-h-20 flex-col gap-0"
+        data-turbo-action="advance"
+        data-header-search-target="previewFrame"
+      >
+        <div class="flex h-12 items-center justify-center text-base-content/60">
+          <span class="loading loading-spinner loading-md"></span>
+        </div>
+      </turbo-frame>
+    </div>
+
+    <div
+      class="shrink-0 border-t border-base-200 bg-base-100 px-3 py-3 sm:px-4 hidden"
+      data-header-search-target="aiSection"
+    >
+      <p class="mb-1.5 px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">向 AI 助手提问</p>
+      <button
+        type="button"
+        class="flex w-full cursor-pointer items-center gap-2.5 rounded-xl bg-base-200/40 px-2 py-2 text-left text-sm text-primary hover:bg-primary/10"
+        data-header-search-target="aiLink"
+        data-header-search-ask-ai-ellipsis-value="…"
+        data-header-search-ask-ai-query-display-value="「%{query}」"
+        data-action="click->header-search#askAiFromSearch"
+      >
+        <i class="ri-sparkling-2-line size-4 shrink-0 text-primary leading-none" aria-hidden="true"></i>
+        <span class="min-w-0 leading-snug">
+          <span class="search-modal-ai-lead text-base-content/70">帮我介绍一下</span>
+          <strong class="search-modal-ai-q font-semibold text-primary"></strong>
+        </span>
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>关闭</button>
+  </form>
+</dialog>

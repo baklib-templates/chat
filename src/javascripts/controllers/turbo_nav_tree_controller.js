@@ -39,9 +39,7 @@ export default class extends Controller {
   ]
 
   connect() {
-    this.currentPath = this.#normalizePathname(
-      this.hasCurrentPathValue ? this.currentPathValue : window.location.pathname,
-    )
+    this.currentPath = this.#initialCurrentPath()
     this.menuContainer = this.rootContainer();
     if (!this.menuContainer) {
       console.log('turbo_nav_tree_controller: menuContainer null')
@@ -67,6 +65,9 @@ export default class extends Controller {
 
     // 渲染导航树
     this.renderTree(this.navTreeValue, this.depthValue || 0, this.element)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => this.refreshActiveState())
+    })
   }
 
   disconnect() {
@@ -222,7 +223,7 @@ export default class extends Controller {
 
         // --- 没有 children 数据，但 children_count > 0，使用 turbo-frame 懒加载 ---
         if (useRenderTurboFrame) {
-          this.appendTurboFrame(childrenContainer, node, depth + 1)
+          this.appendTurboFrame(childrenContainer, node, depth + 1, isOnPath)
         }
 
         liDom.appendChild(childrenContainer)
@@ -234,7 +235,7 @@ export default class extends Controller {
   }
 
   // 懒加载 turbo-frame
-  appendTurboFrame(container, node, depth) {
+  appendTurboFrame(container, node, depth, eager = false) {
     const tf = document.createElement("turbo-frame")
     tf.classList.add("w-full")
     const idPrefix = this.hasIdPrefixValue ? this.idPrefixValue : "nav_tree_frame_"
@@ -244,11 +245,15 @@ export default class extends Controller {
     const params = new URLSearchParams()
     params.set("parent_path", node.path)
     params.set("depth", depth)
+    const currentPath = this.#initialCurrentPath()
+    if (currentPath) {
+      params.set("current_path", currentPath)
+    }
     if (this.hasExpandValue) {
       params.set("expand", this.expandValue)
     }
     tf.src = `${urlBase}?${params.toString()}`
-    tf.loading = "lazy"
+    tf.loading = eager ? "eager" : "lazy"
 
     tf.innerHTML = `
       <div class="flex items-center justify-center h-12 text-base-content/60">
@@ -352,6 +357,13 @@ export default class extends Controller {
 
   #syncCurrentPathFromWindow() {
     this.currentPath = this.#normalizePathname(window.location.pathname)
+  }
+
+  /** Liquid 传入的 current_path；空字符串时回退到地址栏 */
+  #initialCurrentPath() {
+    const fromValue = this.hasCurrentPathValue ? String(this.currentPathValue || "").trim() : ""
+    if (fromValue) return this.#normalizePathname(fromValue)
+    return this.#normalizePathname(window.location.pathname)
   }
 
   /** @param {Record<string, unknown>} node */

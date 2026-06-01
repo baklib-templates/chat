@@ -1,45 +1,42 @@
-<div class="flex min-h-0 min-w-0 flex-1 overflow-hidden w-full">
-  <!-- left_sidebar -->
-  <div class="hidden h-screen min-w-[320px] max-w-[400px] overflow-auto border-r border-base-content/10 bg-base-100 py-6 px-4 sm:px-6 sm:block">
+{% assign search_ask_ai_message_tpl = 'search.ask_ai_message' | t: '请介绍一下「%{query}」' %}
+{% assign chat_static_url = statics['chat'] %}
+{% assign search_preview_url = statics['search_preview'] %}
+{% assign hot_keywords = site.settings.popular_searches | reg_split: "/\n/" %}
 
-    <!-- 搜索框 -->
-    {% form_tag 'search', class: 'w-full' %}
-    <label
-      class="mb-6 flex items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 py-2 focus-within:border-primary/30 focus-within:ring-2 focus-within:ring-primary/10">
-      <i class="ri-search-line text-base text-base-content/40" aria-hidden="true"></i>
-      <input type="text" class="grow bg-transparent border-0 outline-none text-sm placeholder:text-base-content/40"
-        placeholder="输入关键词过滤" name="{{form.keywords_field_name}}" value="{{ search.keywords | escape_once }}"
-        autocomplete="off" />
-    </label>
-    {% endform_tag %}
+<div
+  class="flex min-h-0 min-w-0 flex-1 overflow-hidden w-full"
+  data-controller="header-search"
+  data-header-search-search-url-value="{{ site.search_path }}"
+  data-header-search-preview-url-value="{{ search_preview_url }}"
+  data-header-search-chat-url-value="{{ chat_static_url }}"
+  data-header-search-ask-ai-message-template-value="{{ search_ask_ai_message_tpl | escape_once }}"
+>
+  <!-- left_sidebar：文档目录 -->
+  <div class="hidden h-full min-h-0 min-w-[320px] max-w-[400px] shrink-0 overflow-auto border-r border-base-content/10 bg-base-100 py-6 px-4 sm:px-6 sm:block">
+    <button
+      type="button"
+      class="mb-6 flex h-10 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-left text-sm text-base-content/45 transition hover:border-primary/30 hover:ring-2 hover:ring-primary/10"
+      data-action="click->header-search#openModal"
+      aria-label="搜索文档"
+    >
+      <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
+      <span class="min-w-0 flex-1 truncate">搜索文档、向 AI 提问…</span>
+      <kbd class="hidden shrink-0 rounded border border-base-content/10 px-1.5 py-0.5 text-[0.65rem] text-base-content/40 lg:inline">⌘K</kbd>
+    </button>
 
     <div class="page-nav-tree">
       {% render 'nav_tree_switch', page: site.pages['/'], current_path: page.path %}
     </div>
   </div>
-  <!-- end chat-leftsidebar -->
 
-  <!-- Start User chat -->
-  <turbo-frame id="page-content" class="overflow-hidden w-full bg-base-100" x-data="{ isDrawerOpen: false }">
-    <input id="my-drawer" type="checkbox" class="drawer-toggle" x-model="isDrawerOpen" />
-    <!-- 抽屉侧边栏 -->
-    <div class="z-20 drawer-side">
-      <label for="my-drawer" class="drawer-overlay bg-black/20 backdrop-blur-sm"></label>
-      <div
-        class="menu h-screen w-80 overflow-auto border border-base-content/10 bg-base-100 p-4 text-base-content"
-        @click.capture="if ($event.target.closest('a[href]')) isDrawerOpen = false"
-      >
-        <div class="page-nav-tree">
-          {% render 'nav_tree_switch', page: site.pages['/'], current_path: page.path %}
-        </div>
-      </div>
-    </div>
-    <div class="sm:flex">
-      <div class="flex flex-col flex-1 min-h-screen">
-        {% comment %} 导航栏 {% endcomment %}
+  <turbo-frame id="page-content" class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-base-100" x-data="{ isDrawerOpen: false }">
+    <div class="drawer flex min-h-0 min-w-0 flex-1 flex-col">
+      <input id="my-drawer" type="checkbox" class="drawer-toggle" x-model="isDrawerOpen" />
+      <div class="drawer-content flex min-h-0 min-w-0 flex-1 flex-col">
         <div
-          class="flex h-14 shrink-0 items-center gap-3 border-b border-base-content/8 bg-base-100/75 px-4 backdrop-blur-xl sm:h-16 sm:px-8">
-          <label for="my-drawer" class="btn btn-square btn-ghost btn-sm flex-none sm:hidden" aria-label="目录">
+          class="js-page-topbar flex h-14 shrink-0 items-center gap-3 border-b border-base-content/8 bg-base-100/75 px-4 backdrop-blur-xl sm:h-16 sm:px-8"
+        >
+          <label for="my-drawer" class="btn btn-square btn-ghost btn-sm flex-none lg:hidden" aria-label="目录">
             <i class="ri-menu-line text-xl" aria-hidden="true"></i>
           </label>
 
@@ -48,71 +45,61 @@
           </h5>
         </div>
 
-        <div class="h-[calc(100vh-120px)] overflow-y-auto p-4 md:px-8 relative first-letter:text">
-          {% if site.settings.show_author or site.settings.show_published_at %}
-          <section class="mt-2 mb-6">
-            {% if site.settings.show_author and site.settings.show_published_at %}
-            <div class="flex items-center space-y-2">
-              <div class="flex items-center space-x-2">
-                {% render 'avatar', url: page.author.avatar_url, name: page.author.name %}
-                <div class="flex flex-col space-y-0.5">
-                  <span class="text-xs">{{ page.author.name }}</span>
-                  <span class="text-xs text-base-content/60">{{ 'generic.published_at' | t }}: {{
-                    page.published_at | date: "%Y-%m-%d" }}</span>
+        <div class="min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-8">
+          <div
+            class="group mx-auto w-full max-w-3xl lg:max-w-[calc(var(--container-3xl)+15rem)]"
+            data-controller="toc"
+            data-toc-header-selector-value=".js-page-topbar"
+            data-toc-offset-value="16"
+            data-toc-title-value="{{ 'templates.page.page_toc' | t: '页内目录' }}"
+            data-toc-clipboard-success-value="{{ 'templates.page.copy_success' | t: '链接已复制' }}"
+          >
+            <div class="grid w-full grid-cols-1 gap-8 lg:group-[.has-toc]:grid-cols-[minmax(0,var(--container-3xl))_minmax(11rem,15rem)]">
+              <main class="min-w-0">
+                {% render 'page_content', page: page, chat_url: chat_static_url %}
+                {% render 'footer' %}
+              </main>
+
+              <aside
+                class="sticky top-0 hidden w-full min-w-0 max-h-[calc(100dvh-var(--header-height)-5rem)] overflow-y-auto text-[0.85rem] print:hidden lg:group-[.has-toc]:block"
+                aria-label="{{ 'templates.page.page_toc' | t: '页内目录' }}"
+              >
+                <div data-toc-target="menu">
+                  <p class="mb-2 flex items-center gap-2 font-bold text-base-content">
+                    <i class="ri-list-unordered text-base text-base-content/50" aria-hidden="true"></i>
+                    {{ 'templates.page.page_toc' | t: '页内目录' }}
+                  </p>
+                  <div data-toc-target="links"></div>
                 </div>
-              </div>
+              </aside>
             </div>
-            {% elsif site.settings.show_author %}
-            {% render 'avatar_with_name', url: page.author.avatar_url, name: page.author.name %}
-            {% elsif site.settings.show_published_at %}
-            <p class="text-sm text-base-content/50 text-md">{{ 'generic.published_at' | t }}: {{
-              page.published_at | date: "%Y-%m-%d" }}</p>
-            {% endif %}
-          </section>
-          {% endif %}
-
-          {% # 标题 %}
-          {% assign title = page.settings.title | presence %}
-          {% if title %}
-          <header class="py-2 mb-6">
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-base-content leading-tight">
-              {{ title }}
-            </h1>
-          </header>
-          {% endif %}
-
-          {% # 标签 %}
-          {% if page.settings.tags and page.settings.tags.size > 0 %}
-          <section class="flex flex-wrap gap-2 items-center mb-6">
-            {% for tag in page.settings.tags %}
-            {% render 'tag', tag: tag %}
-            {% endfor %}
-          </section>
-          {% endif %}
-
-          {% # 摘要 %}
-          {% assign description = page.settings.description | presence %}
-          {% if description %}
-          <section class="mb-6">
-            <blockquote
-              class="rounded-xl border border-base-content/10 bg-base-100 p-4 text-sm italic text-base-content/70 sm:p-6 sm:text-base">
-              <p>{{ description }}</p>
-            </blockquote>
-          </section>
-          {% endif %}
-
-          <article class="ProseMirror prose sm:prose-base lg:prose-lg">
-            {{ page.settings.content }}
-            <p></p>
-          </article>
+          </div>
         </div>
-        <div class="hidden sm:block">
-          {%# render 'footer', page: page %}
+      </div>
+
+      <div class="drawer-side z-20 lg:hidden">
+        <label for="my-drawer" class="drawer-overlay bg-black/20 backdrop-blur-sm"></label>
+        <div
+          class="menu h-full w-80 overflow-auto border border-base-content/10 bg-base-100 p-4 text-base-content"
+          @click.capture="if ($event.target.closest('a[href]')) isDrawerOpen = false"
+        >
+          <div class="page-nav-tree">
+            <button
+              type="button"
+              class="mb-4 flex h-10 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-left text-sm text-base-content/45"
+              data-action="click->header-search#openModal"
+            >
+              <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
+              <span class="truncate">搜索文档、向 AI 提问…</span>
+            </button>
+            {% render 'nav_tree_switch', page: site.pages['/'], current_path: page.path %}
+          </div>
         </div>
       </div>
     </div>
-    <!-- End User chat -->
   </turbo-frame>
+
+  {% render 'search_modal', hot_keywords: hot_keywords %}
 </div>
 
 {% schema %}

@@ -81,6 +81,28 @@
     }
   }
   },
+  "page_config": {
+    "name": "页面配置",
+    "settings": {
+      "show_published_at": {
+        "label": "显示发布时间"
+      },
+      "show_author": {
+        "label": "显示作者"
+      },
+      "show_page_tools_dropdown": {
+        "label": "显示页面工具下拉菜单"
+      },
+      "feedback_enabled": {
+        "label": "是否启用页面反馈"
+      },
+      "feedback_helper_text": {
+        "label": "页面反馈辅助提示语",
+        "info": "JSON：yes / no 各含 label（按钮文案）、title、items",
+        "default": "{\"yes\":{\"label\":\"是的\",\"title\":\"太棒了！什么方法对你最有效？\",\"items\":[\"该指南按预期发挥作用。\",\"我很容易就找到了我需要的信息。\",\"产品及其功能很容易理解。\",\"文档已更新。\"]},\"no\":{\"label\":\"不是\",\"title\":\"我们如何改进产品？\",\"items\":[\"帮我更快开始。\",\"让我更容易找到我想要的东西。\",\"让用户能够轻松理解产品及其功能。\",\"更新此文档。\"]}}"
+      }
+    }
+  },
   "templates": {
     "blank": {
       "name": "空白页",

@@ -1,0 +1,62 @@
+{% layout none %}
+{% assign q = params.q | strip %}
+{% assign idx = 0 %}
+<turbo-frame id="search_preview_frame">
+  {% if q != blank %}
+    {% search site.pages, keywords: q, by_user: true %}
+      {% for link in search.extends %}
+        <a
+          href="{{ link.url }}"
+          data-turbo-frame="_top"
+          data-search-item
+          data-index="{{ idx }}"
+          class="search-modal__row group flex w-full min-w-0 items-start gap-2.5 rounded-xl border border-transparent px-2.5 py-2.5 text-left transition-colors hover:bg-base-200/80"
+        >
+          <span class="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-primary/15 text-xs font-bold text-primary" aria-hidden="true">↗</span>
+          <span class="min-w-0 flex-1">
+            <span class="search-highlight-block line-clamp-2 block text-sm font-semibold leading-snug text-base-content">{{ link.link_text }}</span>
+          </span>
+          <i class="search-modal__chev ri-arrow-right-s-line mt-1 shrink-0 text-base text-base-content/30 opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true"></i>
+        </a>
+        {% assign idx = idx | plus: 1 %}
+      {% endfor %}
+
+      {% paginate_tag search.pages, as: 'items', per: 6, page: 1 %}
+        {% for item in items %}
+          {% capture bc_joined %}
+            {% for crumb in item.breadcrumb %}
+              {% unless forloop.first %}›{% endunless %}{{ crumb.link_text }}
+            {% endfor %}
+          {% endcapture %}
+          <a
+            href="{{ item.path }}"
+            data-turbo-frame="_top"
+            data-search-item
+            data-index="{{ idx }}"
+            class="search-modal__row group flex w-full min-w-0 items-start gap-2.5 rounded-xl border border-transparent px-2.5 py-2.5 text-left transition-colors hover:bg-base-200/80"
+          >
+            <span class="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-md bg-base-200/80 text-xs font-bold text-base-content/50 group-hover:bg-base-300/80" aria-hidden="true">#</span>
+            <span class="min-w-0 flex-1">
+              {% assign bc_plain = bc_joined | strip %}
+              {% if bc_plain != blank %}
+                <span class="search-highlight-block mb-0.5 line-clamp-1 block text-[0.7rem] text-base-content/45">{{ bc_plain }}</span>
+              {% endif %}
+              <span class="search-highlight-block line-clamp-2 block text-sm font-semibold leading-snug text-base-content">{{ item.highlighted_search_title }}</span>
+              {% unless item.highlighted_search_content == empty %}
+                <span class="search-highlight-block mt-1 line-clamp-2 block text-xs leading-relaxed text-base-content/55">{{ item.highlighted_search_content }}</span>
+              {% endunless %}
+            </span>
+            <i class="search-modal__chev ri-arrow-right-s-line mt-1 shrink-0 text-base text-base-content/30 opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true"></i>
+          </a>
+          {% assign idx = idx | plus: 1 %}
+        {% else %}
+          {% if idx == 0 %}
+            <div class="rounded-xl border border-dashed border-base-300 bg-base-200/30 px-4 py-8 text-center text-sm text-base-content/60">
+              没有找到相关结果
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endpaginate_tag %}
+    {% endsearch %}
+  {% endif %}
+</turbo-frame>

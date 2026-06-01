@@ -2,6 +2,9 @@
   AI 对话工作区：引用来源侧栏 + 消息区 + 输入框（配合 ai-search / ai-pip）
   chat_id: 会话 hashid；initial_message: 首条自动发送内容
 {% endcomment %}
+
+{% assign chat = site.ai_chats[params['id']] %}
+
 {% assign robot_name = site.settings.robot_name | default: 'AI 助手' %}
 {% assign ai_reading_text = 'ai.reading' | t: '正在阅读文档…' %}
 {% assign ai_thinking_status = 'ai.thinking' | t: 'AI 正在思考' %}
@@ -17,6 +20,7 @@
 {% if initial_message != blank %}
   {% assign auto_submit = true %}
 {% endif %}
+{% capture ai_search_messages_json %}{"thinking":{{ ai_thinking_status | to_json }},"reading":{{ ai_reading_text | to_json }},"thinking_status":{{ ai_thinking_status | to_json }},"completed":{{ ai_completed_text | to_json }},"network_error":{{ ai_network_error | to_json }},"timeout_error":{{ ai_timeout_error | to_json }},"copy_success":{{ ai_copy_success | to_json }},"copy_error":{{ ai_copy_error | to_json }}}{% endcapture %}
 
 <div
   class="relative flex min-h-0 min-w-0 flex-1 overflow-hidden w-full"
@@ -34,43 +38,32 @@
     data-ai-search-timeout-value="60"
     data-ai-search-chat-id-value="{{ chat_id }}"
     data-ai-search-auto-submit-value="{{ auto_submit }}"
-    data-ai-search-messages-value='{"thinking":"{{ ai_thinking_status | escape }}","reading":"{{ ai_reading_text | escape }}","thinking_status":"{{ ai_thinking_status | escape }}","completed":"{{ ai_completed_text | escape }}","network_error":"{{ ai_network_error | escape }}","timeout_error":"{{ ai_timeout_error | escape }}","copy_success":"{{ ai_copy_success | escape }}","copy_error":"{{ ai_copy_error | escape }}"}'
+    data-ai-search-messages-value="{{ ai_search_messages_json | escape_once }}"
   >
     <div data-ai-pip-target="panel" class="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-      {% render 'ai_chat_messages' %}
+      {% render 'ai_chat_messages', chat: chat, ai_completed_text: ai_completed_text %}
 
-      <footer class="shrink-0 border-t border-base-content/8 bg-base-100/90 px-4 py-3 backdrop-blur-xl sm:px-6 sm:py-4">
+      <footer class="shrink-0 border-t border-base-content/8 bg-base-100/90 px-3 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-xl sm:px-6 sm:py-4">
         <div class="mx-auto w-full max-w-[50rem]">
-          <div class="flex items-end gap-2 rounded-2xl border border-base-content/10 bg-base-100 p-2 shadow-lg transition-all focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15">
+          <div class="flex items-end gap-1.5 rounded-2xl border border-base-content/10 bg-base-100 p-1.5 shadow-lg transition-all focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15 sm:gap-2 sm:p-2">
             <textarea
               rows="1"
               data-ai-search-target="input"
               data-action="input->ai-search#syncSendButton keydown->ai-search#onInputKeydown"
               autocomplete="off"
-              placeholder="输入您的问题，Enter 发送，Shift+Enter 换行…"
-              class="max-h-32 min-h-[48px] flex-1 resize-none border-none bg-transparent px-1 py-2.5 text-base outline-none placeholder:text-base-content/45"
+              placeholder="输入问题，Enter 发送"
+              class="max-h-32 min-h-[40px] flex-1 resize-none border-none bg-transparent px-1 py-2 text-sm outline-none placeholder:text-base-content/45 sm:min-h-[48px] sm:py-2.5 sm:text-base"
               oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
             ></textarea>
             <button
               type="button"
               data-ai-search-target="send"
               data-action="click->ai-search#send"
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
               aria-label="发送"
               disabled
             >
               <i class="ri-send-plane-2-fill text-lg" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="mt-2 flex items-center justify-between gap-2">
-            <p class="text-[11px] leading-relaxed text-base-content/45">AI 仅基于当前知识库内容回答</p>
-            <button
-              type="button"
-              class="btn btn-ghost btn-xs hidden text-base-content/50"
-              data-ai-search-target="clearButton"
-              data-action="click->ai-search#clearChat"
-            >
-              清空对话
             </button>
           </div>
         </div>
@@ -99,7 +92,9 @@
         </div>
         {% render 'ai_chat_messages',
           wrapper_class: 'flex-1 min-h-0 overflow-y-auto',
-          messages_class: 'flex flex-col gap-6 px-4 py-4'
+          messages_class: 'ai-chat-messages !px-4 !py-4',
+          chat: chat,
+          ai_completed_text: ai_completed_text
         %}
         <div class="shrink-0 border-t border-base-content/10 px-4 py-3">
           <div class="flex items-end gap-2 rounded-2xl border border-base-content/10 p-2 focus-within:border-primary/40">

@@ -1,0 +1,15 @@
+{% layout none %}
+{% response_type 'json' %}
+
+{% assign chat_id = params.id %}
+{% assign chat = site.ai_chats[chat_id] %}
+
+{% if chat %}
+  {% assign chat_title = chat.title %}
+  {
+    "title": '{{ chat_title }}'
+  }
+{% else %}
+  {}
+{% endif %}
+

@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { buildUrl } from "../utils/index.js";
+import { dispatchRecentChatsRefresh } from "../utils/recentChats";
 
 const STORAGE_KEY = "last_chat_url";
 
@@ -146,6 +147,7 @@ export default class extends Controller {
 
     try {
       const chatId = await this.#createChat();
+      dispatchRecentChatsRefresh({ chatId });
       const url = new URL(this.chatUrlValue, window.location.origin);
       url.searchParams.set("id", chatId);
       url.searchParams.set("message", message);

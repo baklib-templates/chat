@@ -12,14 +12,14 @@
     {% if chat %}
       {% for message in chat.messages %}
         {% if message.role == 'user' %}
-          <div class="ai-chat-user-round" data-user-message-id="{{ message.id }}">
+          <div class="ai-chat-user-round" data-message-id="{{ message.id }}">
             <div class="ai-chat-user-content">
               <p class="ai-user-message">{{ message.content }}</p>
             </div>
             <img src="{{ current_user.image | default: avatar }}" alt="" class="ai-chat-avatar ai-chat-avatar--user" />
           </div>
         {% elsif message.role == 'assistant' %}
-          <div class="ai-chat-assistant-round" data-assistant-message-id="{{ message.id }}">
+          <div class="ai-chat-assistant-round" data-message-id="{{ message.id }}">
             <div class="ai-chat-avatar ai-chat-avatar--bot">
               <i class="ri-robot-2-line text-base leading-none sm:text-lg" aria-hidden="true"></i>
             </div>
@@ -43,7 +43,8 @@
                 <button
                   type="button"
                   class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
-                  data-action="click->ai-search#retryLastResponse"
+                  data-action="click->ai-search#retryResponse"
+                  data-message-id="{{ message.id }}"
                   aria-label="重新生成"
                 >
                   <i class="ri-refresh-line text-sm leading-none" aria-hidden="true"></i>

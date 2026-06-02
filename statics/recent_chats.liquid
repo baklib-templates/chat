@@ -1,0 +1,6 @@
+{% layout none %}
+
+{% assign current_chat_id = params.current_chat_id | default: params.id | strip %}
+<turbo-frame id="recent_chats" class="block w-full">
+  {% render 'recent_chats', current_chat_id: current_chat_id %}
+</turbo-frame>

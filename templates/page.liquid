@@ -12,19 +12,21 @@
   data-header-search-ask-ai-message-template-value="{{ search_ask_ai_message_tpl | escape_once }}"
 >
   <!-- left_sidebar：文档目录 -->
-  <div class="hidden h-full min-h-0 min-w-[320px] max-w-[400px] shrink-0 overflow-auto border-r border-base-content/10 bg-base-100 py-6 px-4 sm:px-6 sm:block">
-    <button
-      type="button"
-      class="mb-6 flex h-10 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-left text-sm text-base-content/45 transition hover:border-primary/30 hover:ring-2 hover:ring-primary/10"
-      data-action="click->header-search#openModal"
-      aria-label="搜索文档"
-    >
-      <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
-      <span class="min-w-0 flex-1 truncate">搜索文档、向 AI 提问…</span>
-      <kbd class="hidden shrink-0 rounded border border-base-content/10 px-1.5 py-0.5 text-[0.65rem] text-base-content/40 lg:inline">⌘K</kbd>
-    </button>
+  <div class="hidden h-full min-h-0 min-w-[320px] max-w-[400px] shrink-0 overflow-auto border-r border-base-content/10 bg-base-100 sm:block">
+    <div class="sticky top-0 bg-white z-10 py-6 px-4">
+      <button
+        type="button"
+        class="flex h-10 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-left text-sm text-base-content/45 transition hover:border-primary/30 hover:ring-2 hover:ring-primary/10"
+        data-action="click->header-search#openModal"
+        aria-label="搜索文档"
+      >
+        <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
+        <span class="min-w-0 flex-1 truncate">搜索文档…</span>
+        <kbd class="hidden shrink-0 rounded border border-base-content/10 px-1.5 py-0.5 text-[0.65rem] text-base-content/40 lg:inline">⌘K</kbd>
+      </button>
+    </div>
 
-    <div class="page-nav-tree">
+    <div class="page-nav-tree py-6 px-4 pt-0">
       {% render 'nav_tree_switch', page: site.pages['/'], current_path: page.path %}
     </div>
   </div>

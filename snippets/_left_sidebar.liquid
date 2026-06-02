@@ -24,7 +24,7 @@
   {%- assign current_path = page.path -%}
   {%- assign current_chat_id = params.id | default: params.chat_id | strip -%}
   {%- assign chat_page_url = statics['chat'] -%}
-  {%- assign recent_chats = site.ai_chats | limit: 20 -%}
+  {%- assign recent_chats_url = statics['recent_chats'] -%}
   {%- assign is_home = false -%}
   {%- if current_path == "/" -%}
     {%- assign is_home = true -%}
@@ -35,36 +35,21 @@
   {%- assign nav_icon = 'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-base-content/5 text-base' -%}
   {%- assign nav_icon_active = 'bg-primary text-primary-content' -%}
 
-  <nav class="flex flex-1 flex-col gap-1 overflow-y-auto" data-controller="nav-tree" data-nav-tree-active-class="{{ nav_active }}">
+  <nav
+    class="flex flex-1 flex-col gap-1 overflow-y-auto"
+    data-controller="nav-tree recent-chats"
+    data-nav-tree-active-class="{{ nav_active }}"
+    data-recent-chats-url-value="{{ recent_chats_url }}"
+  >
     <p class="mb-2 px-2 text-xs font-semibold tracking-wider text-base-content sticky top-0 bg-base-100">菜单</p>
     <a href="{{ kb_item.path }}" class="{{ nav_link }}{% if current_path == kb_item.path %} {{ nav_active }}{% endif %}" data-nav-tree-target="item">
       <i class="{{ nav_icon }}{% if current_path == kb_item.path %} {{ nav_icon_active }}{% endif %} ri-book-2-line" aria-hidden="true"></i>
       <span>知识库</span>
     </a>
 
-    {% if recent_chats %}
-      <div class="mt-4 pt-3">
-        <details open class="group">
-          <summary class="flex cursor-pointer list-none items-center justify-between px-2 py-1.5 text-xs font-semibold text-base-content [&::-webkit-details-marker]:hidden sticky top-0 bg-base-100">
-            <span>最近</span>
-            <i class="ri-arrow-down-s-line text-base text-base-content/40 transition-transform group-open:rotate-180" aria-hidden="true"></i>
-          </summary>
-          <ul class="mt-1 flex flex-col space-y-1">
-            {% for chat in recent_chats %}
-              {% assign chat_title = chat.title | default: '新对话' %}
-              <li>
-                <a
-                  href="{{ chat_page_url }}?id={{ chat.id }}"
-                  class="block truncate rounded-lg px-2 py-2 text-sm text-base-content/80 transition-colors hover:bg-base-content/5 hover:text-base-content{% if current_chat_id == chat.id %} bg-base-content/5 font-medium text-base-content{% endif %}"
-                  data-turbo-frame="_top"
-                  title="{{ chat_title | escape_once }}"
-                >{{ chat_title | escape_once }}{{ chat.id }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </details>
-      </div>
-    {% endif %}
+    <turbo-frame id="recent_chats" class="block w-full">
+      {% render 'recent_chats', current_chat_id: current_chat_id, chat_page_url: chat_page_url %}
+    </turbo-frame>
   </nav>
 
   {% render 'left_sidebar_footer' %}

@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 import tippy from "tippy.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
+import { dispatchRecentChatsRefresh } from "../utils/recentChats";
 
 export default class extends Controller {
   static targets = [
@@ -21,6 +22,9 @@ export default class extends Controller {
     chatId: String,
     timeout: Number,
     autoSubmit: { type: Boolean, default: false },
+    hasChatTitle: { type: Boolean, default: false },
+    isHistoricalChat: { type: Boolean, default: false },
+    chatTitleUrl: String,
     message: String,
     messages: Object,
     query: Object // 搜索查询参数
@@ -31,8 +35,12 @@ export default class extends Controller {
     this.chatHistory = [];
     this.currentRound = null;
     this.shouldAutoScroll = true;
+    this.titlePollStarted = false;
     this.#hydrateLaunchParamsFromUrl();
     this.#hydrateFromDom();
+    if (this.chatHistory.length > 0) {
+      this.isHistoricalChatValue = true;
+    }
     this.#bindAutoScrollTracking();
     this.syncSendButton();
     this.#syncClearButtonVisibility();
@@ -169,9 +177,17 @@ export default class extends Controller {
     if (round?.retry) round.retry();
   }
 
-  retryLastResponse() {
-    const idx = this.chatHistory.length - 1;
-    void this.#resendRound(idx);
+  retryResponse(event) {
+    event?.preventDefault();
+    if (this.isStreaming) return;
+
+    const trigger = event.currentTarget;
+    const messageId =
+      trigger.dataset.messageId ||
+      trigger.closest(".ai-chat-assistant-round")?.dataset.messageId;
+    if (!messageId) return;
+
+    void this.#retryFromMessageId(messageId);
   }
 
   async copyResponse(event) {
@@ -210,6 +226,28 @@ export default class extends Controller {
       this._copyTippy?.destroy();
       this._copyTippy = null;
     }, 1200);
+  }
+
+  #roundIdxForMessageId(messageId) {
+    if (!messageId) return -1;
+    const id = String(messageId);
+    const fromHistory = this.chatHistory.findIndex(
+      (round) => round.assistantMessageId === id || round.userMessageId === id,
+    );
+    if (fromHistory >= 0) return fromHistory;
+
+    const primary = this.messagesTargets[0];
+    if (!primary) return -1;
+    const assistants = primary.querySelectorAll(".ai-chat-assistant-round");
+    for (let i = 0; i < assistants.length; i++) {
+      if (assistants[i].dataset.messageId === id) return i;
+    }
+    return -1;
+  }
+
+  #assistantRoundElAt(container, idx) {
+    const rounds = container.querySelectorAll(".ai-chat-assistant-round");
+    return rounds[idx] || null;
   }
 
   #assistantTextForCopy(triggerEl) {
@@ -291,6 +329,7 @@ export default class extends Controller {
     };
     this.chatHistory.push(this.currentRound);
     this.#syncClearButtonVisibility();
+    this.#hideAssistantActions();
     this.appendUserMessage(message);
     this.appendAssistantMessage("", "streaming", this.chatHistory.length - 1);
 
@@ -305,6 +344,7 @@ export default class extends Controller {
     this.currentRound = round;
     this.isStreaming = true;
     this.syncSendButton();
+    this.#hideAssistantActions();
     round.ai = "";
     round.status = "streaming";
     if (!replaceLastAssistant) {
@@ -364,7 +404,8 @@ export default class extends Controller {
         this.currentRound.status = "completed";
         this.#finishStreaming(idx);
         this.updateCurrentAssistantMessage(this.currentRound.ai, "completed", idx);
-        this.#showAssistantActions(idx);
+        this.#showAssistantActions();
+        this.#maybePollChatTitle();
         return;
       }
 
@@ -387,7 +428,9 @@ export default class extends Controller {
     round.status = "error";
     this.#finishStreaming(idx);
     round.retry = () => {
-      void this.#resendRound(idx);
+      const id = round.assistantMessageId || round.userMessageId;
+      if (id) void this.#retryFromMessageId(id);
+      else void this.#retryFromRoundIdx(idx);
     };
     this.updateCurrentAssistantMessage(
       round.ai,
@@ -436,14 +479,13 @@ export default class extends Controller {
         const contentEl = el.querySelector("[data-markdown-target='content']");
         const ai = contentEl?.textContent?.trim() || "";
         const idx = rounds.length;
-        el.dataset.roundIdx = String(idx);
         rounds.push({
           user: pendingUser,
           ai,
           status: "completed",
           retry: null,
-          userMessageId: pendingUserEl?.dataset.userMessageId || null,
-          assistantMessageId: el.dataset.assistantMessageId || null,
+          userMessageId: pendingUserEl?.dataset.messageId || null,
+          assistantMessageId: el.dataset.messageId || null,
         });
         pendingUser = null;
         pendingUserEl = null;
@@ -454,15 +496,17 @@ export default class extends Controller {
     this.chatHistory = rounds;
     this.#toggleEmptyHint(false);
     this.#syncClearButtonVisibility();
-    this.#showAssistantActions(rounds.length - 1);
+    this.#showAssistantActions();
   }
 
-  appendUserMessage(content) {
+  appendUserMessage(content, messageId = null) {
     if (!this.hasUserMessageTemplateTarget) return;
     this.messagesTargets.forEach((container) => {
       const tpl = this.userMessageTemplateTarget.content.cloneNode(true);
+      const roundEl = tpl.querySelector(".ai-chat-user-round");
       const node = tpl.querySelector(".ai-user-message");
       if (node) node.textContent = content;
+      if (roundEl && messageId) roundEl.dataset.messageId = String(messageId);
       container.appendChild(tpl);
     });
     this.scrollToBottom(true);
@@ -475,14 +519,13 @@ export default class extends Controller {
       this.#fillAssistantNode(tpl, content, status, idx, retryFn);
       container.appendChild(tpl);
     });
-    if (status === "completed") this.#showAssistantActions(idx);
+    if (status === "completed") this.#showAssistantActions();
     this.scrollToBottom(true);
   }
 
   updateCurrentAssistantMessage(content, status, idx, retryFn) {
     this.messagesTargets.forEach((container) => {
-      const rounds = container.querySelectorAll(".ai-chat-assistant-round");
-      const node = rounds[rounds.length - 1];
+      const node = this.#assistantRoundElAt(container, idx);
       if (!node) return;
       this.#fillAssistantNode(node, content, status, idx, retryFn);
     });
@@ -494,7 +537,13 @@ export default class extends Controller {
       node instanceof Element && node.matches(".ai-chat-assistant-round")
         ? node
         : node.querySelector?.(".ai-chat-assistant-round");
-    if (roundEl) roundEl.dataset.roundIdx = String(idx);
+    if (roundEl) {
+      roundEl.dataset.roundIdx = String(idx);
+      const actions = roundEl.querySelector(".ai-message-actions");
+      if (actions) {
+        actions.classList.toggle("hidden", status !== "completed" || this.isStreaming);
+      }
+    }
 
     const markdownRoot = node.querySelector("[data-controller~='markdown']");
     const contentEl = node.querySelector("[data-markdown-target='content']");
@@ -570,15 +619,76 @@ export default class extends Controller {
     markdownRoot.appendChild(el);
   }
 
-  #showAssistantActions(idx) {
+  #showAssistantActions() {
+    if (this.isStreaming) {
+      this.#hideAssistantActions();
+      return;
+    }
+
     this.messagesTargets.forEach((container) => {
       const rounds = container.querySelectorAll(".ai-chat-assistant-round");
       rounds.forEach((el, i) => {
         const actions = el.querySelector(".ai-message-actions");
         if (!actions) return;
-        actions.classList.toggle("hidden", i !== idx);
+        const show = this.chatHistory[i]?.status === "completed";
+        actions.classList.toggle("hidden", !show);
       });
     });
+  }
+
+  #hideAssistantActions() {
+    this.messagesTargets.forEach((container) => {
+      container.querySelectorAll(".ai-message-actions").forEach((actions) => {
+        actions.classList.add("hidden");
+      });
+    });
+  }
+
+  #removeAssistantRoundAndAfter(idx) {
+    this.messagesTargets.forEach((container) => {
+      const assistantEl = this.#assistantRoundElAt(container, idx);
+      if (!assistantEl) return;
+
+      let node = assistantEl;
+      while (node) {
+        const toRemove = node;
+        node = node.nextElementSibling;
+        toRemove.remove();
+      }
+    });
+  }
+
+  async #retryFromMessageId(messageId) {
+    const idx = this.#roundIdxForMessageId(messageId);
+    if (idx < 0) return;
+    await this.#retryFromRoundIdx(idx, messageId);
+  }
+
+  async #retryFromRoundIdx(idx, resendMessageId = null) {
+    const round = this.chatHistory[idx];
+    if (!round?.user) return;
+    if (this.isStreaming) this.stopStreaming();
+
+    this.#removeAssistantRoundAndAfter(idx);
+    this.chatHistory = this.chatHistory.slice(0, idx + 1);
+
+    this.currentRound = round;
+    await this.#ensureChatId();
+
+    const messageId =
+      resendMessageId || round.assistantMessageId || round.userMessageId;
+    round.ai = "";
+    round.status = "streaming";
+    round.assistantMessageId = null;
+    this.#hideAssistantActions();
+    this.appendAssistantMessage("", "streaming", idx);
+
+    if (messageId && this.chatIdValue) {
+      this.#streamAssistant(null, idx, { replaceLastAssistant: true, resendMessageId: messageId });
+      return;
+    }
+
+    this.#streamAssistant(round.user, idx, { replaceLastAssistant: true });
   }
 
   #toggleEmptyHint(show) {
@@ -588,37 +698,6 @@ export default class extends Controller {
     this.messagesScrollTargets
       .filter((el) => el.dataset.aiSearchVariant === "mobile")
       .forEach((el) => el.classList.toggle("hidden", show));
-  }
-
-  #removeLastAssistantRound() {
-    this.messagesTargets.forEach((container) => {
-      const rounds = container.querySelectorAll(".ai-chat-assistant-round");
-      rounds[rounds.length - 1]?.remove();
-    });
-  }
-
-  async #resendRound(idx) {
-    const round = this.chatHistory[idx];
-    if (!round?.user) return;
-    if (this.isStreaming) this.stopStreaming();
-
-    this.currentRound = round;
-
-    await this.#ensureChatId();
-
-    const resendMessageId = round.assistantMessageId || round.userMessageId;
-    round.ai = "";
-    round.status = "streaming";
-    round.assistantMessageId = null;
-    this.#removeLastAssistantRound();
-    this.appendAssistantMessage("", "streaming", idx);
-
-    if (resendMessageId && this.chatIdValue) {
-      this.#streamAssistant(null, idx, { replaceLastAssistant: true, resendMessageId });
-      return;
-    }
-
-    this.#streamAssistant(round.user, idx, { replaceLastAssistant: true });
   }
 
   #buildStreamUrl({ message, resendMessageId }) {
@@ -666,10 +745,14 @@ export default class extends Controller {
       const assistantEl = assistantRounds[idx];
 
       if (userEl && round.userMessageId) {
-        userEl.dataset.userMessageId = round.userMessageId;
+        userEl.dataset.messageId = round.userMessageId;
       }
       if (assistantEl && round.assistantMessageId) {
-        assistantEl.dataset.assistantMessageId = round.assistantMessageId;
+        assistantEl.dataset.messageId = round.assistantMessageId;
+        const retryBtn = assistantEl.querySelector(
+          ".ai-message-actions [data-action*='retryResponse']",
+        );
+        if (retryBtn) retryBtn.dataset.messageId = round.assistantMessageId;
       }
     });
   }
@@ -684,11 +767,54 @@ export default class extends Controller {
       });
       if (!response.ok) return this.chatIdValue;
       const data = await response.json();
-      if (data?.id) this.chatIdValue = String(data.id);
+      if (data?.id) {
+        this.chatIdValue = String(data.id);
+        dispatchRecentChatsRefresh({ chatId: this.chatIdValue });
+      }
     } catch {
       /* ignore network errors, fallback to server auto chat */
     }
     return this.chatIdValue;
+  }
+
+  async #maybePollChatTitle() {
+    if (
+      this.hasChatTitleValue ||
+      this.isHistoricalChatValue ||
+      this.titlePollStarted ||
+      !this.chatIdValue ||
+      !this.hasChatTitleUrlValue
+    ) {
+      return;
+    }
+    this.titlePollStarted = true;
+
+    const deadline = Date.now() + 20000; // 30s 后超时
+    while (!this.hasChatTitleValue && Date.now() < deadline) {
+      try {
+        const url = new URL(this.chatTitleUrlValue, window.location.origin);
+        url.searchParams.set("id", this.chatIdValue);
+        const response = await fetch(url.toString(), {
+          headers: {
+            Accept: "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          credentials: "same-origin",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const title = (data?.title || "").trim();
+          if (title) {
+            this.hasChatTitleValue = true;
+            dispatchRecentChatsRefresh({ chatId: this.chatIdValue, title });
+            return;
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+      await new Promise((resolve) => window.setTimeout(resolve, 2000)); // 2s 后重试
+    }
   }
 
   #stripOneShotMessageFromUrl() {
@@ -745,7 +871,8 @@ export default class extends Controller {
     if (!this.hasTimeoutValue) return;
     this.timeoutTimer = setTimeout(() => {
       if (!this.currentRound) return;
-      const idx = this.chatHistory.length - 1;
+      const idx = this.chatHistory.indexOf(this.currentRound);
+      if (idx < 0) return;
       this.#handleStreamError(this.messagesValue.timeout_error, idx);
     }, this.timeoutValue * 1000);
   }

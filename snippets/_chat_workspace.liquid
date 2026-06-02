@@ -4,6 +4,12 @@
 {% endcomment %}
 
 {% assign chat = site.ai_chats[params['id']] %}
+{% assign chat_has_title = chat.title | presence %}
+{% assign chat_title_url = statics['chat_title'] %}
+{% assign is_historical_chat = false %}
+{% if chat and chat.messages.size > 0 %}
+  {% assign is_historical_chat = true %}
+{% endif %}
 
 {% assign robot_name = site.settings.robot_name | default: 'AI 助手' %}
 {% assign ai_reading_text = 'ai.reading' | t: '正在阅读文档…' %}
@@ -38,6 +44,9 @@
     data-ai-search-timeout-value="60"
     data-ai-search-chat-id-value="{{ chat_id }}"
     data-ai-search-auto-submit-value="{{ auto_submit }}"
+    data-ai-search-has-chat-title-value="{% if chat_has_title %}true{% else %}false{% endif %}"
+    data-ai-search-is-historical-chat-value="{% if is_historical_chat %}true{% else %}false{% endif %}"
+    data-ai-search-chat-title-url-value="{{ chat_title_url }}"
     data-ai-search-messages-value="{{ ai_search_messages_json | escape_once }}"
   >
     <div data-ai-pip-target="panel" class="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">

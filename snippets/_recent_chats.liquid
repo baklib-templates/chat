@@ -1,0 +1,36 @@
+{% comment %}
+  左侧「最近」会话列表（可被 turbo-frame 独立刷新）
+  current_chat_id: 当前高亮的会话 id
+  chat_page_url: 会话静态页 URL
+{% endcomment %}
+
+{%- assign recent_chats = site.ai_chats | limit: 20 -%}
+{%- assign chat_page_url = chat_page_url | default: statics['chat'] -%}
+{%- assign current_chat_id = current_chat_id | strip -%}
+
+{% if recent_chats %}
+  <div class="mt-4 pt-3">
+    <details open class="group">
+      <summary class="flex cursor-pointer list-none items-center justify-between px-2 py-1.5 text-xs font-semibold text-base-content [&::-webkit-details-marker]:hidden sticky top-0 bg-base-100">
+        <span>最近</span>
+        <i class="ri-arrow-down-s-line text-base text-base-content/40 transition-transform group-open:rotate-180" aria-hidden="true"></i>
+      </summary>
+      <ul class="mt-1 flex flex-col space-y-1">
+        {% for chat in recent_chats %}
+          {% assign chat_title = chat.title | default: '新对话' %}
+          {% assign chat_has_title = chat.title | presence %}
+          <li>
+            <a
+              href="{{ chat_page_url }}?id={{ chat.id }}"
+              class="block truncate rounded-lg px-2 py-2 text-sm text-base-content/80 transition-colors hover:bg-base-content/5 hover:text-base-content{% if current_chat_id == chat.id %} bg-base-content/5 font-medium text-base-content{% endif %}"
+              data-turbo-frame="_top"
+              data-chat-id="{{ chat.id }}"
+              data-has-title="{% if chat_has_title %}true{% else %}false{% endif %}"
+              title="{{ chat_title | escape_once }}"
+            >{{ chat_title | escape_once }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
+  </div>
+{% endif %}

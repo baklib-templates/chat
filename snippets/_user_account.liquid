@@ -83,7 +83,7 @@
     {% endif %}
   {% else %}
     {% if can_baklib_login %}
-      {% form_tag 'sign_in_with_baklib', silent: false %}
+      {% form_tag 'sign_in_with_baklib' %}
         <input type="hidden" name="sign_up" value="true" />
         <button
           type="submit"

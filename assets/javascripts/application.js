@@ -18916,6 +18916,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
 
   // src/javascripts/controllers/turbo_nav_tree_controller.js
   var turbo_nav_tree_controller_default = class extends Controller {
+    static currentPathAttr = "data-turbo-nav-tree-current-path";
     static values = {
       navTree: Array,
       depth: Number,
@@ -18940,84 +18941,28 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       // item 模板
     ];
     connect() {
-      this.currentPath = this.#initialCurrentPath();
       this.menuContainer = this.rootContainer();
       if (!this.menuContainer) {
         console.log("turbo_nav_tree_controller: menuContainer null");
         return;
       }
-      this.boundSyncNavFromUrl = () => {
-        if (!this.element?.isConnected || !this.menuContainer) return;
-        this.refreshActiveState();
-      };
-      document.addEventListener("turbo:load", this.boundSyncNavFromUrl);
-      document.addEventListener("turbo:render", this.boundSyncNavFromUrl);
-      document.addEventListener("turbo:frame-load", this.boundSyncNavFromUrl);
-      window.addEventListener("popstate", this.boundSyncNavFromUrl);
+      if (!this.#getStoredCurrentPath()) {
+        this.#setStoredCurrentPath(this.#initialCurrentPath());
+      }
       if (this.element.dataset.rendered === "true") {
-        this.refreshActiveState();
         return;
       }
       this.element.dataset.rendered = "true";
       this.itemTemplate = this.hasItemTemplateTarget ? this.itemTemplateTarget.innerHTML.trim() : null;
       this.renderTree(this.navTreeValue, this.depthValue || 0, this.element);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => this.refreshActiveState());
-      });
     }
     disconnect() {
-      if (this.boundSyncNavFromUrl) {
-        document.removeEventListener("turbo:load", this.boundSyncNavFromUrl);
-        document.removeEventListener("turbo:render", this.boundSyncNavFromUrl);
-        document.removeEventListener("turbo:frame-load", this.boundSyncNavFromUrl);
-        window.removeEventListener("popstate", this.boundSyncNavFromUrl);
-      }
     }
-    /** 与当前地址栏同步高亮（模板不会重跑 Mustache，只靠 [active] + CSS） */
-    refreshActiveState = () => {
-      if (!this.menuContainer) return;
-      this.#syncCurrentPathFromWindow();
-      const current = this.#normalizePathname(this.currentPath);
-      const aDom = this.#resolveActiveAnchorForPath(current);
-      if (!aDom) {
-        this.#clearTreeActiveState();
-        return;
-      }
-      this.menuContainer.querySelectorAll("li[active]").forEach((li) => {
-        li.querySelector("[turbo-nav-tree-children-container]")?.classList.remove("opacity-0");
-      });
-      this.getParents(aDom, "li", this.menuContainer).forEach((li) => {
-        this.treeContainerToggle(li, true);
-      });
-      this.click({ currentTarget: aDom });
-    };
     /** 去掉树上所有 [active]（含 li 与行容器），不触发导航 */
     #clearTreeActiveState() {
       this.menuContainer?.querySelectorAll("[active]").forEach((el) => {
         el.removeAttribute("active");
       });
-    }
-    /**
-     * 在 `.custom-menu` 内根据当前 pathname 找到应对高亮的 a：先精确匹配，再最长前缀匹配（与 channelPathActive 语义一致）。
-     * @param {string} current normalize 后的 pathname
-     * @returns {HTMLAnchorElement | null}
-     */
-    #resolveActiveAnchorForPath(current) {
-      const links = [...this.menuContainer.querySelectorAll("a[href]")];
-      const norm = (a) => this.#normalizePathname(a.getAttribute("href"));
-      const exact = links.find((a) => norm(a) === current);
-      if (exact) return exact;
-      let best = null;
-      let bestLen = -1;
-      for (const a of links) {
-        const h = norm(a);
-        if (!this.#hrefCoversCurrent(h, current)) continue;
-        if (h.length > bestLen) {
-          bestLen = h.length;
-          best = a;
-        }
-      }
-      return best;
     }
     /**
      * expand 配置：off | all | depth(N)
@@ -19042,13 +18987,6 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       if (cfg.mode === "all") return true;
       if (cfg.mode === "depth") return depth < cfg.depth;
       return false;
-    }
-    /** 当前页是否落在该 href 对应路径下（含自身，不含用「/」吞掉所有页） */
-    #hrefCoversCurrent(hrefPath, current) {
-      if (!current) return false;
-      if (current === hrefPath) return true;
-      if (hrefPath === "/") return false;
-      return current.startsWith(hrefPath + "/");
     }
     renderTree(nodes, depth, container) {
       if (container.rendered) return;
@@ -19104,7 +19042,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       const params = new URLSearchParams();
       params.set("parent_path", node.path);
       params.set("depth", depth);
-      const currentPath = this.#initialCurrentPath();
+      const currentPath = this.#getCurrentPath();
       if (currentPath) {
         params.set("current_path", currentPath);
       }
@@ -19139,10 +19077,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       if (!(childrenContainer && childrenContainer.children.length > 0)) return;
       if (status) {
         childrenContainer.hidden = false;
-        childrenContainer.classList.remove("opacity-0");
       } else {
         childrenContainer.hidden = true;
-        childrenContainer.classList.add("opacity-0");
       }
       const itemTargetIcon = li.querySelector("[turbo-nav-tree-item-target-icon]");
       if (itemTargetIcon) {
@@ -19153,15 +19089,19 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     // 作用：点击 item 后，激活当前 item 和其所有祖先 item（高亮仅依赖 [active]，不依赖 Mustache 初次渲染）
     click(event) {
       const target = event.currentTarget;
-      this.currentPath = this.#pathnameFromAnchor(target);
+      this.#setStoredCurrentPath(this.#pathnameFromAnchor(target));
       const turboFrameTarget = target.getAttribute("data-turbo-frame");
       if (turboFrameTarget && turboFrameTarget !== "_top" && !document.getElementById(turboFrameTarget)) {
         target.setAttribute("data-turbo-frame", "_top");
       }
+      this.focusItem(target);
+    }
+    focusItem(target) {
       if (!this.menuContainer) return;
       this.menuContainer.querySelectorAll("[active]").forEach((el) => {
         el.removeAttribute("active");
       });
+      this.#clearTreeActiveState();
       const li = target.closest("li");
       if (!li) return;
       this.getParents(target, "li", this.menuContainer).forEach((el) => {
@@ -19184,14 +19124,28 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     #pathnameFromAnchor(anchor) {
       return this.#normalizePathname(anchor?.getAttribute?.("href") || "");
     }
-    #syncCurrentPathFromWindow() {
-      this.currentPath = this.#normalizePathname(window.location.pathname);
+    #getStoredCurrentPath() {
+      const container = this.menuContainer ?? this.rootContainer();
+      if (!container) return null;
+      const stored = container.getAttribute(this.constructor.currentPathAttr);
+      if (!stored?.trim()) return null;
+      return this.#normalizePathname(stored);
     }
-    /** Liquid 传入的 current_path；空字符串时回退到地址栏 */
+    #setStoredCurrentPath(path2) {
+      const container = this.menuContainer ?? this.rootContainer();
+      if (!container) return;
+      container.setAttribute(this.constructor.currentPathAttr, this.#normalizePathname(path2));
+    }
+    /** 优先 rootContainer，其次 Liquid current_path，最后地址栏 */
     #initialCurrentPath() {
+      const fromRoot = this.#getStoredCurrentPath();
+      if (fromRoot) return fromRoot;
       const fromValue = this.hasCurrentPathValue ? String(this.currentPathValue || "").trim() : "";
       if (fromValue) return this.#normalizePathname(fromValue);
       return this.#normalizePathname(window.location.pathname);
+    }
+    #getCurrentPath() {
+      return this.#initialCurrentPath();
     }
     /** @param {Record<string, unknown>} node */
     #nodeIconUrl(node) {
@@ -19285,7 +19239,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
     // 激活判断
     isPathActive(node, isPrefix = true) {
-      const current = this.#normalizePathname(this.currentPath);
+      const current = this.#getCurrentPath();
       const nodePath = this.#normalizePathname(node.path);
       if (!current) return false;
       if (isPrefix) {
@@ -23351,6 +23305,13 @@ Please report this to https://github.com/markedjs/marked.`, e) {
     }
   };
 
+  // src/javascripts/utils/recentChats.js
+  function dispatchRecentChatsRefresh(detail = {}) {
+    document.dispatchEvent(
+      new CustomEvent("recent-chats:refresh", { bubbles: true, detail })
+    );
+  }
+
   // src/javascripts/controllers/ai_search_completion_controller.js
   var ai_search_completion_controller_default = class extends Controller {
     static targets = [
@@ -23371,6 +23332,9 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       chatId: String,
       timeout: Number,
       autoSubmit: { type: Boolean, default: false },
+      hasChatTitle: { type: Boolean, default: false },
+      isHistoricalChat: { type: Boolean, default: false },
+      chatTitleUrl: String,
       message: String,
       messages: Object,
       query: Object
@@ -23381,8 +23345,12 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       this.chatHistory = [];
       this.currentRound = null;
       this.shouldAutoScroll = true;
+      this.titlePollStarted = false;
       this.#hydrateLaunchParamsFromUrl();
       this.#hydrateFromDom();
+      if (this.chatHistory.length > 0) {
+        this.isHistoricalChatValue = true;
+      }
       this.#bindAutoScrollTracking();
       this.syncSendButton();
       this.#syncClearButtonVisibility();
@@ -23488,9 +23456,13 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       const round2 = this.chatHistory[idx];
       if (round2?.retry) round2.retry();
     }
-    retryLastResponse() {
-      const idx = this.chatHistory.length - 1;
-      void this.#resendRound(idx);
+    retryResponse(event) {
+      event?.preventDefault();
+      if (this.isStreaming) return;
+      const trigger2 = event.currentTarget;
+      const messageId = trigger2.dataset.messageId || trigger2.closest(".ai-chat-assistant-round")?.dataset.messageId;
+      if (!messageId) return;
+      void this.#retryFromMessageId(messageId);
     }
     async copyResponse(event) {
       event?.preventDefault();
@@ -23524,6 +23496,25 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         this._copyTippy?.destroy();
         this._copyTippy = null;
       }, 1200);
+    }
+    #roundIdxForMessageId(messageId) {
+      if (!messageId) return -1;
+      const id = String(messageId);
+      const fromHistory = this.chatHistory.findIndex(
+        (round2) => round2.assistantMessageId === id || round2.userMessageId === id
+      );
+      if (fromHistory >= 0) return fromHistory;
+      const primary = this.messagesTargets[0];
+      if (!primary) return -1;
+      const assistants = primary.querySelectorAll(".ai-chat-assistant-round");
+      for (let i = 0; i < assistants.length; i++) {
+        if (assistants[i].dataset.messageId === id) return i;
+      }
+      return -1;
+    }
+    #assistantRoundElAt(container, idx) {
+      const rounds = container.querySelectorAll(".ai-chat-assistant-round");
+      return rounds[idx] || null;
     }
     #assistantTextForCopy(triggerEl) {
       const roundEl = triggerEl?.closest?.(".ai-chat-assistant-round");
@@ -23589,6 +23580,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       };
       this.chatHistory.push(this.currentRound);
       this.#syncClearButtonVisibility();
+      this.#hideAssistantActions();
       this.appendUserMessage(message);
       this.appendAssistantMessage("", "streaming", this.chatHistory.length - 1);
       const idx = this.chatHistory.length - 1;
@@ -23600,6 +23592,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       this.currentRound = round2;
       this.isStreaming = true;
       this.syncSendButton();
+      this.#hideAssistantActions();
       round2.ai = "";
       round2.status = "streaming";
       if (!replaceLastAssistant) {
@@ -23649,7 +23642,8 @@ Please report this to https://github.com/markedjs/marked.`, e) {
           this.currentRound.status = "completed";
           this.#finishStreaming(idx);
           this.updateCurrentAssistantMessage(this.currentRound.ai, "completed", idx);
-          this.#showAssistantActions(idx);
+          this.#showAssistantActions();
+          this.#maybePollChatTitle();
           return;
         }
         if (data2.status === "error") {
@@ -23668,7 +23662,9 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       round2.status = "error";
       this.#finishStreaming(idx);
       round2.retry = () => {
-        void this.#resendRound(idx);
+        const id = round2.assistantMessageId || round2.userMessageId;
+        if (id) void this.#retryFromMessageId(id);
+        else void this.#retryFromRoundIdx(idx);
       };
       this.updateCurrentAssistantMessage(
         round2.ai,
@@ -23711,14 +23707,13 @@ Please report this to https://github.com/markedjs/marked.`, e) {
           const contentEl = el.querySelector("[data-markdown-target='content']");
           const ai = contentEl?.textContent?.trim() || "";
           const idx = rounds.length;
-          el.dataset.roundIdx = String(idx);
           rounds.push({
             user: pendingUser,
             ai,
             status: "completed",
             retry: null,
-            userMessageId: pendingUserEl?.dataset.userMessageId || null,
-            assistantMessageId: el.dataset.assistantMessageId || null
+            userMessageId: pendingUserEl?.dataset.messageId || null,
+            assistantMessageId: el.dataset.messageId || null
           });
           pendingUser = null;
           pendingUserEl = null;
@@ -23728,14 +23723,16 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       this.chatHistory = rounds;
       this.#toggleEmptyHint(false);
       this.#syncClearButtonVisibility();
-      this.#showAssistantActions(rounds.length - 1);
+      this.#showAssistantActions();
     }
-    appendUserMessage(content) {
+    appendUserMessage(content, messageId = null) {
       if (!this.hasUserMessageTemplateTarget) return;
       this.messagesTargets.forEach((container) => {
         const tpl = this.userMessageTemplateTarget.content.cloneNode(true);
+        const roundEl = tpl.querySelector(".ai-chat-user-round");
         const node = tpl.querySelector(".ai-user-message");
         if (node) node.textContent = content;
+        if (roundEl && messageId) roundEl.dataset.messageId = String(messageId);
         container.appendChild(tpl);
       });
       this.scrollToBottom(true);
@@ -23747,13 +23744,12 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         this.#fillAssistantNode(tpl, content, status, idx, retryFn);
         container.appendChild(tpl);
       });
-      if (status === "completed") this.#showAssistantActions(idx);
+      if (status === "completed") this.#showAssistantActions();
       this.scrollToBottom(true);
     }
     updateCurrentAssistantMessage(content, status, idx, retryFn) {
       this.messagesTargets.forEach((container) => {
-        const rounds = container.querySelectorAll(".ai-chat-assistant-round");
-        const node = rounds[rounds.length - 1];
+        const node = this.#assistantRoundElAt(container, idx);
         if (!node) return;
         this.#fillAssistantNode(node, content, status, idx, retryFn);
       });
@@ -23761,7 +23757,13 @@ Please report this to https://github.com/markedjs/marked.`, e) {
     }
     #fillAssistantNode(node, content, status, idx, retryFn) {
       const roundEl = node instanceof Element && node.matches(".ai-chat-assistant-round") ? node : node.querySelector?.(".ai-chat-assistant-round");
-      if (roundEl) roundEl.dataset.roundIdx = String(idx);
+      if (roundEl) {
+        roundEl.dataset.roundIdx = String(idx);
+        const actions = roundEl.querySelector(".ai-message-actions");
+        if (actions) {
+          actions.classList.toggle("hidden", status !== "completed" || this.isStreaming);
+        }
+      }
       const markdownRoot = node.querySelector("[data-controller~='markdown']");
       const contentEl = node.querySelector("[data-markdown-target='content']");
       const renderedEl = node.querySelector("[data-markdown-target='renderedContent']");
@@ -23827,45 +23829,70 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       el.innerHTML = tail;
       markdownRoot.appendChild(el);
     }
-    #showAssistantActions(idx) {
+    #showAssistantActions() {
+      if (this.isStreaming) {
+        this.#hideAssistantActions();
+        return;
+      }
       this.messagesTargets.forEach((container) => {
         const rounds = container.querySelectorAll(".ai-chat-assistant-round");
         rounds.forEach((el, i) => {
           const actions = el.querySelector(".ai-message-actions");
           if (!actions) return;
-          actions.classList.toggle("hidden", i !== idx);
+          const show = this.chatHistory[i]?.status === "completed";
+          actions.classList.toggle("hidden", !show);
         });
       });
+    }
+    #hideAssistantActions() {
+      this.messagesTargets.forEach((container) => {
+        container.querySelectorAll(".ai-message-actions").forEach((actions) => {
+          actions.classList.add("hidden");
+        });
+      });
+    }
+    #removeAssistantRoundAndAfter(idx) {
+      this.messagesTargets.forEach((container) => {
+        const assistantEl = this.#assistantRoundElAt(container, idx);
+        if (!assistantEl) return;
+        let node = assistantEl;
+        while (node) {
+          const toRemove = node;
+          node = node.nextElementSibling;
+          toRemove.remove();
+        }
+      });
+    }
+    async #retryFromMessageId(messageId) {
+      const idx = this.#roundIdxForMessageId(messageId);
+      if (idx < 0) return;
+      await this.#retryFromRoundIdx(idx, messageId);
+    }
+    async #retryFromRoundIdx(idx, resendMessageId = null) {
+      const round2 = this.chatHistory[idx];
+      if (!round2?.user) return;
+      if (this.isStreaming) this.stopStreaming();
+      this.#removeAssistantRoundAndAfter(idx);
+      this.chatHistory = this.chatHistory.slice(0, idx + 1);
+      this.currentRound = round2;
+      await this.#ensureChatId();
+      const messageId = resendMessageId || round2.assistantMessageId || round2.userMessageId;
+      round2.ai = "";
+      round2.status = "streaming";
+      round2.assistantMessageId = null;
+      this.#hideAssistantActions();
+      this.appendAssistantMessage("", "streaming", idx);
+      if (messageId && this.chatIdValue) {
+        this.#streamAssistant(null, idx, { replaceLastAssistant: true, resendMessageId: messageId });
+        return;
+      }
+      this.#streamAssistant(round2.user, idx, { replaceLastAssistant: true });
     }
     #toggleEmptyHint(show) {
       this.element.querySelectorAll(".chat-ai-empty-hint").forEach((el) => {
         el.classList.toggle("hidden", !show);
       });
       this.messagesScrollTargets.filter((el) => el.dataset.aiSearchVariant === "mobile").forEach((el) => el.classList.toggle("hidden", show));
-    }
-    #removeLastAssistantRound() {
-      this.messagesTargets.forEach((container) => {
-        const rounds = container.querySelectorAll(".ai-chat-assistant-round");
-        rounds[rounds.length - 1]?.remove();
-      });
-    }
-    async #resendRound(idx) {
-      const round2 = this.chatHistory[idx];
-      if (!round2?.user) return;
-      if (this.isStreaming) this.stopStreaming();
-      this.currentRound = round2;
-      await this.#ensureChatId();
-      const resendMessageId = round2.assistantMessageId || round2.userMessageId;
-      round2.ai = "";
-      round2.status = "streaming";
-      round2.assistantMessageId = null;
-      this.#removeLastAssistantRound();
-      this.appendAssistantMessage("", "streaming", idx);
-      if (resendMessageId && this.chatIdValue) {
-        this.#streamAssistant(null, idx, { replaceLastAssistant: true, resendMessageId });
-        return;
-      }
-      this.#streamAssistant(round2.user, idx, { replaceLastAssistant: true });
     }
     #buildStreamUrl({ message, resendMessageId }) {
       const base = (this.url || "").replace(/\/$/, "");
@@ -23903,10 +23930,14 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         const userEl = userRounds[idx];
         const assistantEl = assistantRounds[idx];
         if (userEl && round2.userMessageId) {
-          userEl.dataset.userMessageId = round2.userMessageId;
+          userEl.dataset.messageId = round2.userMessageId;
         }
         if (assistantEl && round2.assistantMessageId) {
-          assistantEl.dataset.assistantMessageId = round2.assistantMessageId;
+          assistantEl.dataset.messageId = round2.assistantMessageId;
+          const retryBtn = assistantEl.querySelector(
+            ".ai-message-actions [data-action*='retryResponse']"
+          );
+          if (retryBtn) retryBtn.dataset.messageId = round2.assistantMessageId;
         }
       });
     }
@@ -23920,10 +23951,44 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         });
         if (!response.ok) return this.chatIdValue;
         const data2 = await response.json();
-        if (data2?.id) this.chatIdValue = String(data2.id);
+        if (data2?.id) {
+          this.chatIdValue = String(data2.id);
+          dispatchRecentChatsRefresh({ chatId: this.chatIdValue });
+        }
       } catch {
       }
       return this.chatIdValue;
+    }
+    async #maybePollChatTitle() {
+      if (this.hasChatTitleValue || this.isHistoricalChatValue || this.titlePollStarted || !this.chatIdValue || !this.hasChatTitleUrlValue) {
+        return;
+      }
+      this.titlePollStarted = true;
+      const deadline = Date.now() + 2e4;
+      while (!this.hasChatTitleValue && Date.now() < deadline) {
+        try {
+          const url = new URL(this.chatTitleUrlValue, window.location.origin);
+          url.searchParams.set("id", this.chatIdValue);
+          const response = await fetch(url.toString(), {
+            headers: {
+              Accept: "application/json",
+              "X-Requested-With": "XMLHttpRequest"
+            },
+            credentials: "same-origin"
+          });
+          if (response.ok) {
+            const data2 = await response.json();
+            const title = (data2?.title || "").trim();
+            if (title) {
+              this.hasChatTitleValue = true;
+              dispatchRecentChatsRefresh({ chatId: this.chatIdValue, title });
+              return;
+            }
+          }
+        } catch {
+        }
+        await new Promise((resolve) => window.setTimeout(resolve, 2e3));
+      }
     }
     #stripOneShotMessageFromUrl() {
       try {
@@ -23975,7 +24040,8 @@ ${tail}`;
       if (!this.hasTimeoutValue) return;
       this.timeoutTimer = setTimeout(() => {
         if (!this.currentRound) return;
-        const idx = this.chatHistory.length - 1;
+        const idx = this.chatHistory.indexOf(this.currentRound);
+        if (idx < 0) return;
         this.#handleStreamError(this.messagesValue.timeout_error, idx);
       }, this.timeoutValue * 1e3);
     }
@@ -43397,6 +43463,7 @@ ${n}</ol>
       if (button) button.disabled = true;
       try {
         const chatId = await this.#createChat();
+        dispatchRecentChatsRefresh({ chatId });
         const url = new URL(this.chatUrlValue, window.location.origin);
         url.searchParams.set("id", chatId);
         url.searchParams.set("message", message);
@@ -43585,6 +43652,7 @@ ${n}</ol>
       this.closeModal();
       try {
         const chatId = await this.#createChat();
+        dispatchRecentChatsRefresh({ chatId });
         const url = new URL(this.chatUrlValue, window.location.origin);
         url.searchParams.set("id", chatId);
         url.searchParams.set("message", message);
@@ -44272,6 +44340,35 @@ ${n}</ol>
     }
   };
 
+  // src/javascripts/controllers/recent_chats_controller.js
+  var recent_chats_controller_default = class extends Controller {
+    static values = {
+      url: String
+    };
+    connect() {
+      this._onRefresh = () => this.refresh();
+      document.addEventListener("recent-chats:refresh", this._onRefresh);
+    }
+    disconnect() {
+      document.removeEventListener("recent-chats:refresh", this._onRefresh);
+    }
+    refresh() {
+      const frame = document.getElementById("recent_chats");
+      if (!frame || !this.hasUrlValue) return;
+      const url = new URL(this.urlValue, window.location.origin);
+      const currentChatId = new URLSearchParams(window.location.search).get("id") || "";
+      if (currentChatId) url.searchParams.set("current_chat_id", currentChatId);
+      else url.searchParams.delete("current_chat_id");
+      const nextSrc = url.pathname + url.search;
+      const prevSrc = frame.getAttribute("src");
+      if (prevSrc) {
+        const prev = new URL(prevSrc, window.location.origin);
+        if (prev.pathname + prev.search === nextSrc) return;
+      }
+      frame.src = nextSrc;
+    }
+  };
+
   // src/javascripts/controllers/index.js
   if (!window.Stimulus) {
     window.Stimulus = Application.start();
@@ -44293,6 +44390,7 @@ ${n}</ol>
   application.register("clipboard", clipboard_controller_default);
   application.register("copy-page", copy_page_controller_default);
   application.register("page-tools", page_tools_controller_default);
+  application.register("recent-chats", recent_chats_controller_default);
 
   // src/javascripts/application.js
   window.tns = import_tiny_slider.tns;

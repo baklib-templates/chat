@@ -1,39 +1,115 @@
-# ai_chat
+# Wiki Chat (`chat`)
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+English | [简体中文](README.zh-CN.md)
 
-#### 软件架构
-软件架构说明
+Baklib **Wiki** AI chat theme (`theme_scope`: `wiki`, version **1.2.1**): conversation-first knowledge Q&A with a welcome home, session sidebar, citation panel, integrated doc browsing, search, and Turbo-driven navigation—not a traditional docs-only or help-center layout.
 
+## Features
 
-#### 安装教程
+- **Welcome home** — Hero, popular prompts, and inline chat input; questions start a new AI session
+- **Chat workspace** — Streaming answers, source citations, PiP pop-out, optional session delete
+- **Docs alongside chat** — Left sidebar for new chat, knowledge-base entry, and recent sessions; `page.liquid` for full doc reading with nav tree and search modal
+- **AI & search** — Header search with preview, configurable assistant name and post-AI footer text
+- **Seven locales** — Runtime UI (`*.json`) and theme-editor copy (`*.schema.json`)
+- **Frontend stack** — Tailwind CSS 4, daisyUI, Stimulus, Alpine.js, Turbo (built from `src/` into `assets/`)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Requirements
 
-#### 使用说明
+- Node.js (for `yarn build` / `yarn dev`)
+- Baklib site on **Wiki** scope with this theme installed
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Project layout
 
-#### 参与贡献
+| Path | Purpose |
+| --- | --- |
+| `config/settings_schema.json` | Theme metadata, global settings, preview image paths |
+| `layout/` | Base layouts (`theme.liquid`, `error.liquid`) |
+| `templates/` | Welcome home, doc page, tag list, search, feedback Turbo Streams |
+| `snippets/` | Shared chrome; `_chat_workspace.liquid`, `_left_sidebar.liquid`, `_recent_chats.liquid`, AI/search partials |
+| `statics/` | Chat session, recent chats, nav tree, search preview, and other Liquid endpoints |
+| `locales/` | Storefront strings (`*.json`) and editor labels (`*.schema.json`) |
+| `src/` | Source CSS/JS (Tailwind CLI, esbuild) |
+| `assets/` | Built stylesheets, scripts, and preview screenshots |
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+## Templates
 
+### Home
 
-#### 特技
+`templates/index.welcome.liquid` — set as the site home template in Baklib.
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+Welcome hero, configurable popular prompts (one per line), chat input, and disclaimer. Submitting a question or clicking a prompt creates a session and navigates to the chat static endpoint.
+
+Home settings include `welcome_title`, `welcome_description`, `popular_searches`, `chat_input_placeholder`, and `chat_disclaimer`.
+
+### Documentation page
+
+`templates/page.liquid` — knowledge-base content pages with left nav tree, document search modal (⌘K), Turbo frame content area, page tools, and feedback.
+
+### Other
+
+| File | Role |
+| --- | --- |
+| `templates/search.liquid` | Search route; starts a chat session from a query |
+| `templates/tag.liquid` | Tag browsing with sidebar tag list |
+| `templates/feedback_*_turbo_stream.liquid` | Turbo Stream responses for in-page feedback |
+| `statics/chat.liquid` | Active chat session (renders `_chat_workspace`) |
+| `statics/recent_chats.liquid` | Recent session list for the left sidebar |
+| `statics/search_preview.liquid` | Search result preview for the header modal |
+| `statics/nav_tree.liquid` | Nav tree static endpoint |
+
+## Locales
+
+Shipped for storefront and schema:
+
+`en` · `zh-CN` · `zh-TW` · `ko` · `ja` · `de` · `fr`
+
+Edit `locales/<locale>.json` (UI) and `locales/<locale>.schema.json` (editor). Register new languages under `theme_info.theme_languages` in `config/settings_schema.json`.
+
+## Build
+
+```bash
+yarn install
+yarn build
+```
+
+Development (watch CSS/JS):
+
+```bash
+yarn dev
+```
+
+Optional live reload for Liquid/locale edits (Ruby + `guard-livereload` from `Gemfile`):
+
+```bash
+bundle install
+yarn livereload
+```
+
+## Preview images
+
+**Theme card thumbnail** (all languages):
+
+```text
+assets/images/theme/thumb.png
+```
+
+**Preview screenshots** — configured in `config/settings_schema.json` (`theme_preview_images`):
+
+```text
+assets/images/theme/
+├── index.webp
+├── chat.webp
+└── list.webp
+```
+
+Optional per-locale screenshots may be placed under `assets/images/theme/<lang>/` for marketing or admin use; paths are resolved via `theme_thumb_url` and `theme_preview_images` in `config/settings_schema.json`.
+
+## Documentation
+
+- Theme guide: <https://help.baklib.cn/themes/docs>
+- Settings reference: <https://help.baklib.cn/themes/docs/settings>
+- Template development: <https://dev.baklib.cn/guide/git>
+
+## License
+
+See [LICENSE](LICENSE) (or the parent repository if no `LICENSE` file is present).

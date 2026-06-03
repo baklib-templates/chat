@@ -4,11 +4,6 @@
   "settings": {
     "brand": {
       "title": "Brand",
-      "logo_paragraph": "Logo appears in the left sidebar and mobile header. Falls back to the site favicon when unset.",
-      "logo_url": {
-        "label": "Light logo",
-        "info": "Recommended size 300×80"
-      },
       "copyright": {
         "label": "Copyright / ICP filing",
         "info": "Shown in the site footer",

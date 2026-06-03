@@ -4,11 +4,6 @@
   "settings": {
     "brand": {
       "title": "Marque",
-      "logo_paragraph": "Le logo apparaît dans la barre latérale gauche et l'en-tête mobile. Utilise le favicon du site si non défini.",
-      "logo_url": {
-        "label": "Logo clair",
-        "info": "Taille recommandée 300×80"
-      },
       "copyright": {
         "label": "Droits d'auteur / enregistrement ICP",
         "info": "Affiché dans le pied de page",

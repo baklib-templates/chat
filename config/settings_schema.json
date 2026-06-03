@@ -89,18 +89,6 @@
     "name": "t:schema.settings.brand.title",
     "settings": [
       {
-        "type": "paragraph",
-        "content": "t:schema.settings.brand.logo_paragraph"
-      },
-      {
-        "id": "logo_url",
-        "type": "image_picker",
-        "width": 300,
-        "height": 80,
-        "label": "t:schema.settings.brand.logo_url.label",
-        "info": "t:schema.settings.brand.logo_url.info"
-      },
-      {
         "id": "site_description",
         "label": "t:schema.settings.brand.site_description.label",
         "type": "text",

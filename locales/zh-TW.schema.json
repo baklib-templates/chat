@@ -4,11 +4,6 @@
   "settings": {
     "brand": {
       "title": "品牌相關",
-      "logo_paragraph": "Logo 顯示在左側欄與行動端頂欄；未設定時使用站點圖示。",
-      "logo_url": {
-        "label": "亮色 Logo 圖片",
-        "info": "網站亮色 Logo 建議尺寸 300×80"
-      },
       "copyright": {
         "label": "備案號/版權資訊",
         "info": "備案號/版權資訊將顯示在網站底部",

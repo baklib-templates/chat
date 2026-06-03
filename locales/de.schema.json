@@ -4,11 +4,6 @@
   "settings": {
     "brand": {
       "title": "Marke",
-      "logo_paragraph": "Logo erscheint in der linken Seitenleiste und im mobilen Header. Fallback auf das Site-Favicon, wenn nicht gesetzt.",
-      "logo_url": {
-        "label": "Helles Logo",
-        "info": "Empfohlene Größe 300×80"
-      },
       "copyright": {
         "label": "Urheberrecht / ICP-Eintrag",
         "info": "Wird in der Fußzeile angezeigt",

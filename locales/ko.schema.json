@@ -4,11 +4,6 @@
   "settings": {
     "brand": {
       "title": "브랜드",
-      "logo_paragraph": "로고는 왼쪽 사이드바와 모바일 헤더에 표시됩니다. 설정하지 않으면 사이트 파비콘을 사용합니다.",
-      "logo_url": {
-        "label": "밝은 모드 로고",
-        "info": "권장 크기 300×80"
-      },
       "copyright": {
         "label": "저작권 / ICP 등록",
         "info": "사이트 하단에 표시됩니다",

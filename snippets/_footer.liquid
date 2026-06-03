@@ -1,4 +1,4 @@
-{% assign company_name = site.settings.company_name | presence | default: site.name %}
+{% assign company_name = site.settings.company_name | presence %}
 {% assign copyright = site.settings.copyright | presence %}
 {% assign service_term_url = site.settings.service_term_url | presence %}
 {% assign privacy_policy_url = site.settings.privacy_policy_url | presence %}

@@ -1,0 +1,173 @@
+{
+  "theme_label": "AI Chat",
+  "theme_description": "インテリジェントな Q&A、ドキュメント検索、自動応答向け AI チャットテーマ",
+  "settings": {
+    "brand": {
+      "title": "ブランド",
+      "logo_paragraph": "ロゴは左サイドバーとモバイルヘッダーに表示されます。未設定の場合はサイトのファビコンを使用します。",
+      "logo_url": {
+        "label": "ライトモードロゴ",
+        "info": "推奨サイズ 300×80"
+      },
+      "copyright": {
+        "label": "著作権 / ICP 登録",
+        "info": "サイトフッターに表示されます",
+        "default": "ICP 登録番号"
+      },
+      "company_name": {
+        "label": "会社名",
+        "default": "会社名"
+      },
+      "site_description": {
+        "label": "サイト副題",
+        "info": "サイドバーのサイト名の下に表示",
+        "default": "Knowledge AI"
+      },
+      "robot_name": {
+        "label": "アシスタント名",
+        "info": "AI チャットと検索に表示される名前",
+        "default": "AI アシスタント"
+      },
+      "ai_search_completed_text": {
+        "label": "AI 回答フッター注記",
+        "info": "各 AI 回答の末尾に追加されます。HTML リンクに対応しています。",
+        "default": "さらにサポートが必要な場合は、<a href='#' class='text-blue-600'>サポートチーム</a>にお問い合わせください。"
+      },
+      "kb_menu_label": {
+        "label": "ナレッジベースメニュー名",
+        "info": "サイドバーのナレッジベースリンクの表示テキスト",
+        "default": "ナレッジベース"
+      }
+    },
+    "ai": {
+      "title": "AI",
+      "chat_delete_enabled": {
+        "label": "チャット削除を許可",
+        "info": "有効にすると、ユーザーはサイドバーの「最近」リストからチャット履歴を削除できます"
+      }
+    },
+    "layout": {
+      "title": "レイアウト"
+    },
+    "policy": {
+      "title": "法的情報",
+      "service_term_url": {
+        "label": "利用規約 URL",
+        "info": "フッターに表示されます"
+      },
+      "privacy_policy_url": {
+        "label": "プライバシーポリシー URL",
+        "info": "フッターに表示されます"
+      }
+    },
+    "head": {
+      "title": "Head コード",
+      "head_html": {
+        "label": "<head> 内 HTML",
+        "info": "カスタムスクリプト、スタイル、分析コードなど"
+      }
+    }
+  },
+  "page_config": {
+    "name": "ページオプション",
+    "settings": {
+      "show_published_at": {
+        "label": "公開日を表示"
+      },
+      "show_author": {
+        "label": "著者を表示"
+      },
+      "show_page_tools_dropdown": {
+        "label": "ページツールメニューを表示"
+      },
+      "feedback_enabled": {
+        "label": "ページフィードバックを有効化"
+      },
+      "feedback_helper_text": {
+        "label": "フィードバックヘルパー JSON",
+        "info": "yes/no ラベル、タイトル、項目リストを含む JSON",
+        "default": "{\"yes\":{\"label\":\"はい\",\"title\":\"素晴らしい！何が最も役立ちましたか？\",\"items\":[\"ガイドは期待どおりに機能しました。\",\"必要な情報を簡単に見つけられました。\",\"製品と機能を理解しやすかったです。\",\"ドキュメントは最新です。\"]},\"no\":{\"label\":\"いいえ\",\"title\":\"どう改善できますか？\",\"items\":[\"より早く始められるようにしてください。\",\"必要なものを見つけやすくしてください。\",\"製品と機能をより分かりやすく説明してください。\",\"このドキュメントを更新してください。\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "左サイドバー幅",
+        "info": "メインチャットサイドバーの幅；約 280px 推奨"
+      },
+      "header_height": {
+        "label": "ヘッダー高さ",
+        "info": "トップバーの高さ（ピクセル）；sticky 目次の位置に影響"
+      }
+    }
+  },
+  "templates": {
+    "page": {
+      "name": "ページ",
+      "description": "ドキュメントページテンプレート",
+      "settings": {
+        "show_list": {
+          "label": "セクションページ",
+          "info": "子ページをリスト表示；ホームノードは常に子ページを表示"
+        },
+        "icon": {
+          "label": "ページアイコン",
+          "info": "子ページリストのアイコン；1:1 比率推奨"
+        },
+        "title": {
+          "label": "タイトル",
+          "info": "ナレッジベースから同期；読み取り専用"
+        },
+        "description": {
+          "label": "概要"
+        },
+        "tags": {
+          "label": "タグ"
+        },
+        "thumb_image_url": {
+          "label": "カバー画像"
+        },
+        "content": {
+          "label": "コンテンツ",
+          "info": "ソースから同期；読み取り専用"
+        }
+      }
+    },
+    "index": {
+      "name": "ホーム",
+      "description": "ホームページテンプレート",
+      "settings": {
+        "groups": {
+          "welcome": "ウェルカム",
+          "prompts": "チャット案内"
+        },
+        "welcome_title": {
+          "label": "ウェルカムタイトル",
+          "default": "AI ナレッジ Q&A アシスタント"
+        },
+        "welcome_description": {
+          "label": "ウェルカム説明",
+          "default": "知りたい質問を入力してください。ドキュメント内容とインテリジェント分析に基づき、最も関連性の高い回答を素早く見つけます。"
+        },
+        "popular_searches": {
+          "label": "おすすめの質問",
+          "info": "ホームページと検索モーダルに表示；1 行に 1 つの質問"
+        },
+        "popular_searches_label": {
+          "label": "おすすめ質問の見出し",
+          "default": "こんな質問を試してみてください"
+        },
+        "chat_input_placeholder": {
+          "label": "入力 placeholder",
+          "default": "質問を入力して Enter で送信…"
+        },
+        "chat_disclaimer": {
+          "label": "入力欄下の説明",
+          "default": "AI は現在のナレッジベースの内容のみに基づいて回答し、外部データは参照しません",
+          "info": "空にすると非表示"
+        }
+      }
+    }
+  }
+}

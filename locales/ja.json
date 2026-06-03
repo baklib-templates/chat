@@ -1,0 +1,146 @@
+{
+  "templates": {
+    "page": {
+      "copy_success": "リンクをコピーしました",
+      "page_toc": "ページ内目次",
+      "llm_prompt_template": "%{url} の内容を読み取り、質問できるようにしてください。",
+      "llm_copying": "コピー中...",
+      "llm_copied": "コピーしました",
+      "search_docs": "ドキュメントを検索",
+      "search_docs_placeholder": "ドキュメントを検索…",
+      "nav_drawer": "目次",
+      "search_docs_and_ai": "ドキュメントを検索、または AI に質問…"
+    },
+    "index": {
+      "send_question": "質問を送信"
+    },
+    "search": {
+      "entering_chat": "チャットを開いています…"
+    },
+    "tag": {
+      "heading": "タグ",
+      "empty_tags_title": "タグがありません",
+      "empty_tags_description": "管理画面でタグを追加してください",
+      "empty_content": "コンテンツがありません"
+    }
+  },
+  "snippets": {
+    "sidebar": {
+      "open_menu": "メニューを開く",
+      "new_chat": "新しいチャット",
+      "menu": "メニュー",
+      "recent": "最近"
+    },
+    "recent_chats": {
+      "new_chat": "新しいチャット",
+      "delete": "チャットを削除",
+      "delete_confirm": "このチャットを削除しますか？この操作は元に戻せません。"
+    },
+    "chat": {
+      "sources": "参照元",
+      "pip_open": "別ウィンドウで開く",
+      "pip_unsupported": "このブラウザでは別ウィンドウに対応していません",
+      "pip_pop_out": "別ウィンドウ",
+      "pip_dock": "ページに戻す",
+      "pip_opened": "AI アシスタントが別ウィンドウで開いています",
+      "input_placeholder": "質問を入力して Enter で送信",
+      "continue_input_placeholder": "追加の質問…",
+      "send": "送信",
+      "copy_response": "回答をコピー",
+      "regenerate": "再生成",
+      "empty_disclaimer": "AI が生成したコンテンツには誤りが含まれる場合があります。ご自身でご確認ください。"
+    },
+    "search_modal": {
+      "aria_label": "検索",
+      "placeholder": "ドキュメントを検索…",
+      "hot_searches": "人気の検索",
+      "ask_ai_heading": "AI アシスタントに質問",
+      "ask_ai_lead": "次について教えてください",
+      "close": "閉じる"
+    },
+    "user_account": {
+      "login": "ログイン",
+      "login_title": "ログイン",
+      "login_sync_history": "ログインしてチャット履歴を同期",
+      "continue_with_account": "アカウントで続行",
+      "continue_with_sso": "企業アカウントで続行",
+      "guest": "ゲスト",
+      "login_disabled": "このサイトではログインが有効になっていません",
+      "guest_mode": "ログイン無効；ゲストモードで閲覧中"
+    },
+    "footer": {
+      "copyright": "All rights reserved",
+      "service_terms": "利用規約",
+      "privacy_policy": "プライバシーポリシー"
+    },
+    "page_tools": {
+      "copy_page_label": "ページをコピー",
+      "copy_page_description": "LLM 用に Markdown 形式でページをコピー",
+      "open_in_chatgpt": "ChatGPT で開く",
+      "open_in_claude": "Claude で開く",
+      "ask_about_page": "このページについて質問",
+      "copy_mcp_label": "MCP インストールコマンドをコピー",
+      "copy_mcp_description": "MCP サーバーインストール用の npx コマンドをコピー",
+      "connect_to_cursor": "Cursor に接続",
+      "connect_to_cursor_description": "Cursor に MCP サーバーをインストール",
+      "connect_to_vscode": "VS Code に接続",
+      "connect_to_vscode_description": "VS Code に MCP サーバーをインストール"
+    },
+    "page_feedback": {
+      "cancel": "キャンセル",
+      "submit": "フィードバックを送信",
+      "thanks": "フィードバックありがとうございます。コンテンツ体験の改善に活用します。",
+      "other": "その他",
+      "other_prefix": "その他：",
+      "other_details_sr": "その他のフィードバック詳細"
+    },
+    "feedback_form": {
+      "title": "フィードバックを送信",
+      "message_label": "メッセージ",
+      "message_placeholder": "フィードバック内容を入力してください",
+      "message_required": "フィードバック内容を入力してください",
+      "submit": "送信",
+      "cancel": "キャンセル"
+    },
+    "empty": {
+      "title": "関連コンテンツが見つかりません",
+      "description": "別のキーワードで検索するか、他のカテゴリをご覧ください",
+      "button_text": "ホームに戻る"
+    }
+  },
+  "statics": {
+    "search_preview": {
+      "no_results": "関連する結果が見つかりません"
+    }
+  },
+  "generic": {
+    "feedback_created_at": "最終フィードバック",
+    "published_at": "公開日",
+    "profile": "プロフィール"
+  },
+  "buttons": {
+    "logout": "ログアウト"
+  },
+  "page": {
+    "ask_ai": "AI に質問",
+    "ask_ai_message": "「%{title}」について教えてください"
+  },
+  "search": {
+    "ask_ai_message": "「%{query}」について教えてください"
+  },
+  "ai": {
+    "reading": "ドキュメントを読み取り中…",
+    "thinking": "AI が考えています",
+    "network_error": "ネットワークエラー。再試行してください",
+    "timeout_error": "応答がタイムアウトしました。再試行してください",
+    "copy_success": "コピーしました",
+    "copy_error": "コピーに失敗しました"
+  },
+  "paginate": {
+    "previous": "前へ",
+    "next": "次へ",
+    "showing": "表示中",
+    "records": "件",
+    "total": "合計"
+  }
+}

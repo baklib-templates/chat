@@ -1,7 +1,8 @@
 {% assign search_ask_ai_message_tpl = 'search.ask_ai_message' | t: '请介绍一下「%{query}」' %}
 {% assign chat_static_url = statics['chat'] %}
 {% assign search_preview_url = statics['search_preview'] %}
-{% assign hot_keywords = site.settings.popular_searches | reg_split: "/\n/" %}
+{% assign index_page = site.pages['/'] %}
+{% assign hot_keywords = index_page.settings.popular_searches | reg_split: "/\n/" %}
 
 <div
   class="flex min-h-0 min-w-0 flex-1 overflow-hidden w-full"
@@ -12,16 +13,16 @@
   data-header-search-ask-ai-message-template-value="{{ search_ask_ai_message_tpl | escape_once }}"
 >
   <!-- left_sidebar：文档目录 -->
-  <div class="hidden h-full min-h-0 min-w-[320px] max-w-[400px] shrink-0 overflow-auto border-r border-base-content/10 bg-base-100 sm:block">
+  <div class="hidden h-full min-h-0 min-w-[320px] max-w-[400px] shrink-0 overflow-auto border-r border-base-content/10 bg-base-100 lg:block">
     <div class="sticky top-0 bg-white z-10 py-6 px-4">
       <button
         type="button"
         class="flex h-10 w-full items-center gap-2 rounded-xl border border-base-content/10 bg-base-100 px-3 text-left text-sm text-base-content/45 transition hover:border-primary/30 hover:ring-2 hover:ring-primary/10"
         data-action="click->header-search#openModal"
-        aria-label="搜索文档"
+        aria-label="{{ 'templates.page.search_docs' | t: '搜索文档' }}"
       >
         <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
-        <span class="min-w-0 flex-1 truncate">搜索文档…</span>
+        <span class="min-w-0 flex-1 truncate">{{ 'templates.page.search_docs_placeholder' | t: '搜索文档…' }}</span>
         <kbd class="hidden shrink-0 rounded border border-base-content/10 px-1.5 py-0.5 text-[0.65rem] text-base-content/40 lg:inline">⌘K</kbd>
       </button>
     </div>
@@ -36,9 +37,9 @@
       <input id="my-drawer" type="checkbox" class="drawer-toggle" x-model="isDrawerOpen" />
       <div class="drawer-content flex min-h-0 min-w-0 flex-1 flex-col">
         <div
-          class="js-page-topbar flex h-14 shrink-0 items-center gap-3 border-b border-base-content/8 bg-base-100/75 px-4 backdrop-blur-xl sm:h-16 sm:px-8"
+          class="js-page-topbar flex h-14 shrink-0 items-center gap-3 border-b border-base-content/8 bg-base-100/75 px-4 backdrop-blur-xl sm:h-16 sm:px-6 lg:h-16 lg:px-8"
         >
-          <label for="my-drawer" class="btn btn-square btn-ghost btn-sm flex-none lg:hidden" aria-label="目录">
+          <label for="my-drawer" class="btn btn-square btn-ghost btn-sm flex-none lg:hidden" aria-label="{{ 'templates.page.nav_drawer' | t: '目录' }}">
             <i class="ri-menu-line text-xl" aria-hidden="true"></i>
           </label>
 
@@ -92,7 +93,7 @@
               data-action="click->header-search#openModal"
             >
               <i class="ri-search-line shrink-0 text-base text-base-content/40" aria-hidden="true"></i>
-              <span class="truncate">搜索文档、向 AI 提问…</span>
+              <span class="truncate">{{ 'templates.page.search_docs_and_ai' | t: '搜索文档、向 AI 提问…' }}</span>
             </button>
             {% render 'nav_tree_switch', page: site.pages['/'], current_path: page.path %}
           </div>
@@ -112,6 +113,21 @@
 "sub_page_templates": ["page"],
 "settings": [
 {
+"id": "show_list",
+"type": "checkbox",
+"default": false,
+"label": "t:schema.templates.page.settings.show_list.label",
+"info": "t:schema.templates.page.settings.show_list.info"
+},
+{
+"id": "icon",
+"type": "image_picker",
+"ratio": "1:1",
+"width": 100,
+"label": "t:schema.templates.page.settings.icon.label",
+"info": "t:schema.templates.page.settings.icon.info"
+},
+{
 "id": "title",
 "type": "text",
 "readonly": true,
@@ -119,11 +135,23 @@
 "info": "t:schema.templates.page.settings.title.info"
 },
 {
+"id": "description",
+"type": "textarea",
+"label": "t:schema.templates.page.settings.description.label"
+},
+{
 "id": "tags",
 "type": "tag_picker",
 "multiple": true,
 "label": "t:schema.templates.page.settings.tags.label",
 "query_enabled": true
+},
+{
+"id": "thumb_image_url",
+"type": "image_picker",
+"width": 400,
+"height": 225,
+"label": "t:schema.templates.page.settings.thumb_image_url.label"
 },
 {
 "id": "content",

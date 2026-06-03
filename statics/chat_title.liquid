@@ -5,11 +5,8 @@
 {% assign chat = site.ai_chats[chat_id] %}
 
 {% if chat %}
-  {% assign chat_title = chat.title %}
-  {
-    "title": '{{ chat_title }}'
-  }
+  {% assign chat_title = chat.title | default: '' %}
+  {"title":{{ chat_title | to_json }}}
 {% else %}
   {}
 {% endif %}
-

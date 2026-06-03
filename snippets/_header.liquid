@@ -1,17 +1,20 @@
-{% assign header_subtitle = subtitle | default: site.settings.welcome_title | default: nil %}
+{% assign header_subtitle = subtitle %}
 {% assign show_sources_toggle = show_sources_toggle | default: false %}
 {% assign show_pip_button = show_pip_button | default: false %}
+{% assign logo_url = site.settings.logo_url | presence %}
+{% assign favicon_url = site.favicon_url | presence %}
 
 <header class="flex h-14 w-full shrink-0 items-center justify-between gap-4 border-b border-base-content/8 bg-base-100/75 px-4 backdrop-blur-xl sm:h-16 sm:px-6 sticky top-0 z-10">
   <div class="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
-    <label for="left-sidebar-drawer" class="btn btn-square btn-ghost btn-sm drawer-button lg:hidden" aria-label="打开菜单">
+    <label for="left-sidebar-drawer" class="btn btn-square btn-ghost btn-sm drawer-button lg:hidden" aria-label="{{ 'snippets.sidebar.open_menu' | t: '打开菜单' }}">
       <i class="ri-menu-line text-xl" aria-hidden="true"></i>
     </label>
 
     <div class="flex items-center gap-2 lg:hidden">
-      <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center">
-        {% assign favicon_url = site.favicon_url | presence %}
-        {% if favicon_url %}
+      <div class="flex h-8 w-8 shrink-0 items-center justify-center">
+        {% if logo_url %}
+          <img src="{{ logo_url }}" alt="{{ site.name }}" class="h-8 max-w-32 object-contain" />
+        {% elsif favicon_url %}
           <img src="{{ favicon_url }}" alt="" class="h-8 w-8 object-contain" />
         {% else %}
           <div class="rounded-lg bg-base-content/5 h-8 w-8 flex items-center justify-center">
@@ -19,12 +22,20 @@
           </div>
         {% endif %}
       </div>
-      <p class="truncate text-sm font-medium text-base-content/55">{{ site.name | escape_once }}</p>
+      <p class="truncate text-sm font-medium text-base-content/55">{{ site.name }}</p>
     </div>
 
     <div class="lg:flex items-center gap-2 hidden">
       {% if header_subtitle != blank %}
-        <span class="min-w-0 truncate text-sm font-medium text-base-content/55">{{ header_subtitle }}</span>
+        <span
+          class="min-w-0 truncate text-sm font-medium text-base-content/55"
+          data-recent-chats-target="headerSubtitle"
+        >{{ header_subtitle }}</span>
+      {% else %}
+        <span
+          class="min-w-0 truncate text-sm font-medium text-base-content/55 hidden"
+          data-recent-chats-target="headerSubtitle"
+        ></span>
       {% endif %}
     </div>
   </div>
@@ -34,7 +45,7 @@
       <button
         type="button"
         class="btn btn-square btn-ghost btn-sm lg:hidden"
-        aria-label="引用来源"
+        aria-label="{{ 'snippets.chat.sources' | t: '引用来源' }}"
       >
         <i class="ri-sidebar-unfold-line text-lg" aria-hidden="true"></i>
       </button>
@@ -46,8 +57,8 @@
         class="btn btn-square btn-ghost btn-sm hidden"
         data-ai-pip-target="openButton"
         data-action="click->ai-pip#open"
-        aria-label="独立窗口"
-        title="在独立窗口中打开"
+        aria-label="{{ 'snippets.chat.pip_open' | t: '独立窗口' }}"
+        title="{{ 'snippets.chat.pip_open' | t: '在独立窗口中打开' }}"
       >
         <i class="ri-picture-in-picture-2-line text-lg" aria-hidden="true"></i>
       </button>

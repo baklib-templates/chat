@@ -1,3 +1,5 @@
+{% assign ai_copy_response = 'snippets.chat.copy_response' | t: '复制回答' %}
+{% assign ai_regenerate = 'snippets.chat.regenerate' | t: '重新生成' %}
 <template data-ai-search-target="userMessageTemplate">
   <div class="ai-chat-user-round">
     <div class="ai-chat-user-content">
@@ -23,7 +25,7 @@
           type="button"
           class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
           data-action="click->ai-search#copyResponse"
-          aria-label="复制回答"
+          aria-label="{{ ai_copy_response | escape_once }}"
         >
           <i class="ri-file-copy-line text-sm leading-none" aria-hidden="true"></i>
         </button>
@@ -31,7 +33,7 @@
           type="button"
           class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
           data-action="click->ai-search#retryResponse"
-          aria-label="重新生成"
+          aria-label="{{ ai_regenerate | escape_once }}"
         >
           <i class="ri-refresh-line text-sm leading-none" aria-hidden="true"></i>
         </button>
@@ -45,7 +47,7 @@
   class="hidden btn btn-ghost btn-xs btn-square align-middle text-base-content/70"
   data-ai-search-target="retryButton"
   data-action="click->ai-search#retryFromButton"
-  aria-label="重新生成"
+  aria-label="{{ ai_regenerate | escape_once }}"
 >
   <i class="ri-refresh-line leading-none" aria-hidden="true"></i>
 </button>

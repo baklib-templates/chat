@@ -44,13 +44,13 @@
         ~
         <span class="font-medium">{{paginate.to}}</span>
         {{ "paginate.records" | t: "条记录" }},
-        {{ "paginate.records" | t: "总共" }}
+        {{ "paginate.total" | t: "总共" }}
         <span class="font-medium">{{paginate.total_count}}</span>
         {{ "paginate.records" | t: "条记录" }}
       </div>
     {% else %}
       <div class="mt-4 text-center text-base-content/50">
-        {{ "paginate.records" | t: "总共" }}
+        {{ "paginate.total" | t: "总共" }}
           <span class="bkt-font-medium">{{paginate.total_count}}</span>
         {{ "paginate.records" | t: "条记录" }}
       </div>

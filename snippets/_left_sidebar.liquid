@@ -1,8 +1,15 @@
+{% assign site_tagline = site.settings.site_description | presence %}
+{% assign logo_url = site.settings.logo_url | presence %}
+{% assign favicon_url = site.favicon_url | presence %}
+{% assign kb_menu_label = site.settings.kb_menu_label %}
+{% assign index_page = site.pages['/'] %}
+
 <aside class="w-[var(--left-sidebar-width)] max-w-80 shrink-0 flex-col border-r border-base-content/5 bg-base-100 p-5 backdrop-blur-xl flex bg-base-100 h-full ">
   <div class="mb-7 flex items-center gap-3">
     <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center">
-      {% assign favicon_url = site.favicon_url | presence %}
-      {% if favicon_url %}
+      {% if logo_url %}
+        <img src="{{ logo_url }}" alt="{{ site.name }}" class="h-10 max-w-full object-contain" />
+      {% elsif favicon_url %}
         <img src="{{ favicon_url }}" alt="" class="h-10 w-10 object-contain" />
       {% else %}
         <div class="rounded-lg bg-primary text-primary-content shadow-md shadow-primary/20 h-10 w-10 flex items-center justify-center">
@@ -10,25 +17,22 @@
         </div>
       {% endif %}
     </div>
-    <div class="min-w-0">
-      <p class="truncate text-base font-bold text-base-content">{{ site.name | escape_once }}</p>
-      <p class="text-sm font-semibold tracking-wider text-base-content/45">Knowledge AI</p>
-    </div>
+    <a class="min-w-0 block group flex-1 overflow-hidden" href="{{ index_page.path }}">
+      <p class="truncate text-base font-bold text-base-content group-hover:text-primary text-ellipsis">{{ site.name }}</p>
+      {% if site_tagline %}
+        <p class="truncate text-sm font-semibold tracking-wider text-base-content/45 group-hover:text-primary">{{ site_tagline }}</p>
+      {% endif %}
+    </a>
   </div>
 
   <a href="/" class="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border border-base-content/10 px-4 py-3 text-sm font-bold text-base-content transition-all hover:border-primary/25 hover:bg-primary/10 hover:text-primary">
     <i class="ri-add-line text-lg" aria-hidden="true"></i>
-    <span>新建会话</span>
+    <span>{{ 'snippets.sidebar.new_chat' | t: '新建会话' }}</span>
   </a>
 
   {%- assign current_path = page.path -%}
   {%- assign current_chat_id = params.id | default: params.chat_id | strip -%}
   {%- assign chat_page_url = statics['chat'] -%}
-  {%- assign recent_chats_url = statics['recent_chats'] -%}
-  {%- assign is_home = false -%}
-  {%- if current_path == "/" -%}
-    {%- assign is_home = true -%}
-  {%- endif -%}
   {%- assign kb_item = site.pages['/'].children_in_list | first -%}
   {%- assign nav_link = 'flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-base-content/5 hover:text-base-content' -%}
   {%- assign nav_active = 'bg-primary/10 font-semibold text-primary' -%}
@@ -37,20 +41,19 @@
 
   <nav
     class="flex flex-1 flex-col gap-1 overflow-y-auto"
-    data-controller="nav-tree recent-chats"
+    data-controller="nav-tree"
     data-nav-tree-active-class="{{ nav_active }}"
-    data-recent-chats-url-value="{{ recent_chats_url }}"
   >
-    <p class="mb-2 px-2 text-xs font-semibold tracking-wider text-base-content sticky top-0 bg-base-100">菜单</p>
-    <a href="{{ kb_item.path }}" class="{{ nav_link }}{% if current_path == kb_item.path %} {{ nav_active }}{% endif %}" data-nav-tree-target="item">
-      <i class="{{ nav_icon }}{% if current_path == kb_item.path %} {{ nav_icon_active }}{% endif %} ri-book-2-line" aria-hidden="true"></i>
-      <span>知识库</span>
-    </a>
+    <p class="mb-2 px-2 text-xs font-semibold tracking-wider text-base-content sticky top-0 bg-base-100">{{ 'snippets.sidebar.menu' | t: '菜单' }}</p>
+    {% if kb_item %}
+      <a href="{{ kb_item.path }}" class="{{ nav_link }}{% if current_path == kb_item.path %} {{ nav_active }}{% endif %}" data-nav-tree-target="item">
+        <i class="{{ nav_icon }}{% if current_path == kb_item.path %} {{ nav_icon_active }}{% endif %} ri-book-2-line" aria-hidden="true"></i>
+        <span>{{ kb_menu_label }}</span>
+      </a>
+    {% endif %}
 
-    <turbo-frame id="recent_chats" class="block w-full">
+    <turbo-frame id="recent_chats" class="block w-full" data-recent-chats-target="frame">
       {% render 'recent_chats', current_chat_id: current_chat_id, chat_page_url: chat_page_url %}
     </turbo-frame>
   </nav>
-
-  {% render 'left_sidebar_footer' %}
 </aside>

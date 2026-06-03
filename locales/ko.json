@@ -1,0 +1,146 @@
+{
+  "templates": {
+    "page": {
+      "copy_success": "링크가 복사되었습니다",
+      "page_toc": "페이지 목차",
+      "llm_prompt_template": "%{url}의 내용을 읽어서 질문할 수 있도록 해 주세요.",
+      "llm_copying": "복사 중...",
+      "llm_copied": "복사됨",
+      "search_docs": "문서 검색",
+      "search_docs_placeholder": "문서 검색…",
+      "nav_drawer": "목차",
+      "search_docs_and_ai": "문서 검색 또는 AI에게 질문…"
+    },
+    "index": {
+      "send_question": "질문 보내기"
+    },
+    "search": {
+      "entering_chat": "대화를 여는 중…"
+    },
+    "tag": {
+      "heading": "태그",
+      "empty_tags_title": "태그 없음",
+      "empty_tags_description": "관리자에서 태그를 추가하세요",
+      "empty_content": "콘텐츠 없음"
+    }
+  },
+  "snippets": {
+    "sidebar": {
+      "open_menu": "메뉴 열기",
+      "new_chat": "새 대화",
+      "menu": "메뉴",
+      "recent": "최근"
+    },
+    "recent_chats": {
+      "new_chat": "새 대화",
+      "delete": "대화 삭제",
+      "delete_confirm": "이 대화를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+    },
+    "chat": {
+      "sources": "출처",
+      "pip_open": "별도 창에서 열기",
+      "pip_unsupported": "이 브라우저에서는 별도 창을 지원하지 않습니다",
+      "pip_pop_out": "별도 창",
+      "pip_dock": "페이지로 되돌리기",
+      "pip_opened": "AI 어시스턴트가 별도 창에서 열려 있습니다",
+      "input_placeholder": "질문을 입력하고 Enter를 눌러 전송",
+      "continue_input_placeholder": "추가 질문…",
+      "send": "전송",
+      "copy_response": "답변 복사",
+      "regenerate": "다시 생성",
+      "empty_disclaimer": "AI가 생성한 콘텐츠에는 오류가 있을 수 있습니다. 직접 확인해 주세요."
+    },
+    "search_modal": {
+      "aria_label": "검색",
+      "placeholder": "문서 검색…",
+      "hot_searches": "인기 검색",
+      "ask_ai_heading": "AI 어시스턴트에게 질문",
+      "ask_ai_lead": "다음에 대해 알려 주세요",
+      "close": "닫기"
+    },
+    "user_account": {
+      "login": "로그인",
+      "login_title": "로그인",
+      "login_sync_history": "로그인하여 대화 기록 동기화",
+      "continue_with_account": "계정으로 계속",
+      "continue_with_sso": "기업 계정으로 계속",
+      "guest": "게스트",
+      "login_disabled": "이 사이트에서는 로그인이 활성화되어 있지 않습니다",
+      "guest_mode": "로그인 비활성화; 게스트 모드로 탐색 중"
+    },
+    "footer": {
+      "copyright": "All rights reserved",
+      "service_terms": "서비스 약관",
+      "privacy_policy": "개인정보 처리방침"
+    },
+    "page_tools": {
+      "copy_page_label": "페이지 복사",
+      "copy_page_description": "LLM용 Markdown 형식으로 페이지 복사",
+      "open_in_chatgpt": "ChatGPT에서 열기",
+      "open_in_claude": "Claude에서 열기",
+      "ask_about_page": "이 페이지에 대해 질문",
+      "copy_mcp_label": "MCP 설치 명령 복사",
+      "copy_mcp_description": "MCP 서버 설치를 위한 npx 명령 복사",
+      "connect_to_cursor": "Cursor에 연결",
+      "connect_to_cursor_description": "Cursor에 MCP 서버 설치",
+      "connect_to_vscode": "VS Code에 연결",
+      "connect_to_vscode_description": "VS Code에 MCP 서버 설치"
+    },
+    "page_feedback": {
+      "cancel": "취소",
+      "submit": "피드백 제출",
+      "thanks": "피드백 감사합니다. 콘텐츠 경험을 지속적으로 개선하겠습니다.",
+      "other": "기타",
+      "other_prefix": "기타: ",
+      "other_details_sr": "기타 피드백 상세"
+    },
+    "feedback_form": {
+      "title": "피드백 제출",
+      "message_label": "메시지",
+      "message_placeholder": "피드백 내용을 입력하세요",
+      "message_required": "피드백 내용을 입력해 주세요",
+      "submit": "제출",
+      "cancel": "취소"
+    },
+    "empty": {
+      "title": "관련 콘텐츠를 찾을 수 없습니다",
+      "description": "다른 검색어를 시도하거나 다른 카테고리를 둘러보세요",
+      "button_text": "홈으로 돌아가기"
+    }
+  },
+  "statics": {
+    "search_preview": {
+      "no_results": "관련 결과를 찾을 수 없습니다"
+    }
+  },
+  "generic": {
+    "feedback_created_at": "마지막 피드백",
+    "published_at": "게시일",
+    "profile": "프로필"
+  },
+  "buttons": {
+    "logout": "로그아웃"
+  },
+  "page": {
+    "ask_ai": "AI에게 질문",
+    "ask_ai_message": "「%{title}」에 대해 알려 주세요"
+  },
+  "search": {
+    "ask_ai_message": "「%{query}」에 대해 알려 주세요"
+  },
+  "ai": {
+    "reading": "문서를 읽는 중…",
+    "thinking": "AI가 생각하는 중",
+    "network_error": "네트워크 오류, 다시 시도해 주세요",
+    "timeout_error": "응답 시간 초과, 다시 시도해 주세요",
+    "copy_success": "복사됨",
+    "copy_error": "복사 실패"
+  },
+  "paginate": {
+    "previous": "이전",
+    "next": "다음",
+    "showing": "표시 중",
+    "records": "건",
+    "total": "전체"
+  }
+}

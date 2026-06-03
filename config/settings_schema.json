@@ -22,8 +22,28 @@
         "value": "zh-CN"
       },
       {
+        "name": "中文繁體",
+        "value": "zh-TW"
+      },
+      {
+        "name": "한국어",
+        "value": "ko"
+      },
+      {
         "name": "English",
         "value": "en"
+      },
+      {
+        "name": "日本語",
+        "value": "ja"
+      },
+      {
+        "name": "Deutsch",
+        "value": "de"
+      },
+      {
+        "name": "Français",
+        "value": "fr"
       }
     ],
     "recommendations": {
@@ -69,6 +89,10 @@
     "name": "t:schema.settings.brand.title",
     "settings": [
       {
+        "type": "paragraph",
+        "content": "t:schema.settings.brand.logo_paragraph"
+      },
+      {
         "id": "logo_url",
         "type": "image_picker",
         "width": 300,
@@ -77,49 +101,24 @@
         "info": "t:schema.settings.brand.logo_url.info"
       },
       {
-        "id": "dark_logo_url",
-        "type": "image_picker",
-        "width": 300,
-        "height": 80,
-        "label": "t:schema.settings.brand.dark_logo_url.label",
-        "info": "t:schema.settings.brand.dark_logo_url.info"
-      },
-      {
-        "id": "brand_name",
-        "label": "t:schema.settings.brand.brand_name.label",
-        "type": "text",
-        "default": "品牌名称"
-      },
-      {
         "id": "site_description",
         "label": "t:schema.settings.brand.site_description.label",
         "type": "text",
-        "default": "支持智能问答、文档检索、标签筛选等功能，助您快速获取所需信息，为您提供 7×24 智能问答与帮助文档服务，提升工作效率与客户满意度。"
+        "default": "t:schema.settings.brand.site_description.default",
+        "info": "t:schema.settings.brand.site_description.info"
       },
       {
         "id": "company_name",
         "label": "t:schema.settings.brand.company_name.label",
         "type": "text",
-        "default": "公司名称"
-      },
-      {
-        "id": "welcome_title",
-        "label": "t:schema.settings.brand.welcome_title.label",
-        "type": "text",
-        "default": "AI 知识问答助手"
-      },
-      {
-        "id": "welcome_description",
-        "label": "t:schema.settings.brand.welcome_description.label",
-        "type": "text",
-        "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
+        "default": "t:schema.settings.brand.company_name.default"
       },
       {
         "id": "robot_name",
         "type": "text",
         "label": "t:schema.settings.brand.robot_name.label",
         "info": "t:schema.settings.brand.robot_name.info",
-        "default": "AI 助手"
+        "default": "t:schema.settings.brand.robot_name.default"
       },
       {
         "id": "ai_search_completed_text",
@@ -129,16 +128,48 @@
         "default": "t:schema.settings.brand.ai_search_completed_text.default"
       },
       {
-        "id": "popular_searches",
-        "type": "textarea",
-        "label": "热搜问题",
-        "info": "将展示在首页的热搜问题列表中，每行一个问题。"
+        "id": "kb_menu_label",
+        "type": "text",
+        "label": "t:schema.settings.brand.kb_menu_label.label",
+        "info": "t:schema.settings.brand.kb_menu_label.info",
+        "default": "t:schema.settings.brand.kb_menu_label.default"
+      }
+    ]
+  },
+  {
+    "name": "t:schema.settings.ai.title",
+    "settings": [
+      {
+        "id": "chat_delete_enabled",
+        "type": "checkbox",
+        "label": "t:schema.settings.ai.chat_delete_enabled.label",
+        "info": "t:schema.settings.ai.chat_delete_enabled.info",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "t:schema.settings.layout.title",
+    "settings": [
+      {
+        "id": "left_sidebar_width",
+        "type": "range",
+        "label": "t:schema.generic.settings.left_sidebar_width.label",
+        "min": 200,
+        "max": 400,
+        "step": 1,
+        "default": 280,
+        "info": "t:schema.generic.settings.left_sidebar_width.info"
       },
       {
-        "id": "help_url",
-        "type": "html",
-        "label": "帮助中心链接",
-        "info": "显示在侧栏左下角「帮助」入口，可填帮助文档或 FAQ 页面地址。"
+        "id": "header_height",
+        "type": "range",
+        "label": "t:schema.generic.settings.header_height.label",
+        "min": 48,
+        "max": 80,
+        "step": 1,
+        "default": 64,
+        "info": "t:schema.generic.settings.header_height.info"
       }
     ]
   },
@@ -163,18 +194,6 @@
         "type": "text",
         "label": "t:schema.settings.policy.privacy_policy_url.label",
         "info": "t:schema.settings.policy.privacy_policy_url.info"
-      }
-    ]
-  },
-  {
-    "name": "标签版块(Tags)",
-    "settings": [
-      {
-        "id": "section_tags_on",
-        "type": "checkbox",
-        "label": "是否显示tags版块",
-        "info": "如果选中，则在左侧导航显示tags版块；否则不显示",
-        "default": false
       }
     ]
   },
@@ -216,13 +235,13 @@
     ]
   },
   {
-    "name": "Head版块",
+    "name": "t:schema.settings.head.title",
     "settings": [
       {
         "id": "head_html",
         "type": "html",
-        "label": "<head>标签内 HTML 代码",
-        "info": "用于添加自定义的 <head> 标签内的 HTML 代码，例如添加第三方脚本、样式等。",
+        "label": "t:schema.settings.head.head_html.label",
+        "info": "t:schema.settings.head.head_html.info",
         "rows": 6
       }
     ]

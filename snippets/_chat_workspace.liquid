@@ -3,7 +3,8 @@
   chat_id: 会话 hashid；initial_message: 首条自动发送内容
 {% endcomment %}
 
-{% assign chat = site.ai_chats[params['id']] %}
+{% assign resolved_chat_id = chat_id | default: params.id | default: params.chat_id | strip %}
+{% assign chat = site.ai_chats[resolved_chat_id] %}
 {% assign chat_has_title = chat.title | presence %}
 {% assign chat_title_url = statics['chat_title'] %}
 {% assign is_historical_chat = false %}
@@ -11,17 +12,21 @@
   {% assign is_historical_chat = true %}
 {% endif %}
 
-{% assign robot_name = site.settings.robot_name | default: 'AI 助手' %}
+{% assign robot_name = site.settings.robot_name %}
 {% assign ai_reading_text = 'ai.reading' | t: '正在阅读文档…' %}
 {% assign ai_thinking_status = 'ai.thinking' | t: 'AI 正在思考' %}
 {% assign ai_network_error = 'ai.network_error' | t: '网络错误，请重试' %}
 {% assign ai_timeout_error = 'ai.timeout_error' | t: '响应超时，请重试' %}
 {% assign ai_copy_success = 'ai.copy_success' | t: '已复制' %}
 {% assign ai_copy_error = 'ai.copy_error' | t: '复制失败' %}
-{% assign ai_completed_text = site.settings.ai_search_completed_text | presence %}
-{% unless ai_completed_text %}
-  {% assign ai_completed_text = 'ai.completed' | t: 'AI 回答完毕.' %}
-{% endunless %}
+{% assign ai_completed_text = site.settings.ai_search_completed_text %}
+{% assign chat_input_placeholder = 'snippets.chat.input_placeholder' | t: '输入问题，Enter 发送' %}
+{% assign chat_continue_placeholder = 'snippets.chat.continue_input_placeholder' | t: '继续提问…' %}
+{% assign chat_send_label = 'snippets.chat.send' | t: '发送' %}
+{% assign pip_unsupported = 'snippets.chat.pip_unsupported' | t: '当前浏览器不支持独立窗口' %}
+{% assign pip_pop_out = 'snippets.chat.pip_pop_out' | t: '独立窗口' %}
+{% assign pip_dock = 'snippets.chat.pip_dock' | t: '收回页面' %}
+{% assign pip_opened = 'snippets.chat.pip_opened' | t: 'AI 助手已在独立窗口中打开' %}
 {% assign auto_submit = false %}
 {% if initial_message != blank %}
   {% assign auto_submit = true %}
@@ -31,9 +36,9 @@
 <div
   class="relative flex min-h-0 min-w-0 flex-1 overflow-hidden w-full"
   data-controller="ai-pip"
-  data-ai-pip-unsupported-message-value="当前浏览器不支持独立窗口"
-  data-ai-pip-pop-out-label-value="独立窗口"
-  data-ai-pip-dock-label-value="收回页面"
+  data-ai-pip-unsupported-message-value="{{ pip_unsupported | escape_once }}"
+  data-ai-pip-pop-out-label-value="{{ pip_pop_out | escape_once }}"
+  data-ai-pip-dock-label-value="{{ pip_dock | escape_once }}"
 >
 
   <div
@@ -60,7 +65,7 @@
               data-ai-search-target="input"
               data-action="input->ai-search#syncSendButton keydown->ai-search#onInputKeydown"
               autocomplete="off"
-              placeholder="输入问题，Enter 发送"
+              placeholder="{{ chat_input_placeholder | escape_once }}"
               class="max-h-32 min-h-[40px] flex-1 resize-none border-none bg-transparent px-1 py-2 text-sm outline-none placeholder:text-base-content/45 sm:min-h-[48px] sm:py-2.5 sm:text-base"
               oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
             ></textarea>
@@ -69,7 +74,7 @@
               data-ai-search-target="send"
               data-action="click->ai-search#send"
               class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
-              aria-label="发送"
+              aria-label="{{ chat_send_label | escape_once }}"
               disabled
             >
               <i class="ri-send-plane-2-fill text-lg" aria-hidden="true"></i>
@@ -84,8 +89,8 @@
       class="hidden min-h-0 flex-1 flex-col items-center justify-center gap-3 px-6 text-center text-sm text-base-content/60"
     >
       <i class="ri-picture-in-picture-2-line text-3xl text-primary/80" aria-hidden="true"></i>
-      <p>AI 助手已在独立窗口中打开</p>
-      <button type="button" class="btn btn-outline btn-sm" data-action="click->ai-pip#dock">收回页面</button>
+      <p>{{ pip_opened }}</p>
+      <button type="button" class="btn btn-outline btn-sm" data-action="click->ai-pip#dock">{{ pip_dock }}</button>
     </div>
 
     <template data-ai-pip-target="shellTemplate">
@@ -95,7 +100,7 @@
             <i class="ri-sparkling-2-line text-primary" aria-hidden="true"></i>
             {{ robot_name }}
           </div>
-          <button type="button" class="btn btn-ghost btn-sm btn-square" data-ai-pip-dock aria-label="收回页面">
+          <button type="button" class="btn btn-ghost btn-sm btn-square" data-ai-pip-dock aria-label="{{ pip_dock | escape_once }}">
             <i class="ri-layout-left-line text-base" aria-hidden="true"></i>
           </button>
         </div>
@@ -112,7 +117,7 @@
               data-ai-search-target="input"
               data-action="input->ai-search#syncSendButton keydown->ai-search#onInputKeydown"
               class="max-h-28 min-h-[44px] flex-1 resize-none border-none bg-transparent py-2 text-sm outline-none"
-              placeholder="继续提问…"
+              placeholder="{{ chat_continue_placeholder | escape_once }}"
             ></textarea>
             <button
               type="button"
@@ -120,7 +125,7 @@
               data-action="click->ai-search#send"
               class="btn btn-circle btn-sm bg-primary text-primary-content"
               disabled
-              aria-label="发送"
+              aria-label="{{ chat_send_label | escape_once }}"
             >
               <i class="ri-send-plane-2-fill" aria-hidden="true"></i>
             </button>

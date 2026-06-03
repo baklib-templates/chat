@@ -1,0 +1,173 @@
+{
+  "theme_label": "AI Chat",
+  "theme_description": "지능형 Q&A, 문서 검색 및 자동 응답을 위한 AI 채팅 테마",
+  "settings": {
+    "brand": {
+      "title": "브랜드",
+      "logo_paragraph": "로고는 왼쪽 사이드바와 모바일 헤더에 표시됩니다. 설정하지 않으면 사이트 파비콘을 사용합니다.",
+      "logo_url": {
+        "label": "밝은 모드 로고",
+        "info": "권장 크기 300×80"
+      },
+      "copyright": {
+        "label": "저작권 / ICP 등록",
+        "info": "사이트 하단에 표시됩니다",
+        "default": "ICP 등록 번호"
+      },
+      "company_name": {
+        "label": "회사명",
+        "default": "회사명"
+      },
+      "site_description": {
+        "label": "사이트 부제",
+        "info": "사이드바의 사이트 이름 아래에 표시",
+        "default": "Knowledge AI"
+      },
+      "robot_name": {
+        "label": "어시스턴트 이름",
+        "info": "AI 채팅 및 검색에 표시되는 이름",
+        "default": "AI 어시스턴트"
+      },
+      "ai_search_completed_text": {
+        "label": "AI 답변 하단 안내",
+        "info": "각 AI 답변 끝에 추가됩니다. HTML 링크를 지원합니다.",
+        "default": "추가 도움이 필요하시면 <a href='#' class='text-blue-600'>고객 지원팀</a>에 문의해 주세요."
+      },
+      "kb_menu_label": {
+        "label": "지식베이스 메뉴 이름",
+        "info": "사이드바 지식베이스 링크 표시 텍스트",
+        "default": "지식베이스"
+      }
+    },
+    "ai": {
+      "title": "AI",
+      "chat_delete_enabled": {
+        "label": "대화 삭제 허용",
+        "info": "활성화하면 사용자가 사이드바 '최근' 목록에서 대화 기록을 삭제할 수 있습니다"
+      }
+    },
+    "layout": {
+      "title": "레이아웃"
+    },
+    "policy": {
+      "title": "법적 정보",
+      "service_term_url": {
+        "label": "서비스 약관 URL",
+        "info": "하단에 표시됩니다"
+      },
+      "privacy_policy_url": {
+        "label": "개인정보 처리방침 URL",
+        "info": "하단에 표시됩니다"
+      }
+    },
+    "head": {
+      "title": "Head 코드",
+      "head_html": {
+        "label": "<head> 내 HTML",
+        "info": "사용자 정의 스크립트, 스타일, 분석 코드 등"
+      }
+    }
+  },
+  "page_config": {
+    "name": "페이지 옵션",
+    "settings": {
+      "show_published_at": {
+        "label": "게시일 표시"
+      },
+      "show_author": {
+        "label": "작성자 표시"
+      },
+      "show_page_tools_dropdown": {
+        "label": "페이지 도구 메뉴 표시"
+      },
+      "feedback_enabled": {
+        "label": "페이지 피드백 활성화"
+      },
+      "feedback_helper_text": {
+        "label": "피드백 도우미 JSON",
+        "info": "yes/no 레이블, 제목, 항목 목록이 포함된 JSON",
+        "default": "{\"yes\":{\"label\":\"예\",\"title\":\"좋습니다! 무엇이 가장 도움이 되었나요?\",\"items\":[\"가이드가 예상대로 작동했습니다.\",\"필요한 정보를 쉽게 찾았습니다.\",\"제품과 기능을 이해하기 쉬웠습니다.\",\"문서가 최신 상태입니다.\"]},\"no\":{\"label\":\"아니오\",\"title\":\"어떻게 개선할 수 있을까요?\",\"items\":[\"더 빨리 시작할 수 있도록 도와주세요.\",\"원하는 것을 더 쉽게 찾을 수 있게 해주세요.\",\"제품과 기능을 더 쉽게 이해할 수 있게 해주세요.\",\"이 문서를 업데이트해 주세요.\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "왼쪽 사이드바 너비",
+        "info": "메인 채팅 사이드바 너비; 약 280px 권장"
+      },
+      "header_height": {
+        "label": "헤더 높이",
+        "info": "상단 바 높이(픽셀); sticky 목차 위치에 영향"
+      }
+    }
+  },
+  "templates": {
+    "page": {
+      "name": "페이지",
+      "description": "문서 페이지 템플릿",
+      "settings": {
+        "show_list": {
+          "label": "섹션 페이지",
+          "info": "하위 페이지를 목록으로 표시; 홈 노드는 항상 하위 페이지 표시"
+        },
+        "icon": {
+          "label": "페이지 아이콘",
+          "info": "하위 페이지 목록 아이콘; 1:1 비율 권장"
+        },
+        "title": {
+          "label": "제목",
+          "info": "지식베이스에서 동기화; 읽기 전용"
+        },
+        "description": {
+          "label": "요약"
+        },
+        "tags": {
+          "label": "태그"
+        },
+        "thumb_image_url": {
+          "label": "커버 이미지"
+        },
+        "content": {
+          "label": "내용",
+          "info": "소스에서 동기화; 읽기 전용"
+        }
+      }
+    },
+    "index": {
+      "name": "홈",
+      "description": "홈 페이지 템플릿",
+      "settings": {
+        "groups": {
+          "welcome": "환영",
+          "prompts": "채팅 안내"
+        },
+        "welcome_title": {
+          "label": "환영 제목",
+          "default": "AI 지식 Q&A 어시스턴트"
+        },
+        "welcome_description": {
+          "label": "환영 설명",
+          "default": "궁금한 질문을 입력하시면 문서 내용과 지능형 분석을 바탕으로 가장 관련성 높은 답변을 빠르게 찾아드립니다."
+        },
+        "popular_searches": {
+          "label": "추천 질문",
+          "info": "홈 페이지 및 검색 모달에 표시; 한 줄에 하나의 질문"
+        },
+        "popular_searches_label": {
+          "label": "추천 질문 제목",
+          "default": "이런 질문을 해보세요"
+        },
+        "chat_input_placeholder": {
+          "label": "입력 placeholder",
+          "default": "질문을 입력하고 Enter를 눌러 전송…"
+        },
+        "chat_disclaimer": {
+          "label": "입력창 아래 안내",
+          "default": "AI는 현재 지식베이스 내용만 기반으로 답변하며 외부 데이터를 참조하지 않습니다",
+          "info": "비워두면 표시하지 않음"
+        }
+      }
+    }
+  }
+}

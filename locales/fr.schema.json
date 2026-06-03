@@ -1,0 +1,173 @@
+{
+  "theme_label": "AI Chat",
+  "theme_description": "Thème de chat IA pour Q&R intelligentes, recherche documentaire et réponses automatiques",
+  "settings": {
+    "brand": {
+      "title": "Marque",
+      "logo_paragraph": "Le logo apparaît dans la barre latérale gauche et l'en-tête mobile. Utilise le favicon du site si non défini.",
+      "logo_url": {
+        "label": "Logo clair",
+        "info": "Taille recommandée 300×80"
+      },
+      "copyright": {
+        "label": "Droits d'auteur / enregistrement ICP",
+        "info": "Affiché dans le pied de page",
+        "default": "Numéro d'enregistrement ICP"
+      },
+      "company_name": {
+        "label": "Nom de l'entreprise",
+        "default": "Nom de l'entreprise"
+      },
+      "site_description": {
+        "label": "Sous-titre du site",
+        "info": "Affiché sous le nom du site dans la barre latérale",
+        "default": "Knowledge AI"
+      },
+      "robot_name": {
+        "label": "Nom de l'assistant",
+        "info": "Affiché dans le chat IA et la recherche",
+        "default": "Assistant IA"
+      },
+      "ai_search_completed_text": {
+        "label": "Note de bas de réponse IA",
+        "info": "Ajoutée à chaque réponse IA. Les liens HTML sont pris en charge.",
+        "default": "Si vous avez besoin d'aide supplémentaire, veuillez <a href='#' class='text-blue-600'>contacter l'équipe support</a>."
+      },
+      "kb_menu_label": {
+        "label": "Libellé du menu base de connaissances",
+        "info": "Texte du lien base de connaissances dans la barre latérale",
+        "default": "Base de connaissances"
+      }
+    },
+    "ai": {
+      "title": "IA",
+      "chat_delete_enabled": {
+        "label": "Autoriser la suppression des chats",
+        "info": "Lorsque activé, les utilisateurs peuvent supprimer l'historique des chats depuis la liste « Récents » dans la barre latérale"
+      }
+    },
+    "layout": {
+      "title": "Mise en page"
+    },
+    "policy": {
+      "title": "Informations légales",
+      "service_term_url": {
+        "label": "URL des conditions d'utilisation",
+        "info": "Affichée dans le pied de page"
+      },
+      "privacy_policy_url": {
+        "label": "URL de la politique de confidentialité",
+        "info": "Affichée dans le pied de page"
+      }
+    },
+    "head": {
+      "title": "Code Head",
+      "head_html": {
+        "label": "HTML dans <head>",
+        "info": "Scripts personnalisés, styles, analytics, etc."
+      }
+    }
+  },
+  "page_config": {
+    "name": "Options de page",
+    "settings": {
+      "show_published_at": {
+        "label": "Afficher la date de publication"
+      },
+      "show_author": {
+        "label": "Afficher l'auteur"
+      },
+      "show_page_tools_dropdown": {
+        "label": "Afficher le menu outils de page"
+      },
+      "feedback_enabled": {
+        "label": "Activer le feedback de page"
+      },
+      "feedback_helper_text": {
+        "label": "JSON d'aide au feedback",
+        "info": "JSON avec labels yes/no, titres et listes d'éléments",
+        "default": "{\"yes\":{\"label\":\"Oui\",\"title\":\"Super ! Qu'est-ce qui a le mieux fonctionné ?\",\"items\":[\"Le guide a fonctionné comme prévu.\",\"J'ai facilement trouvé ce dont j'avais besoin.\",\"Le produit était facile à comprendre.\",\"La documentation est à jour.\"]},\"no\":{\"label\":\"Non\",\"title\":\"Comment pouvons-nous nous améliorer ?\",\"items\":[\"Aidez-moi à démarrer plus vite.\",\"Facilitez la recherche de ce dont j'ai besoin.\",\"Expliquez le produit plus clairement.\",\"Mettez à jour ce document.\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "Largeur de la barre latérale gauche",
+        "info": "Largeur de la barre latérale de chat ; ~280px recommandé"
+      },
+      "header_height": {
+        "label": "Hauteur de l'en-tête",
+        "info": "Hauteur de la barre supérieure en pixels ; affecte le positionnement sticky de la table des matières"
+      }
+    }
+  },
+  "templates": {
+    "page": {
+      "name": "Page",
+      "description": "Modèle de page de documentation",
+      "settings": {
+        "show_list": {
+          "label": "Page de section",
+          "info": "Afficher les sous-pages en liste ; le nœud d'accueil liste toujours les enfants"
+        },
+        "icon": {
+          "label": "Icône de page",
+          "info": "Icône dans les listes de sous-pages ; ratio 1:1 recommandé"
+        },
+        "title": {
+          "label": "Titre",
+          "info": "Synchronisé depuis la base de connaissances ; lecture seule"
+        },
+        "description": {
+          "label": "Résumé"
+        },
+        "tags": {
+          "label": "Tags"
+        },
+        "thumb_image_url": {
+          "label": "Image de couverture"
+        },
+        "content": {
+          "label": "Contenu",
+          "info": "Synchronisé depuis la source ; lecture seule"
+        }
+      }
+    },
+    "index": {
+      "name": "Accueil",
+      "description": "Modèle de page d'accueil",
+      "settings": {
+        "groups": {
+          "welcome": "Bienvenue",
+          "prompts": "Invites de chat"
+        },
+        "welcome_title": {
+          "label": "Titre de bienvenue",
+          "default": "Assistant Q&R de connaissances IA"
+        },
+        "welcome_description": {
+          "label": "Description de bienvenue",
+          "default": "Saisissez votre question. Le système trouvera rapidement la réponse la plus pertinente en s'appuyant sur le contenu documentaire et l'analyse intelligente."
+        },
+        "popular_searches": {
+          "label": "Questions suggérées",
+          "info": "Affichées sur la page d'accueil et la modale de recherche ; une question par ligne"
+        },
+        "popular_searches_label": {
+          "label": "Titre des questions suggérées",
+          "default": "Essayez ces questions"
+        },
+        "chat_input_placeholder": {
+          "label": "Placeholder de saisie",
+          "default": "Saisissez votre question et appuyez sur Entrée…"
+        },
+        "chat_disclaimer": {
+          "label": "Note sous la saisie",
+          "default": "L'IA répond uniquement à partir du contenu actuel de la base de connaissances, sans données externes",
+          "info": "Laisser vide pour masquer"
+        }
+      }
+    }
+  }
+}

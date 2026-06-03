@@ -4,13 +4,10 @@
   "settings": {
     "brand": {
       "title": "品牌相关",
+      "logo_paragraph": "Logo 显示在左侧栏与移动端顶栏；未设置时使用站点图标。",
       "logo_url": {
         "label": "亮色 Logo 图片",
-        "info": "网站亮色 Logo 建议尺寸 300x80"
-      },
-      "dark_logo_url": {
-        "label": "暗色 Logo 图片",
-        "info": "网站暗色 Logo 建议尺寸 300x80"
+        "info": "网站亮色 Logo 建议尺寸 300×80"
       },
       "copyright": {
         "label": "备案号/版权信息",
@@ -19,67 +16,57 @@
       },
       "company_name": {
         "label": "公司名称",
-        "info": "公司名称将显示在首页",
         "default": "公司名称"
       },
-      "brand_name": {
-        "label": "品牌名称",
-        "info": "品牌名称将显示在首页",
-        "default": "品牌名称"
-      },
       "site_description": {
-        "label": "站点描述",
-        "info": "站点描述将显示在首页 ",
-        "default": "支持智能问答、文档检索、标签筛选等功能，助您快速获取所需信息，为您提供 7×24 智能问答与帮助文档服务，提升工作效率与客户满意度。"
-      },
-      "welcome_title": {
-        "label": "欢迎标题",
-        "info": "欢迎标题将显示在首页 ",
-        "default": "AI 知识问答助手"
-      },
-      "welcome_description": {
-        "label": "欢迎描述",
-        "info": "欢迎描述将显示在首页 ",
-        "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
+        "label": "站点副标题",
+        "info": "显示在左侧栏站点名称下方",
+        "default": "Knowledge AI"
       },
       "robot_name": {
         "label": "机器人名称",
-        "info": "搜索页机器人名字",
-        "default": "gpt-4o"
+        "info": "AI 对话与搜索中显示的助手名称",
+        "default": "AI 助手"
       },
       "ai_search_completed_text": {
         "label": "AI 回答底部提示语",
         "info": "会自动追加在每条 AI 回答的结尾处，用于引导用户联系人工客服。可包含 HTML 链接。",
         "default": "如果您有更多问题或需要进一步帮助，请<a href='#' class='text-blue-600'>联系客服团队</a>。"
+      },
+      "kb_menu_label": {
+        "label": "知识库菜单名称",
+        "info": "左侧栏「知识库」入口的显示文案",
+        "default": "知识库"
       }
+    },
+    "ai": {
+      "title": "AI 相关",
+      "chat_delete_enabled": {
+        "label": "允许删除对话",
+        "info": "开启后，用户可在左侧「最近」列表中删除历史对话"
+      }
+    },
+    "layout": {
+      "title": "布局"
     },
     "policy": {
       "title": "备案信息",
-      "icp_beian": {
-        "label": "备案号",
-        "info": "备案号将显示在网站底部"
-      },
       "service_term_url": {
         "label": "服务条款链接",
-        "info": "服务条款链接将显示在网站底部",
-        "default": "https://www.baklib.com/terms"
+        "info": "服务条款链接将显示在网站底部"
       },
       "privacy_policy_url": {
         "label": "隐私政策链接",
-        "info": "隐私政策链接将显示在网站底部",
-        "default": "https://www.baklib.com/privacy"
+        "info": "隐私政策链接将显示在网站底部"
       }
     },
-    "custom_html": {
-    "name": "自定义 HTML 代码",
-    "settings": {
-      "quick_navigation_html": {
-        "label": "快速导航 HTML",
-        "info": "支持HTML标签和有限的TailwindCSS样式代码",
-        "placeholder": "首页快捷导航"
+    "head": {
+      "title": "Head 代码",
+      "head_html": {
+        "label": "<head> 标签内 HTML 代码",
+        "info": "用于添加自定义脚本、样式等，例如统计代码或第三方 SDK"
       }
     }
-  }
   },
   "page_config": {
     "name": "页面配置",
@@ -103,15 +90,31 @@
       }
     }
   },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "左侧栏宽度",
+        "info": "主布局左侧会话栏宽度，建议 280 像素左右"
+      },
+      "header_height": {
+        "label": "顶栏高度",
+        "info": "站点顶栏高度（像素），影响页内目录等 sticky 定位"
+      }
+    }
+  },
   "templates": {
-    "blank": {
-      "name": "空白页",
-      "description": "用于创建空白页面"
-    },
     "page": {
       "name": "页面详情",
       "description": "用于发布页面详情页",
       "settings": {
+        "show_list": {
+          "label": "是否为栏目页面",
+          "info": "开启后显示下级页面列表；首页节点始终显示子页面列表"
+        },
+        "icon": {
+          "label": "页面图标",
+          "info": "用于子页面列表中的图标，建议 1:1 比例"
+        },
         "title": {
           "label": "标题",
           "info": "知识库同步，不可编辑"
@@ -119,13 +122,13 @@
         "description": {
           "label": "摘要"
         },
-        "tags":{
+        "tags": {
           "label": "标签"
         },
-        "thumb_image_url":{
+        "thumb_image_url": {
           "label": "封面图"
         },
-        "content":{
+        "content": {
           "label": "页面内容",
           "info": "同步自数据源，不可编辑"
         }
@@ -133,7 +136,38 @@
     },
     "index": {
       "name": "首页",
-      "description": "用于发布首页"
+      "description": "用于发布首页",
+      "settings": {
+        "groups": {
+          "welcome": "欢迎区",
+          "prompts": "对话引导"
+        },
+        "welcome_title": {
+          "label": "欢迎标题",
+          "default": "AI 知识问答助手"
+        },
+        "welcome_description": {
+          "label": "欢迎描述",
+          "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
+        },
+        "popular_searches": {
+          "label": "热搜问题",
+          "info": "展示在首页与搜索弹窗，每行一个问题"
+        },
+        "popular_searches_label": {
+          "label": "热搜区标题",
+          "default": "试试这些问题"
+        },
+        "chat_input_placeholder": {
+          "label": "输入框占位符",
+          "default": "输入您的问题，按 Enter 发送…"
+        },
+        "chat_disclaimer": {
+          "label": "输入框下方说明",
+          "default": "AI 仅基于当前知识库内容回答，不引用外部数据",
+          "info": "留空则不显示"
+        }
+      }
     }
   }
 }

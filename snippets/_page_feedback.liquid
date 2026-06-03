@@ -17,7 +17,7 @@
   {% assign has_posted_feedback = true %}
 {% endif %}
 
-{% assign fb_config_raw = site.settings.feedback_helper_text | default: '' %}
+{% assign fb_config_raw = site.settings.feedback_helper_text %}
 {% assign fb_cancel = 'snippets.page_feedback.cancel' | t: '取消' %}
 {% assign fb_submit = 'snippets.page_feedback.submit' | t: '提交反馈' %}
 {% assign fb_thanks = 'snippets.page_feedback.thanks' | t: '感谢你的反馈，我们会持续优化内容体验。' %}

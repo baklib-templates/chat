@@ -1,0 +1,146 @@
+{
+  "templates": {
+    "page": {
+      "copy_success": "Lien copié",
+      "page_toc": "Sur cette page",
+      "llm_prompt_template": "Lisez le contenu de %{url} afin que je puisse poser des questions à son sujet.",
+      "llm_copying": "Copie en cours…",
+      "llm_copied": "Copié",
+      "search_docs": "Rechercher dans la documentation",
+      "search_docs_placeholder": "Rechercher dans la documentation…",
+      "nav_drawer": "Table des matières",
+      "search_docs_and_ai": "Rechercher ou poser une question à l'IA…"
+    },
+    "index": {
+      "send_question": "Envoyer la question"
+    },
+    "search": {
+      "entering_chat": "Ouverture du chat…"
+    },
+    "tag": {
+      "heading": "Tags",
+      "empty_tags_title": "Aucun tag",
+      "empty_tags_description": "Ajoutez des tags dans l'administration",
+      "empty_content": "Aucun contenu"
+    }
+  },
+  "snippets": {
+    "sidebar": {
+      "open_menu": "Ouvrir le menu",
+      "new_chat": "Nouveau chat",
+      "menu": "Menu",
+      "recent": "Récents"
+    },
+    "recent_chats": {
+      "new_chat": "Nouveau chat",
+      "delete": "Supprimer le chat",
+      "delete_confirm": "Supprimer ce chat ? Cette action est irréversible."
+    },
+    "chat": {
+      "sources": "Sources",
+      "pip_open": "Ouvrir dans une fenêtre séparée",
+      "pip_unsupported": "Fenêtre séparée non prise en charge par ce navigateur",
+      "pip_pop_out": "Détacher",
+      "pip_dock": "Réintégrer à la page",
+      "pip_opened": "L'assistant IA est ouvert dans une fenêtre séparée",
+      "input_placeholder": "Saisissez une question, appuyez sur Entrée pour envoyer",
+      "continue_input_placeholder": "Question de suivi…",
+      "send": "Envoyer",
+      "copy_response": "Copier la réponse",
+      "regenerate": "Régénérer",
+      "empty_disclaimer": "Le contenu généré par l'IA peut contenir des erreurs. Veuillez vérifier."
+    },
+    "search_modal": {
+      "aria_label": "Recherche",
+      "placeholder": "Rechercher dans la documentation…",
+      "hot_searches": "Recherches populaires",
+      "ask_ai_heading": "Poser une question à l'assistant IA",
+      "ask_ai_lead": "Parlez-moi de",
+      "close": "Fermer"
+    },
+    "user_account": {
+      "login": "Se connecter",
+      "login_title": "Se connecter",
+      "login_sync_history": "Connectez-vous pour synchroniser l'historique des chats",
+      "continue_with_account": "Continuer avec un compte",
+      "continue_with_sso": "Continuer avec un compte entreprise",
+      "guest": "Invité",
+      "login_disabled": "La connexion n'est pas activée sur ce site",
+      "guest_mode": "Connexion désactivée ; navigation en mode invité"
+    },
+    "footer": {
+      "copyright": "Tous droits réservés",
+      "service_terms": "Conditions d'utilisation",
+      "privacy_policy": "Politique de confidentialité"
+    },
+    "page_tools": {
+      "copy_page_label": "Copier la page",
+      "copy_page_description": "Copier la page au format Markdown pour les LLM",
+      "open_in_chatgpt": "Ouvrir dans ChatGPT",
+      "open_in_claude": "Ouvrir dans Claude",
+      "ask_about_page": "Poser une question sur cette page",
+      "copy_mcp_label": "Copier la commande d'installation MCP",
+      "copy_mcp_description": "Copier la commande npx pour installer le serveur MCP",
+      "connect_to_cursor": "Connecter à Cursor",
+      "connect_to_cursor_description": "Installer le serveur MCP dans Cursor",
+      "connect_to_vscode": "Connecter à VS Code",
+      "connect_to_vscode_description": "Installer le serveur MCP dans VS Code"
+    },
+    "page_feedback": {
+      "cancel": "Annuler",
+      "submit": "Envoyer un commentaire",
+      "thanks": "Merci pour votre retour. Nous améliorerons continuellement l'expérience de contenu.",
+      "other": "Autre",
+      "other_prefix": "Autre : ",
+      "other_details_sr": "Détails du commentaire autre"
+    },
+    "feedback_form": {
+      "title": "Envoyer un commentaire",
+      "message_label": "Message",
+      "message_placeholder": "Saisissez votre commentaire",
+      "message_required": "Le commentaire ne peut pas être vide",
+      "submit": "Envoyer",
+      "cancel": "Annuler"
+    },
+    "empty": {
+      "title": "Aucun contenu trouvé",
+      "description": "Essayez d'autres mots-clés ou parcourez d'autres catégories",
+      "button_text": "Retour à l'accueil"
+    }
+  },
+  "statics": {
+    "search_preview": {
+      "no_results": "Aucun résultat trouvé"
+    }
+  },
+  "generic": {
+    "feedback_created_at": "Dernier commentaire le",
+    "published_at": "Publié le",
+    "profile": "Profil"
+  },
+  "buttons": {
+    "logout": "Se déconnecter"
+  },
+  "page": {
+    "ask_ai": "Demander à l'IA",
+    "ask_ai_message": "Parlez-moi de「%{title}」"
+  },
+  "search": {
+    "ask_ai_message": "Parlez-moi de「%{query}」"
+  },
+  "ai": {
+    "reading": "Lecture des documents…",
+    "thinking": "L'IA réfléchit",
+    "network_error": "Erreur réseau, veuillez réessayer",
+    "timeout_error": "Délai d'attente dépassé, veuillez réessayer",
+    "copy_success": "Copié",
+    "copy_error": "Échec de la copie"
+  },
+  "paginate": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "showing": "Affichage",
+    "records": "enregistrements",
+    "total": "Total"
+  }
+}

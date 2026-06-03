@@ -1,0 +1,173 @@
+{
+  "theme_label": "AI Chat",
+  "theme_description": "KI-Chat-Thema für intelligente Q&A, Dokumentensuche und automatische Antworten",
+  "settings": {
+    "brand": {
+      "title": "Marke",
+      "logo_paragraph": "Logo erscheint in der linken Seitenleiste und im mobilen Header. Fallback auf das Site-Favicon, wenn nicht gesetzt.",
+      "logo_url": {
+        "label": "Helles Logo",
+        "info": "Empfohlene Größe 300×80"
+      },
+      "copyright": {
+        "label": "Urheberrecht / ICP-Eintrag",
+        "info": "Wird in der Fußzeile angezeigt",
+        "default": "ICP-Eintragsnummer"
+      },
+      "company_name": {
+        "label": "Firmenname",
+        "default": "Firmenname"
+      },
+      "site_description": {
+        "label": "Site-Untertitel",
+        "info": "Unter dem Site-Namen in der Seitenleiste angezeigt",
+        "default": "Knowledge AI"
+      },
+      "robot_name": {
+        "label": "Assistentenname",
+        "info": "In KI-Chat und Suche angezeigt",
+        "default": "KI-Assistent"
+      },
+      "ai_search_completed_text": {
+        "label": "KI-Antwort-Fußnote",
+        "info": "Wird an jede KI-Antwort angehängt. HTML-Links werden unterstützt.",
+        "default": "Wenn Sie weitere Hilfe benötigen, wenden Sie sich bitte an unser <a href='#' class='text-blue-600'>Support-Team</a>."
+      },
+      "kb_menu_label": {
+        "label": "Wissensdatenbank-Menübezeichnung",
+        "info": "Beschriftung des Wissensdatenbank-Links in der Seitenleiste",
+        "default": "Wissensdatenbank"
+      }
+    },
+    "ai": {
+      "title": "KI",
+      "chat_delete_enabled": {
+        "label": "Chat-Löschung erlauben",
+        "info": "Wenn aktiviert, können Benutzer Chatverläufe aus der Liste „Zuletzt“ in der Seitenleiste löschen"
+      }
+    },
+    "layout": {
+      "title": "Layout"
+    },
+    "policy": {
+      "title": "Rechtliches",
+      "service_term_url": {
+        "label": "Nutzungsbedingungen-URL",
+        "info": "Wird in der Fußzeile angezeigt"
+      },
+      "privacy_policy_url": {
+        "label": "Datenschutzrichtlinien-URL",
+        "info": "Wird in der Fußzeile angezeigt"
+      }
+    },
+    "head": {
+      "title": "Head-Code",
+      "head_html": {
+        "label": "HTML innerhalb von <head>",
+        "info": "Benutzerdefinierte Skripte, Styles, Analytics usw."
+      }
+    }
+  },
+  "page_config": {
+    "name": "Seitenoptionen",
+    "settings": {
+      "show_published_at": {
+        "label": "Veröffentlichungsdatum anzeigen"
+      },
+      "show_author": {
+        "label": "Autor anzeigen"
+      },
+      "show_page_tools_dropdown": {
+        "label": "Seitentools-Menü anzeigen"
+      },
+      "feedback_enabled": {
+        "label": "Seitenfeedback aktivieren"
+      },
+      "feedback_helper_text": {
+        "label": "Feedback-Hilfe-JSON",
+        "info": "JSON mit yes/no-Labels, Titeln und Elementlisten",
+        "default": "{\"yes\":{\"label\":\"Ja\",\"title\":\"Großartig! Was hat am besten funktioniert?\",\"items\":[\"Die Anleitung hat wie erwartet funktioniert.\",\"Ich habe leicht gefunden, was ich brauchte.\",\"Das Produkt war leicht verständlich.\",\"Die Dokumentation ist aktuell.\"]},\"no\":{\"label\":\"Nein\",\"title\":\"Wie können wir uns verbessern?\",\"items\":[\"Helfen Sie mir, schneller zu starten.\",\"Machen Sie es einfacher, das Richtige zu finden.\",\"Erklären Sie das Produkt verständlicher.\",\"Aktualisieren Sie dieses Dokument.\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "Breite der linken Seitenleiste",
+        "info": "Breite der Chat-Seitenleiste; ~280px empfohlen"
+      },
+      "header_height": {
+        "label": "Kopfzeilenhöhe",
+        "info": "Höhe der oberen Leiste in Pixeln; beeinflusst sticky Inhaltsverzeichnis"
+      }
+    }
+  },
+  "templates": {
+    "page": {
+      "name": "Seite",
+      "description": "Dokumentationsseiten-Vorlage",
+      "settings": {
+        "show_list": {
+          "label": "Abschnittsseite",
+          "info": "Unterseiten als Liste anzeigen; Startknoten listet immer Unterseiten"
+        },
+        "icon": {
+          "label": "Seitensymbol",
+          "info": "Symbol in Unterseitenlisten; 1:1-Verhältnis empfohlen"
+        },
+        "title": {
+          "label": "Titel",
+          "info": "Aus Wissensdatenbank synchronisiert; schreibgeschützt"
+        },
+        "description": {
+          "label": "Zusammenfassung"
+        },
+        "tags": {
+          "label": "Tags"
+        },
+        "thumb_image_url": {
+          "label": "Titelbild"
+        },
+        "content": {
+          "label": "Inhalt",
+          "info": "Aus Quelle synchronisiert; schreibgeschützt"
+        }
+      }
+    },
+    "index": {
+      "name": "Startseite",
+      "description": "Startseiten-Vorlage",
+      "settings": {
+        "groups": {
+          "welcome": "Willkommen",
+          "prompts": "Chat-Hinweise"
+        },
+        "welcome_title": {
+          "label": "Willkommenstitel",
+          "default": "KI-Wissens-Q&A-Assistent"
+        },
+        "welcome_description": {
+          "label": "Willkommensbeschreibung",
+          "default": "Geben Sie Ihre Frage ein. Das System findet basierend auf Dokumenteninhalten und intelligenter Analyse schnell die relevanteste Antwort."
+        },
+        "popular_searches": {
+          "label": "Vorgeschlagene Fragen",
+          "info": "Auf Startseite und Suchmodal angezeigt; eine Frage pro Zeile"
+        },
+        "popular_searches_label": {
+          "label": "Überschrift vorgeschlagene Fragen",
+          "default": "Probieren Sie diese Fragen"
+        },
+        "chat_input_placeholder": {
+          "label": "Eingabe-Platzhalter",
+          "default": "Frage eingeben und Enter drücken…"
+        },
+        "chat_disclaimer": {
+          "label": "Hinweis unter Eingabe",
+          "default": "KI antwortet nur basierend auf dem aktuellen Wissensbestand, ohne externe Daten",
+          "info": "Leer lassen zum Ausblenden"
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,146 @@
 {
-    "templates": {
-      "video-page": {
-        "recent_videos": "Recent Videos",
-        "recent_videos_description": "Explore the latest video content, bringing you cutting-edge information and in-depth analysis."
-      }
+  "templates": {
+    "page": {
+      "copy_success": "Link copied",
+      "page_toc": "On this page",
+      "llm_prompt_template": "Read the content at %{url} so I can ask questions about it.",
+      "llm_copying": "Copying…",
+      "llm_copied": "Copied",
+      "search_docs": "Search docs",
+      "search_docs_placeholder": "Search docs…",
+      "nav_drawer": "Table of contents",
+      "search_docs_and_ai": "Search docs or ask AI…"
     },
-    "snippets": {
-      "empty": {
-        "title": "No Content Found",
-        "description": "Please try other search keywords or browse other categories",
-        "button_text": "Back to Home"
-      }
+    "index": {
+      "send_question": "Send question"
+    },
+    "search": {
+      "entering_chat": "Opening chat…"
+    },
+    "tag": {
+      "heading": "Tags",
+      "empty_tags_title": "No tags yet",
+      "empty_tags_description": "Add tags in the admin",
+      "empty_content": "No content"
     }
+  },
+  "snippets": {
+    "sidebar": {
+      "open_menu": "Open menu",
+      "new_chat": "New chat",
+      "menu": "Menu",
+      "recent": "Recent"
+    },
+    "recent_chats": {
+      "new_chat": "New chat",
+      "delete": "Delete chat",
+      "delete_confirm": "Delete this chat? This cannot be undone."
+    },
+    "chat": {
+      "sources": "Sources",
+      "pip_open": "Open in picture-in-picture",
+      "pip_unsupported": "Picture-in-picture is not supported in this browser",
+      "pip_pop_out": "Pop out",
+      "pip_dock": "Dock to page",
+      "pip_opened": "AI assistant is open in a separate window",
+      "input_placeholder": "Ask a question, press Enter to send",
+      "continue_input_placeholder": "Ask a follow-up…",
+      "send": "Send",
+      "copy_response": "Copy answer",
+      "regenerate": "Regenerate",
+      "empty_disclaimer": "AI-generated content may contain errors. Please verify."
+    },
+    "search_modal": {
+      "aria_label": "Search",
+      "placeholder": "Search docs…",
+      "hot_searches": "Popular searches",
+      "ask_ai_heading": "Ask AI assistant",
+      "ask_ai_lead": "Tell me about",
+      "close": "Close"
+    },
+    "user_account": {
+      "login": "Sign in",
+      "login_title": "Sign in",
+      "login_sync_history": "Sign in to sync chat history",
+      "continue_with_account": "Continue with account",
+      "continue_with_sso": "Continue with SSO",
+      "guest": "Guest",
+      "login_disabled": "Sign-in is not enabled on this site",
+      "guest_mode": "Sign-in disabled; browsing as guest"
+    },
+    "footer": {
+      "copyright": "All rights reserved",
+      "service_terms": "Terms of service",
+      "privacy_policy": "Privacy policy"
+    },
+    "page_tools": {
+      "copy_page_label": "Copy page",
+      "copy_page_description": "Copy page as Markdown for LLMs",
+      "open_in_chatgpt": "Open in ChatGPT",
+      "open_in_claude": "Open in Claude",
+      "ask_about_page": "Ask about this page",
+      "copy_mcp_label": "Copy MCP install command",
+      "copy_mcp_description": "Copy npx command to install MCP server",
+      "connect_to_cursor": "Connect to Cursor",
+      "connect_to_cursor_description": "Install MCP server in Cursor",
+      "connect_to_vscode": "Connect to VS Code",
+      "connect_to_vscode_description": "Install MCP server in VS Code"
+    },
+    "page_feedback": {
+      "cancel": "Cancel",
+      "submit": "Submit feedback",
+      "thanks": "Thanks for your feedback.",
+      "other": "Other",
+      "other_prefix": "Other: ",
+      "other_details_sr": "Other feedback details"
+    },
+    "feedback_form": {
+      "title": "Submit feedback",
+      "message_label": "Message",
+      "message_placeholder": "Enter your feedback",
+      "message_required": "Feedback cannot be empty",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "empty": {
+      "title": "No Content Found",
+      "description": "Please try other search keywords or browse other categories",
+      "button_text": "Back to Home"
+    }
+  },
+  "statics": {
+    "search_preview": {
+      "no_results": "No results found"
+    }
+  },
+  "generic": {
+    "feedback_created_at": "Last feedback on",
+    "published_at": "Published",
+    "profile": "Profile"
+  },
+  "buttons": {
+    "logout": "Sign out"
+  },
+  "page": {
+    "ask_ai": "Ask AI",
+    "ask_ai_message": "Tell me about「%{title}」"
+  },
+  "search": {
+    "ask_ai_message": "Tell me about「%{query}」"
+  },
+  "ai": {
+    "reading": "Reading documents…",
+    "thinking": "AI is thinking",
+    "network_error": "Network error, please retry",
+    "timeout_error": "Request timed out, please retry",
+    "copy_success": "Copied",
+    "copy_error": "Copy failed"
+  },
+  "paginate": {
+    "previous": "Previous",
+    "next": "Next",
+    "showing": "Showing",
+    "records": "records",
+    "total": "Total"
   }
-  
+}

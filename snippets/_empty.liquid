@@ -15,9 +15,9 @@
   %}
 {%- endcomment -%}
 
-{% assign default_title = 'snippets.empty.title' | t %}
-{% assign default_description = 'snippets.empty.description' | t %}
-{% assign default_button_text = 'snippets.empty.button_text' | t %}
+{% assign default_title = 'snippets.empty.title' | t: '没有找到相关内容' %}
+{% assign default_description = 'snippets.empty.description' | t: '请尝试其他搜索关键词或浏览其他分类' %}
+{% assign default_button_text = 'snippets.empty.button_text' | t: '返回首页' %}
 
 <div class="px-4 py-16 mx-auto">
   <div class="flex flex-col justify-center items-center text-center">

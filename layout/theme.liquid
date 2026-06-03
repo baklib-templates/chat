@@ -10,10 +10,17 @@
     {{ 'stylesheets/application.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
     {{ 'baklib/shared/main.css' | asset_url | stylesheet_tag: data-turbo-track: 'reload' }}
     {{ 'baklib/shared/main.js' | asset_url | script_tag: data-turbo-track: 'reload' }}
-    <!-- start head_html -->
-    {{ site.settings.head_html }}
+    {% assign head_html = site.settings.head_html | presence %}
+    {% if head_html %}
+      <!-- start head_html -->
+      {{ head_html }}
+      <!-- end head_html -->
+    {% endif %}
 
     <style>
+      {%- assign left_sidebar_width = site.settings.left_sidebar_width | append: 'px' -%}
+      {%- assign header_height = site.settings.header_height | append: 'px' -%}
+
       :root {
         --color-base-100: hsl(var(--theme-color-base-100));
         --color-base-200: hsl(var(--theme-color-base-200));
@@ -28,11 +35,8 @@
         --color-warning: hsl(var(--theme-color-warning));
         --color-error: hsl(var(--theme-color-error));
 
-        --max-content-width: {{ site.settings.screen_width.value | presence | default: '1200px' }};
-        --left-sidebar-width: {{ site.settings.left_sidebar_width.value | presence | default: '240px' }};
-        --right-sidebar-width: {{ site.settings.right_sidebar_width.value | presence | default: '240px' }};
-        --header-height: {{ site.settings.header_height.value | presence | default: '68px' }};
-        --chat-sidebar-width: 17.5rem;
+        --left-sidebar-width: {{ left_sidebar_width }};
+        --header-height: {{ header_height }};
       }
 
       :root:has(input.theme-controller[value=dark]:checked),
@@ -53,7 +57,19 @@
     </style>
   </head>
   <body id="js--body" class="min-h-dvh overflow-hidden" data-chat-url="{{ statics['chat'] }}">
-    <div class="drawer lg:drawer-open h-dvh min-h-0">
+    {%- assign current_chat_id = params.id | default: params.chat_id | strip -%}
+    {%- assign chat_delete_enabled = site.settings.chat_delete_enabled -%}
+    <div
+      class="drawer lg:drawer-open h-dvh min-h-0"
+      data-controller="recent-chats"
+      data-recent-chats-url-value="{{ statics['recent_chats'] }}"
+      data-recent-chats-current-chat-id-value="{{ current_chat_id }}"
+      {% if chat_delete_enabled %}
+        data-recent-chats-chats-url-value="/-/ai_chats"
+        data-recent-chats-delete-enabled-value="true"
+        data-recent-chats-delete-confirm-value="{{ 'snippets.recent_chats.delete_confirm' | t: '确定删除此对话吗？此操作不可恢复。' | escape_once }}"
+      {% endif %}
+    >
       <input id="left-sidebar-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content flex h-full min-h-0 w-full max-w-full flex-col">
         {% render 'header' %}

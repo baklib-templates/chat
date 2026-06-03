@@ -1,0 +1,146 @@
+{
+  "templates": {
+    "page": {
+      "copy_success": "Link kopiert",
+      "page_toc": "Auf dieser Seite",
+      "llm_prompt_template": "Lies den Inhalt unter %{url}, damit ich Fragen dazu stellen kann.",
+      "llm_copying": "Wird kopiert…",
+      "llm_copied": "Kopiert",
+      "search_docs": "Dokumentation durchsuchen",
+      "search_docs_placeholder": "Dokumentation durchsuchen…",
+      "nav_drawer": "Inhaltsverzeichnis",
+      "search_docs_and_ai": "Dokumentation durchsuchen oder KI fragen…"
+    },
+    "index": {
+      "send_question": "Frage senden"
+    },
+    "search": {
+      "entering_chat": "Chat wird geöffnet…"
+    },
+    "tag": {
+      "heading": "Tags",
+      "empty_tags_title": "Noch keine Tags",
+      "empty_tags_description": "Tags in der Verwaltung hinzufügen",
+      "empty_content": "Kein Inhalt"
+    }
+  },
+  "snippets": {
+    "sidebar": {
+      "open_menu": "Menü öffnen",
+      "new_chat": "Neuer Chat",
+      "menu": "Menü",
+      "recent": "Zuletzt"
+    },
+    "recent_chats": {
+      "new_chat": "Neuer Chat",
+      "delete": "Chat löschen",
+      "delete_confirm": "Diesen Chat löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "chat": {
+      "sources": "Quellen",
+      "pip_open": "In separatem Fenster öffnen",
+      "pip_unsupported": "Separates Fenster wird in diesem Browser nicht unterstützt",
+      "pip_pop_out": "Ausklappen",
+      "pip_dock": "Zur Seite zurück",
+      "pip_opened": "KI-Assistent ist in einem separaten Fenster geöffnet",
+      "input_placeholder": "Frage eingeben, Enter zum Senden",
+      "continue_input_placeholder": "Nachfrage stellen…",
+      "send": "Senden",
+      "copy_response": "Antwort kopieren",
+      "regenerate": "Neu generieren",
+      "empty_disclaimer": "KI-generierte Inhalte können Fehler enthalten. Bitte überprüfen."
+    },
+    "search_modal": {
+      "aria_label": "Suche",
+      "placeholder": "Dokumentation durchsuchen…",
+      "hot_searches": "Beliebte Suchen",
+      "ask_ai_heading": "KI-Assistent fragen",
+      "ask_ai_lead": "Erzählen Sie mir über",
+      "close": "Schließen"
+    },
+    "user_account": {
+      "login": "Anmelden",
+      "login_title": "Anmelden",
+      "login_sync_history": "Anmelden, um Chatverlauf zu synchronisieren",
+      "continue_with_account": "Mit Konto fortfahren",
+      "continue_with_sso": "Mit Unternehmenskonto fortfahren",
+      "guest": "Gast",
+      "login_disabled": "Anmeldung ist auf dieser Website nicht aktiviert",
+      "guest_mode": "Anmeldung deaktiviert; Surfen als Gast"
+    },
+    "footer": {
+      "copyright": "Alle Rechte vorbehalten",
+      "service_terms": "Nutzungsbedingungen",
+      "privacy_policy": "Datenschutzrichtlinie"
+    },
+    "page_tools": {
+      "copy_page_label": "Seite kopieren",
+      "copy_page_description": "Seite als Markdown für LLMs kopieren",
+      "open_in_chatgpt": "In ChatGPT öffnen",
+      "open_in_claude": "In Claude öffnen",
+      "ask_about_page": "Frage zu dieser Seite stellen",
+      "copy_mcp_label": "MCP-Installationsbefehl kopieren",
+      "copy_mcp_description": "npx-Befehl zum Installieren des MCP-Servers kopieren",
+      "connect_to_cursor": "Mit Cursor verbinden",
+      "connect_to_cursor_description": "MCP-Server in Cursor installieren",
+      "connect_to_vscode": "Mit VS Code verbinden",
+      "connect_to_vscode_description": "MCP-Server in VS Code installieren"
+    },
+    "page_feedback": {
+      "cancel": "Abbrechen",
+      "submit": "Feedback senden",
+      "thanks": "Vielen Dank für Ihr Feedback. Wir verbessern das Inhaltserlebnis kontinuierlich.",
+      "other": "Sonstiges",
+      "other_prefix": "Sonstiges: ",
+      "other_details_sr": "Weitere Feedback-Details"
+    },
+    "feedback_form": {
+      "title": "Feedback senden",
+      "message_label": "Nachricht",
+      "message_placeholder": "Feedback eingeben",
+      "message_required": "Feedback darf nicht leer sein",
+      "submit": "Senden",
+      "cancel": "Abbrechen"
+    },
+    "empty": {
+      "title": "Keine relevanten Inhalte gefunden",
+      "description": "Versuchen Sie andere Suchbegriffe oder durchsuchen Sie andere Kategorien",
+      "button_text": "Zur Startseite"
+    }
+  },
+  "statics": {
+    "search_preview": {
+      "no_results": "Keine Ergebnisse gefunden"
+    }
+  },
+  "generic": {
+    "feedback_created_at": "Letztes Feedback am",
+    "published_at": "Veröffentlicht am",
+    "profile": "Profil"
+  },
+  "buttons": {
+    "logout": "Abmelden"
+  },
+  "page": {
+    "ask_ai": "KI fragen",
+    "ask_ai_message": "Erzählen Sie mir über「%{title}」"
+  },
+  "search": {
+    "ask_ai_message": "Erzählen Sie mir über「%{query}」"
+  },
+  "ai": {
+    "reading": "Dokumente werden gelesen…",
+    "thinking": "KI denkt nach",
+    "network_error": "Netzwerkfehler, bitte erneut versuchen",
+    "timeout_error": "Zeitüberschreitung, bitte erneut versuchen",
+    "copy_success": "Kopiert",
+    "copy_error": "Kopieren fehlgeschlagen"
+  },
+  "paginate": {
+    "previous": "Zurück",
+    "next": "Weiter",
+    "showing": "Angezeigt",
+    "records": "Einträge",
+    "total": "Gesamt"
+  }
+}

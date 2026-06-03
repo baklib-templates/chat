@@ -5,6 +5,14 @@
 {% assign variant = variant | default: 'toolbar' %}
 {% assign can_baklib_login = site.baklib_login_enabled %}
 {% assign can_sso_login = site.sso_login_enabled %}
+{% assign ua_login = 'snippets.user_account.login' | t: '登录' %}
+{% assign ua_login_title = 'snippets.user_account.login_title' | t: '点击登录' %}
+{% assign ua_login_sync = 'snippets.user_account.login_sync_history' | t: '登录后同步历史会话' %}
+{% assign ua_continue_account = 'snippets.user_account.continue_with_account' | t: '使用账号继续' %}
+{% assign ua_continue_sso = 'snippets.user_account.continue_with_sso' | t: '使用企业账号继续' %}
+{% assign ua_guest = 'snippets.user_account.guest' | t: '访客' %}
+{% assign ua_login_disabled = 'snippets.user_account.login_disabled' | t: '站点未开启登录' %}
+{% assign ua_guest_mode = 'snippets.user_account.guest_mode' | t: '站点未开启登录，当前为访客模式' %}
 
 {% if current_user %}
   <div class="dropdown dropdown-end">
@@ -24,10 +32,10 @@
       <span class="hidden max-w-[7rem] truncate text-sm font-semibold sm:inline">{{ current_user.name }}</span>
     </button>
     <ul tabindex="0" class="dropdown-content menu z-50 mt-2 w-52 rounded-xl border border-base-content/10 bg-base-100 p-2 shadow-lg">
-      <li><a href="{{ current_user.profile_url }}">{{ 'generic.profile' | t }}</a></li>
+      <li><a href="{{ current_user.profile_url }}">{{ 'generic.profile' | t: '个人中心' }}</a></li>
       <li>
         {% form_tag 'sign_out' %}
-          <button type="submit" class="w-full text-left">{{ 'buttons.logout' | t }}</button>
+          <button type="submit" class="w-full text-left">{{ 'buttons.logout' | t: '退出登录' }}</button>
         {% endform_tag %}
       </li>
     </ul>
@@ -40,16 +48,16 @@
         <input type="hidden" name="sign_up" value="true" />
         <button
           type="submit"
-          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary"
+          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary cursor-pointer"
           data-disable-with="..."
-          title="登录后同步历史会话"
+          title="{{ ua_login_sync | escape_once }}"
         >
           <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/20 bg-base-200/80 text-base-content/45">
             <i class="ri-user-line text-base" aria-hidden="true"></i>
           </span>
           <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5 text-left">
-            <span class="font-semibold text-base-content">登录</span>
-            <span class="text-xs text-base-content/45">使用账号继续</span>
+            <span class="font-semibold text-base-content">{{ ua_login }}</span>
+            <span class="text-xs text-base-content/45">{{ ua_continue_account }}</span>
           </span>
           <i class="ri-arrow-right-s-line shrink-0 text-base-content/35" aria-hidden="true"></i>
         </button>
@@ -58,26 +66,26 @@
       {% form_tag 'sign_in_with_sso', class: 'w-full' %}
         <button
           type="submit"
-          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary"
+          class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-base-content/65 transition-all hover:bg-primary/10 hover:text-primary cursor-pointer"
           data-disable-with="..."
         >
           <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/20 bg-base-200/80 text-base-content/45">
             <i class="ri-user-line text-base" aria-hidden="true"></i>
           </span>
           <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5 text-left">
-            <span class="font-semibold text-base-content">登录</span>
-            <span class="text-xs text-base-content/45">使用企业账号继续</span>
+            <span class="font-semibold text-base-content">{{ ua_login }}</span>
+            <span class="text-xs text-base-content/45">{{ ua_continue_sso }}</span>
           </span>
           <i class="ri-arrow-right-s-line shrink-0 text-base-content/35" aria-hidden="true"></i>
         </button>
       {% endform_tag %}
     {% else %}
-      <div class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm text-base-content/50" title="站点未开启登录">
+      <div class="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm text-base-content/50" title="{{ ua_login_disabled | escape_once }}">
         <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-base-content/15 bg-base-200/60 text-base-content/40">
           <i class="ri-user-line text-base" aria-hidden="true"></i>
         </span>
         <span class="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-          <span class="font-medium">访客</span>
+          <span class="font-medium">{{ ua_guest }}</span>
         </span>
       </div>
     {% endif %}
@@ -87,41 +95,41 @@
         <input type="hidden" name="sign_up" value="true" />
         <button
           type="submit"
-          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm"
+          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm cursor-pointer"
           data-disable-with="..."
-          title="点击登录"
-          aria-label="登录"
+          title="{{ ua_login_title | escape_once }}"
+          aria-label="{{ ua_login | escape_once }}"
         >
           <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/25 bg-base-100 text-base-content/40 transition-colors group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:text-primary">
             <i class="ri-user-line text-base" aria-hidden="true"></i>
           </span>
-          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">登录</span>
+          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">{{ ua_login }}</span>
         </button>
       {% endform_tag %}
     {% elsif can_sso_login %}
       {% form_tag 'sign_in_with_sso' %}
         <button
           type="submit"
-          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm"
+          class="group flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/50 py-1 pr-3 pl-1 transition-all hover:border-primary/25 hover:bg-primary/10 hover:shadow-sm cursor-pointer"
           data-disable-with="..."
-          title="点击登录"
-          aria-label="登录"
+          title="{{ ua_login_title | escape_once }}"
+          aria-label="{{ ua_login | escape_once }}"
         >
           <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/25 bg-base-100 text-base-content/40 transition-colors group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:text-primary">
             <i class="ri-user-line text-base" aria-hidden="true"></i>
           </span>
-          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">登录</span>
+          <span class="text-sm font-semibold text-base-content/70 group-hover:text-primary">{{ ua_login }}</span>
         </button>
       {% endform_tag %}
     {% else %}
       <span
         class="flex items-center gap-2 rounded-full border border-base-content/10 bg-base-200/40 py-1 pr-3 pl-1 text-base-content/50"
-        title="站点未开启登录，当前为访客模式"
+        title="{{ ua_guest_mode | escape_once }}"
       >
         <span class="flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-base-content/20 bg-base-100 text-base-content/40">
           <i class="ri-user-line text-base" aria-hidden="true"></i>
         </span>
-        <span class="text-sm font-medium">访客</span>
+        <span class="text-sm font-medium">{{ ua_guest }}</span>
       </span>
     {% endif %}
   {% endif %}

@@ -1,0 +1,9 @@
+{
+  "defaultLanguage": "zh-CN",
+  "targetLanguages": ["zh-TW", "ko", "en", "ja", "de", "fr"],
+  "paths": {
+    "locales": "locales",
+    "schema": "config/settings_schema.json",
+    "source": ["config", "templates", "layout", "snippets", "statics"]
+  }
+}

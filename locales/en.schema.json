@@ -1,116 +1,173 @@
 {
   "theme_label": "AI Chat",
-  "theme_description": "适用于智能对话、知识问答和自动回复的 AI 聊天主题",
+  "theme_description": "AI chat theme for intelligent Q&A, document search, and automated replies",
   "settings": {
     "brand": {
-      "title": "品牌相关",
+      "title": "Brand",
+      "logo_paragraph": "Logo appears in the left sidebar and mobile header. Falls back to the site favicon when unset.",
       "logo_url": {
-        "label": "亮色 Logo 图片",
-        "info": "网站亮色 Logo 建议尺寸 300x80"
-      },
-      "dark_logo_url": {
-        "label": "暗色 Logo 图片",
-        "info": "网站暗色 Logo 建议尺寸 300x80"
+        "label": "Light logo",
+        "info": "Recommended size 300×80"
       },
       "copyright": {
-        "label": "备案号/版权信息",
-        "info": "备案号/版权信息将显示在网站底部",
-        "default": "蜀备20240001号"
+        "label": "Copyright / ICP filing",
+        "info": "Shown in the site footer",
+        "default": "ICP filing number"
       },
       "company_name": {
-        "label": "公司名称",
-        "info": "公司名称将显示在首页",
-        "default": "公司名称"
-      },
-      "brand_name": {
-        "label": "品牌名称",
-        "info": "品牌名称将显示在首页",
-        "default": "品牌名称"
+        "label": "Company name",
+        "default": "Company name"
       },
       "site_description": {
-        "label": "站点描述",
-        "info": "站点描述将显示在首页 ",
-        "default": "支持智能问答、文档检索、标签筛选等功能，助您快速获取所需信息，为您提供 7×24 智能问答与帮助文档服务，提升工作效率与客户满意度。"
-      },
-      "welcome_title": {
-        "label": "欢迎标题",
-        "info": "欢迎标题将显示在首页 ",
-        "default": "👏 欢迎"
-      },
-      "welcome_description": {
-        "label": "欢迎描述",
-        "info": "欢迎描述将显示在首页 ",
-        "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
+        "label": "Site tagline",
+        "info": "Shown below the site name in the sidebar",
+        "default": "Knowledge AI"
       },
       "robot_name": {
-        "label": "机器人名称",
-        "info": "搜索页机器人名字",
-        "default": "gpt-4o"
+        "label": "Assistant name",
+        "info": "Displayed in AI chat and search",
+        "default": "AI Assistant"
       },
       "ai_search_completed_text": {
-        "label": "AI 回答底部提示语",
-        "info": "会自动追加在每条 AI 回答的结尾处，用于引导用户联系人工客服。可包含 HTML 链接。"
+        "label": "AI answer footer note",
+        "info": "Appended to each AI answer. HTML links are supported.",
+        "default": "If you need more help, please <a href='#' class='text-blue-600'>contact support</a>."
+      },
+      "kb_menu_label": {
+        "label": "Knowledge base menu label",
+        "info": "Label for the knowledge base link in the sidebar",
+        "default": "Knowledge base"
       }
+    },
+    "ai": {
+      "title": "AI",
+      "chat_delete_enabled": {
+        "label": "Allow deleting chats",
+        "info": "When enabled, users can delete chat history from the Recent list in the sidebar"
+      }
+    },
+    "layout": {
+      "title": "Layout"
     },
     "policy": {
-      "title": "备案信息",
-      "icp_beian": {
-        "label": "备案号",
-        "info": "备案号将显示在网站底部"
-      },
+      "title": "Legal",
       "service_term_url": {
-        "label": "服务条款链接",
-        "info": "服务条款链接将显示在网站底部",
-        "default": "https://www.baklib.com/terms"
+        "label": "Terms of service URL",
+        "info": "Shown in the footer"
       },
       "privacy_policy_url": {
-        "label": "隐私政策链接",
-        "info": "隐私政策链接将显示在网站底部",
-        "default": "https://www.baklib.com/privacy"
+        "label": "Privacy policy URL",
+        "info": "Shown in the footer"
       }
     },
-    "custom_html": {
-    "name": "自定义 HTML 代码",
-    "settings": {
-      "quick_navigation_html": {
-        "label": "快速导航 HTML",
-        "info": "支持HTML标签和有限的TailwindCSS样式代码",
-        "placeholder": "首页快捷导航"
+    "head": {
+      "title": "Head code",
+      "head_html": {
+        "label": "HTML inside <head>",
+        "info": "Custom scripts, styles, analytics, etc."
       }
     }
-  }
+  },
+  "page_config": {
+    "name": "Page options",
+    "settings": {
+      "show_published_at": {
+        "label": "Show publish date"
+      },
+      "show_author": {
+        "label": "Show author"
+      },
+      "show_page_tools_dropdown": {
+        "label": "Show page tools menu"
+      },
+      "feedback_enabled": {
+        "label": "Enable page feedback"
+      },
+      "feedback_helper_text": {
+        "label": "Feedback helper JSON",
+        "info": "JSON with yes/no labels, titles, and item lists",
+        "default": "{\"yes\":{\"label\":\"Yes\",\"title\":\"Great! What worked best?\",\"items\":[\"The guide worked as expected.\",\"I found what I needed easily.\",\"The product was easy to understand.\",\"The docs are up to date.\"]},\"no\":{\"label\":\"No\",\"title\":\"How can we improve?\",\"items\":[\"Help me get started faster.\",\"Make it easier to find what I need.\",\"Explain the product more clearly.\",\"Update this document.\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "Left sidebar width",
+        "info": "Width of the main chat sidebar; ~280px recommended"
+      },
+      "header_height": {
+        "label": "Header height",
+        "info": "Top bar height in pixels; affects sticky TOC positioning"
+      }
+    }
   },
   "templates": {
-    "blank": {
-      "name": "空白页",
-      "description": "用于创建空白页面"
-    },
     "page": {
-      "name": "页面详情",
-      "description": "用于发布页面详情页",
+      "name": "Page",
+      "description": "Documentation page template",
       "settings": {
+        "show_list": {
+          "label": "Section page",
+          "info": "Show child pages as a list; the home node always lists children"
+        },
+        "icon": {
+          "label": "Page icon",
+          "info": "Icon in child page lists; 1:1 ratio recommended"
+        },
         "title": {
-          "label": "标题",
-          "info": "知识库同步，不可编辑"
+          "label": "Title",
+          "info": "Synced from knowledge base; read-only"
         },
         "description": {
-          "label": "摘要"
+          "label": "Summary"
         },
-        "tags":{
-          "label": "标签"
+        "tags": {
+          "label": "Tags"
         },
-        "thumb_image_url":{
-          "label": "封面图"
+        "thumb_image_url": {
+          "label": "Cover image"
         },
-        "content":{
-          "label": "页面内容",
-          "info": "同步自数据源，不可编辑"
+        "content": {
+          "label": "Content",
+          "info": "Synced from source; read-only"
         }
       }
     },
     "index": {
-      "name": "首页",
-      "description": "用于发布首页"
+      "name": "Home",
+      "description": "Home page template",
+      "settings": {
+        "groups": {
+          "welcome": "Welcome",
+          "prompts": "Chat prompts"
+        },
+        "welcome_title": {
+          "label": "Welcome title",
+          "default": "AI Knowledge Assistant"
+        },
+        "welcome_description": {
+          "label": "Welcome description",
+          "default": "Ask a question and we'll search the knowledge base to find the most relevant answer."
+        },
+        "popular_searches": {
+          "label": "Suggested questions",
+          "info": "Shown on the home page and search modal; one question per line"
+        },
+        "popular_searches_label": {
+          "label": "Suggested questions heading",
+          "default": "Try asking"
+        },
+        "chat_input_placeholder": {
+          "label": "Input placeholder",
+          "default": "Type your question and press Enter…"
+        },
+        "chat_disclaimer": {
+          "label": "Disclaimer below input",
+          "default": "Answers are based on this knowledge base only; no external data is used.",
+          "info": "Leave empty to hide"
+        }
+      }
     }
   }
 }

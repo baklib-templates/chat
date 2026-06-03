@@ -1,0 +1,173 @@
+{
+  "theme_label": "AI Chat 模版",
+  "theme_description": "適用於智慧對話、知識問答和自動回覆的 AI 聊天主題",
+  "settings": {
+    "brand": {
+      "title": "品牌相關",
+      "logo_paragraph": "Logo 顯示在左側欄與行動端頂欄；未設定時使用站點圖示。",
+      "logo_url": {
+        "label": "亮色 Logo 圖片",
+        "info": "網站亮色 Logo 建議尺寸 300×80"
+      },
+      "copyright": {
+        "label": "備案號/版權資訊",
+        "info": "備案號/版權資訊將顯示在網站底部",
+        "default": "蜀備20240001號"
+      },
+      "company_name": {
+        "label": "公司名稱",
+        "default": "公司名稱"
+      },
+      "site_description": {
+        "label": "站點副標題",
+        "info": "顯示在左側欄站點名稱下方",
+        "default": "Knowledge AI"
+      },
+      "robot_name": {
+        "label": "機器人名稱",
+        "info": "AI 對話與搜尋中顯示的助手名稱",
+        "default": "AI 助手"
+      },
+      "ai_search_completed_text": {
+        "label": "AI 回答底部提示語",
+        "info": "會自動追加在每條 AI 回答的結尾處，用於引導使用者聯絡人工客服。可包含 HTML 連結。",
+        "default": "如果您有更多問題或需要進一步協助，請<a href='#' class='text-blue-600'>聯絡客服團隊</a>。"
+      },
+      "kb_menu_label": {
+        "label": "知識庫選單名稱",
+        "info": "左側欄「知識庫」入口的顯示文案",
+        "default": "知識庫"
+      }
+    },
+    "ai": {
+      "title": "AI 相關",
+      "chat_delete_enabled": {
+        "label": "允許刪除對話",
+        "info": "開啟後，使用者可在左側「最近」列表中刪除歷史對話"
+      }
+    },
+    "layout": {
+      "title": "版面配置"
+    },
+    "policy": {
+      "title": "備案資訊",
+      "service_term_url": {
+        "label": "服務條款連結",
+        "info": "服務條款連結將顯示在網站底部"
+      },
+      "privacy_policy_url": {
+        "label": "隱私政策連結",
+        "info": "隱私政策連結將顯示在網站底部"
+      }
+    },
+    "head": {
+      "title": "Head 程式碼",
+      "head_html": {
+        "label": "<head> 標籤內 HTML 程式碼",
+        "info": "用於新增自訂腳本、樣式等，例如統計程式碼或第三方 SDK"
+      }
+    }
+  },
+  "page_config": {
+    "name": "頁面配置",
+    "settings": {
+      "show_published_at": {
+        "label": "顯示發布時間"
+      },
+      "show_author": {
+        "label": "顯示作者"
+      },
+      "show_page_tools_dropdown": {
+        "label": "顯示頁面工具下拉選單"
+      },
+      "feedback_enabled": {
+        "label": "是否啟用頁面回饋"
+      },
+      "feedback_helper_text": {
+        "label": "頁面回饋輔助提示語",
+        "info": "JSON：yes / no 各含 label（按鈕文案）、title、items",
+        "default": "{\"yes\":{\"label\":\"是的\",\"title\":\"太棒了！什麼方法對你最有效？\",\"items\":[\"該指南按預期發揮作用。\",\"我很容易就找到了我需要的資訊。\",\"產品及其功能很容易理解。\",\"文件已更新。\"]},\"no\":{\"label\":\"不是\",\"title\":\"我們如何改進產品？\",\"items\":[\"幫我更快開始。\",\"讓我更容易找到我想要的東西。\",\"讓使用者能夠輕鬆理解產品及其功能。\",\"更新此文件。\"]}}"
+      }
+    }
+  },
+  "generic": {
+    "settings": {
+      "left_sidebar_width": {
+        "label": "左側欄寬度",
+        "info": "主版面左側對話欄寬度，建議 280 像素左右"
+      },
+      "header_height": {
+        "label": "頂欄高度",
+        "info": "站點頂欄高度（像素），影響頁內目錄等 sticky 定位"
+      }
+    }
+  },
+  "templates": {
+    "page": {
+      "name": "頁面詳情",
+      "description": "用於發布頁面詳情頁",
+      "settings": {
+        "show_list": {
+          "label": "是否為欄目頁面",
+          "info": "開啟後顯示下級頁面列表；首頁節點始終顯示子頁面列表"
+        },
+        "icon": {
+          "label": "頁面圖示",
+          "info": "用於子頁面列表中的圖示，建議 1:1 比例"
+        },
+        "title": {
+          "label": "標題",
+          "info": "知識庫同步，不可編輯"
+        },
+        "description": {
+          "label": "摘要"
+        },
+        "tags": {
+          "label": "標籤"
+        },
+        "thumb_image_url": {
+          "label": "封面圖"
+        },
+        "content": {
+          "label": "頁面內容",
+          "info": "同步自資料來源，不可編輯"
+        }
+      }
+    },
+    "index": {
+      "name": "首頁",
+      "description": "用於發布首頁",
+      "settings": {
+        "groups": {
+          "welcome": "歡迎區",
+          "prompts": "對話引導"
+        },
+        "welcome_title": {
+          "label": "歡迎標題",
+          "default": "AI 知識問答助手"
+        },
+        "welcome_description": {
+          "label": "歡迎描述",
+          "default": "請輸入您想了解的問題，系統將基於文件內容和智慧分析，快速為您找到最相關的答案。"
+        },
+        "popular_searches": {
+          "label": "熱搜問題",
+          "info": "展示在首頁與搜尋彈窗，每行一個問題"
+        },
+        "popular_searches_label": {
+          "label": "熱搜區標題",
+          "default": "試試這些問題"
+        },
+        "chat_input_placeholder": {
+          "label": "輸入框占位符",
+          "default": "輸入您的問題，按 Enter 傳送…"
+        },
+        "chat_disclaimer": {
+          "label": "輸入框下方說明",
+          "default": "AI 僅基於目前知識庫內容回答，不引用外部資料",
+          "info": "留空則不顯示"
+        }
+      }
+    }
+  }
+}

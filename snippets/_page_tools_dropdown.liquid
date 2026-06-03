@@ -4,7 +4,7 @@
 {% assign ask_ai_message = ask_ai_tpl | replace: '%{title}', page_title %}
 
 {% if page.path != '/' or chat_url %}
-<div class="flex shrink-0 flex-wrap items-center justify-end gap-2">
+<div class="flex w-full min-w-0 flex-wrap items-center justify-start gap-2 sm:w-auto sm:justify-end">
   {% if page.path != '/' %}
   <div
     class="join shrink-0 rounded-md border border-base-300 bg-base-100"

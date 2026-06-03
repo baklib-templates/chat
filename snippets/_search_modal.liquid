@@ -3,7 +3,7 @@
   id="site-search-modal"
   class="modal"
   data-header-search-target="modal"
-  aria-label="搜索"
+  aria-label="{{ 'snippets.search_modal.aria_label' | t: '搜索' }}"
 >
   <div
     class="modal-box flex max-h-[min(85vh,720px)] w-[min(100vw-1rem,36rem)] max-w-none flex-col gap-0 overflow-hidden rounded-2xl border border-base-200 bg-base-100 p-0 shadow-2xl sm:max-w-[min(100vw-2rem,36rem)] fixed top-[5vh] left-1/2 -translate-x-1/2"
@@ -15,7 +15,7 @@
           type="search"
           autocomplete="off"
           class="grow truncate border-0 bg-transparent p-0 text-sm outline-none focus:outline-none"
-          placeholder="搜索文档、向 AI 提问…"
+          placeholder="{{ 'snippets.search_modal.placeholder' | t: '搜索文档…' }}"
           data-header-search-target="modalInput"
           data-action="input->header-search#onModalInput keydown->header-search#onModalKeydown"
         />
@@ -33,7 +33,7 @@
         data-header-search-target="hotSection"
       >
         {% if hot_keywords.size > 0 %}
-          <p class="px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">热门搜索</p>
+          <p class="px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">{{ 'snippets.search_modal.hot_searches' | t: '热门搜索' }}</p>
           <div class="flex flex-wrap gap-2" data-header-search-target="hotList">
             {% for kw in hot_keywords %}
               {% assign kw_trim = kw | strip %}
@@ -68,7 +68,7 @@
       class="shrink-0 border-t border-base-200 bg-base-100 px-3 py-3 sm:px-4 hidden"
       data-header-search-target="aiSection"
     >
-      <p class="mb-1.5 px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">向 AI 助手提问</p>
+      <p class="mb-1.5 px-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-base-content/45">{{ 'snippets.search_modal.ask_ai_heading' | t: '向 AI 助手提问' }}</p>
       <button
         type="button"
         class="flex w-full cursor-pointer items-center gap-2.5 rounded-xl bg-base-200/40 px-2 py-2 text-left text-sm text-primary hover:bg-primary/10"
@@ -79,13 +79,13 @@
       >
         <i class="ri-sparkling-2-line size-4 shrink-0 text-primary leading-none" aria-hidden="true"></i>
         <span class="min-w-0 leading-snug">
-          <span class="search-modal-ai-lead text-base-content/70">帮我介绍一下</span>
+          <span class="search-modal-ai-lead text-base-content/70">{{ 'snippets.search_modal.ask_ai_lead' | t: '帮我介绍一下' }}</span>
           <strong class="search-modal-ai-q font-semibold text-primary"></strong>
         </span>
       </button>
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">
-    <button>关闭</button>
+    <button>{{ 'snippets.search_modal.close' | t: '关闭' }}</button>
   </form>
 </dialog>

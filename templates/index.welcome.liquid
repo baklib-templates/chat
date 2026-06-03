@@ -1,6 +1,9 @@
-{% assign popular_searches = site.settings.popular_searches %}
-{% assign welcome_title = site.settings.welcome_title | default: "AI 知识问答助手" %}
-{% assign welcome_description = site.settings.welcome_description | default: "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。" %}
+{% assign popular_searches = page.settings.popular_searches | reg_split: "/\n/" %}
+{% assign welcome_title = page.settings.welcome_title %}
+{% assign welcome_description = page.settings.welcome_description %}
+{% assign popular_searches_label = page.settings.popular_searches_label %}
+{% assign chat_input_placeholder = page.settings.chat_input_placeholder %}
+{% assign chat_disclaimer = page.settings.chat_disclaimer %}
 {% assign chat_static_url = statics['chat'] %}
 
 <div
@@ -13,14 +16,15 @@
       <h1 class="text-balance text-3xl font-extrabold leading-tight tracking-tight text-base-content sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">{{ welcome_title }}</h1>
       <p class="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-base-content/55 sm:text-lg">{{ welcome_description }}</p>
 
-      {% if popular_searches != blank %}
-        <p class="mt-10 mb-3 text-xs font-semibold tracking-wider text-base-content/40 uppercase">试试这些问题</p>
-        <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5" role="list" aria-label="热门问题">
+      {% if popular_searches.size > 0 %}
+        <p class="mt-10 mb-3 text-xs font-semibold tracking-wider text-base-content/40 uppercase">{{ popular_searches_label }}</p>
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5" role="list" aria-label="{{ popular_searches_label | escape_once }}">
           {% for question in popular_searches %}
+            {% assign question = question | strip %}
             {% if question != blank %}
               <button
                 type="button"
-                class="inline-flex items-center gap-1.5 rounded-full border border-base-content/8 bg-base-100/80 px-4 py-2 text-sm text-base-content/75 shadow-sm backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:bg-primary/10 hover:text-primary hover:shadow-md"
+                class="inline-flex items-center gap-1.5 rounded-full border border-base-content/8 bg-base-100/80 px-4 py-2 text-sm text-base-content/75 shadow-sm backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:bg-primary/10 hover:text-primary hover:shadow-md cursor-pointer"
                 role="listitem"
                 data-action="click->welcome-chat#startFromPrompt"
                 data-message="{{ question | escape }}"
@@ -44,15 +48,17 @@
             data-welcome-chat-target="input"
             data-action="keydown->welcome-chat#onInputKeydown"
             autocomplete="off"
-            placeholder="输入您的问题，按 Enter 发送…"
+            placeholder="{{ chat_input_placeholder | escape_once }}"
             class="max-h-32 min-h-[48px] flex-1 resize-none border-none bg-transparent px-1 py-2.5 text-base outline-none placeholder:text-base-content/45"
             oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
           ></textarea>
-          <button type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:opacity-40 sm:h-11 sm:w-11" aria-label="发送问题">
+          <button type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:opacity-40 sm:h-11 sm:w-11" aria-label="{{ 'templates.index.send_question' | t: '发送问题' }}">
             <i class="ri-send-plane-2-fill text-lg" aria-hidden="true"></i>
           </button>
         </form>
-        <p class="mt-3 text-center text-[11px] leading-relaxed text-base-content/45">AI 仅基于当前知识库内容回答，不引用外部数据</p>
+        {% if chat_disclaimer != blank %}
+          <p class="mt-3 text-center text-[11px] leading-relaxed text-base-content/45">{{ chat_disclaimer }}</p>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -64,6 +70,55 @@
     "description": "t:schema.templates.index.description",
     "thumb_url": "images/theme/index.webp",
     "preview_image_urls": ["images/theme/index.webp"],
-    "sub_page_templates": ["page"]
+    "sub_page_templates": ["page"],
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:schema.templates.index.settings.groups.welcome"
+      },
+      {
+        "id": "welcome_title",
+        "type": "text",
+        "label": "t:schema.templates.index.settings.welcome_title.label",
+        "default": "t:schema.templates.index.settings.welcome_title.default"
+      },
+      {
+        "id": "welcome_description",
+        "type": "textarea",
+        "label": "t:schema.templates.index.settings.welcome_description.label",
+        "default": "t:schema.templates.index.settings.welcome_description.default",
+        "rows": 3
+      },
+      {
+        "type": "header",
+        "content": "t:schema.templates.index.settings.groups.prompts"
+      },
+      {
+        "id": "popular_searches",
+        "type": "textarea",
+        "label": "t:schema.templates.index.settings.popular_searches.label",
+        "info": "t:schema.templates.index.settings.popular_searches.info",
+        "rows": 5
+      },
+      {
+        "id": "popular_searches_label",
+        "type": "text",
+        "label": "t:schema.templates.index.settings.popular_searches_label.label",
+        "default": "t:schema.templates.index.settings.popular_searches_label.default"
+      },
+      {
+        "id": "chat_input_placeholder",
+        "type": "text",
+        "label": "t:schema.templates.index.settings.chat_input_placeholder.label",
+        "default": "t:schema.templates.index.settings.chat_input_placeholder.default"
+      },
+      {
+        "id": "chat_disclaimer",
+        "type": "text",
+        "label": "t:schema.templates.index.settings.chat_disclaimer.label",
+        "default": "t:schema.templates.index.settings.chat_disclaimer.default",
+        "info": "t:schema.templates.index.settings.chat_disclaimer.info"
+      }
+    ]
   }
 {% endschema %}

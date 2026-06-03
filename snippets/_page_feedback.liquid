@@ -2,9 +2,10 @@
   页面反馈选项由站点设置 feedback_helper_text（JSON 字符串）驱动，在 Alpine 中解析与校验。
 {% endcomment %}
 {% assign posted_feedback = page.visitor_posted_feedback | default: {} %}
-{% assign posted_emoji = posted_feedback.useful_type | default: '' %}
-{% assign useful_yes_emoji = '😊' %}
-{% assign useful_no_emoji = '😞' %}
+{% assign posted_emoji = posted_feedback.useful_type | default: posted_feedback.emoji | default: '' %}
+{% assign useful_types = site.plugins.feedback.useful_types %}
+{% assign useful_yes_emoji = useful_types[0].emoji | default: '' %}
+{% assign useful_no_emoji = useful_types[1].emoji | default: '' %}
 
 {% assign default_state = '' %}
 {% assign has_posted_feedback = false %}
@@ -96,25 +97,23 @@
         <section class="mt-6">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
             <p class="text-[0.92rem] text-base-content/70">{{ site.plugins.feedback.useful_label }}</p>
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                class="btn btn-sm h-9 min-w-22 rounded-xl px-4 text-md font-medium shadow-none"
-                :class="state === 'yes' ? 'btn-primary' : 'btn-outline border-base-300'"
-                @click="state = 'yes'; reason = ''; details = ''; submitted = false; scrollToFollowUp()"
-              >
-                <i class="ri-thumb-up-line text-base leading-none" aria-hidden="true"></i>
-                <span x-text="yesBranch.label"></span>
-              </button>
-              <button
-                type="button"
-                class="btn btn-sm h-9 min-w-18 rounded-xl px-4 text-md font-medium shadow-none"
-                :class="state === 'no' ? 'btn-primary' : 'btn-outline border-base-300'"
-                @click="state = 'no'; reason = ''; details = ''; submitted = false; scrollToFollowUp()"
-              >
-                <i class="ri-thumb-down-line text-base leading-none" aria-hidden="true"></i>
-                <span x-text="noBranch.label"></span>
-              </button>
+            <div class="flex flex-wrap items-center gap-2">
+              {% for useful_type in useful_types limit: 2 %}
+                {% if forloop.first %}
+                  {% assign branch_key = 'yes' %}
+                {% else %}
+                  {% assign branch_key = 'no' %}
+                {% endif %}
+                <button
+                  type="button"
+                  class="btn btn-sm inline-flex h-9 min-w-18 gap-1.5 rounded-xl px-4 text-md font-medium shadow-none"
+                  :class="state === '{{ branch_key }}' ? 'btn-primary' : 'btn-outline border-base-300'"
+                  @click="state = '{{ branch_key }}'; reason = ''; details = ''; submitted = false; scrollToFollowUp()"
+                >
+                  <span class="text-lg leading-none" aria-hidden="true">{{ useful_type.emoji }}</span>
+                  <span>{{ useful_type.label }}</span>
+                </button>
+              {% endfor %}
             </div>
           </div>
 

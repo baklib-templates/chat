@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat",
-  "theme_description": "KI-Chat-Thema für intelligente Q&A, Dokumentensuche und automatische Antworten",
+  "theme_label": "KI-Suche & Antwort",
+  "theme_description": "Ihr dedizierter Enterprise-Wissensexperte – rund um die Uhr. Liefert verifizierte, kontextbezogene Antworten, die ausschließlich auf Ihrem privaten Dokumentenbestand trainiert wurden.",
   "settings": {
     "brand": {
       "title": "Marke",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "Site-Untertitel",
         "info": "Unter dem Site-Namen in der Seitenleiste angezeigt",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "Assistentenname",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "Startseite",
-      "description": "Startseiten-Vorlage",
+      "description": "AI Search & Answer – Willkommensseite",
       "settings": {
         "groups": {
           "welcome": "Willkommen",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "Willkommenstitel",
-          "default": "KI-Wissens-Q&A-Assistent"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "Willkommensbeschreibung",
-          "default": "Geben Sie Ihre Frage ein. Das System findet basierend auf Dokumenteninhalten und intelligenter Analyse schnell die relevanteste Antwort."
+          "default": "Ihr dedizierter Enterprise-Wissensexperte – rund um die Uhr. Liefert verifizierte, kontextbezogene Antworten, die ausschließlich auf Ihrem privaten Dokumentenbestand trainiert wurden."
         },
         "popular_searches": {
           "label": "Vorgeschlagene Fragen",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "Hinweis unter Eingabe",
-          "default": "KI antwortet nur basierend auf dem aktuellen Wissensbestand, ohne externe Daten",
+          "default": "Antworten werden ausschließlich aus Ihrem privaten Dokumentenbestand erzeugt; keine externen Daten.",
           "info": "Leer lassen zum Ausblenden"
         }
       }

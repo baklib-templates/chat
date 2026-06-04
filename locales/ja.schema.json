@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat",
-  "theme_description": "インテリジェントな Q&A、ドキュメント検索、自動応答向け AI チャットテーマ",
+  "theme_label": "Chat",
+  "theme_description": "24時間365日対応の専任エンタープライズ・ナレッジ・エキスパート。社内プライベート文書リポジトリのみで学習し、検証済みの文脈に沿った回答を提供します。",
   "settings": {
     "brand": {
       "title": "ブランド",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "サイト副題",
         "info": "サイドバーのサイト名の下に表示",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "アシスタント名",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "ホーム",
-      "description": "ホームページテンプレート",
+      "description": "AI Search & Answer ウェルカムページ",
       "settings": {
         "groups": {
           "welcome": "ウェルカム",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "ウェルカムタイトル",
-          "default": "AI ナレッジ Q&A アシスタント"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "ウェルカム説明",
-          "default": "知りたい質問を入力してください。ドキュメント内容とインテリジェント分析に基づき、最も関連性の高い回答を素早く見つけます。"
+          "default": "24時間365日対応の専任エンタープライズ・ナレッジ・エキスパート。社内プライベート文書リポジトリのみで学習し、検証済みの文脈に沿った回答を提供します。"
         },
         "popular_searches": {
           "label": "おすすめの質問",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "入力欄下の説明",
-          "default": "AI は現在のナレッジベースの内容のみに基づいて回答し、外部データは参照しません",
+          "default": "回答は社内プライベート文書リポジトリのみに基づいて生成され、外部データは使用しません",
           "info": "空にすると非表示"
         }
       }

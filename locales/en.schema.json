@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat",
-  "theme_description": "AI chat theme for intelligent Q&A, document search, and automated replies",
+  "theme_label": "Chat",
+  "theme_description": "Ask your dedicated 24/7 enterprise knowledge expert and receive structured summaries in seconds, with contextual responses trained exclusively on your private document repository.",
   "settings": {
     "brand": {
       "title": "Brand",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "Site tagline",
         "info": "Shown below the site name in the sidebar",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "Assistant name",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "Home",
-      "description": "Home page template",
+      "description": "AI Search & Answer welcome page",
       "settings": {
         "groups": {
           "welcome": "Welcome",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "Welcome title",
-          "default": "AI Knowledge Assistant"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "Welcome description",
-          "default": "Ask a question and we'll search the knowledge base to find the most relevant answer."
+          "default": "Your 24/7 dedicated enterprise knowledge expert. Delivers verified, contextual responses exclusively trained on your private document repository."
         },
         "popular_searches": {
           "label": "Suggested questions",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "Disclaimer below input",
-          "default": "Answers are based on this knowledge base only; no external data is used.",
+          "default": "Answers are generated exclusively from your private document repository; no external data is used.",
           "info": "Leave empty to hide"
         }
       }

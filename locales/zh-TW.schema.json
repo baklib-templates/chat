@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat 模版",
-  "theme_description": "適用於智慧對話、知識問答和自動回覆的 AI 聊天主題",
+  "theme_label": "Chat",
+  "theme_description": "您全天候專屬的企業知識專家。基於貴司私有文件庫專屬訓練，提供經核驗、貼合語境的回答。",
   "settings": {
     "brand": {
       "title": "品牌相關",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "站點副標題",
         "info": "顯示在左側欄站點名稱下方",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "機器人名稱",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "首頁",
-      "description": "用於發布首頁",
+      "description": "AI Search & Answer 歡迎頁",
       "settings": {
         "groups": {
           "welcome": "歡迎區",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "歡迎標題",
-          "default": "AI 知識問答助手"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "歡迎描述",
-          "default": "請輸入您想了解的問題，系統將基於文件內容和智慧分析，快速為您找到最相關的答案。"
+          "default": "您全天候專屬的企業知識專家。基於貴司私有文件庫專屬訓練，提供經核驗、貼合語境的回答。"
         },
         "popular_searches": {
           "label": "熱搜問題",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "輸入框下方說明",
-          "default": "AI 僅基於目前知識庫內容回答，不引用外部資料",
+          "default": "回答僅基於貴司私有文件庫生成，不引用外部資料",
           "info": "留空則不顯示"
         }
       }

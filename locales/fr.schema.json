@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat",
-  "theme_description": "Thème de chat IA pour Q&R intelligentes, recherche documentaire et réponses automatiques",
+  "theme_label": "Recherche et réponses IA",
+  "theme_description": "Votre expert en connaissances d'entreprise dédié, disponible 24 h/24 et 7 j/7. Fournit des réponses vérifiées et contextuelles, entraînées exclusivement sur votre dépôt documentaire privé.",
   "settings": {
     "brand": {
       "title": "Marque",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "Sous-titre du site",
         "info": "Affiché sous le nom du site dans la barre latérale",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "Nom de l'assistant",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "Accueil",
-      "description": "Modèle de page d'accueil",
+      "description": "Page d'accueil AI Search & Answer",
       "settings": {
         "groups": {
           "welcome": "Bienvenue",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "Titre de bienvenue",
-          "default": "Assistant Q&R de connaissances IA"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "Description de bienvenue",
-          "default": "Saisissez votre question. Le système trouvera rapidement la réponse la plus pertinente en s'appuyant sur le contenu documentaire et l'analyse intelligente."
+          "default": "Votre expert en connaissances d'entreprise dédié, disponible 24 h/24 et 7 j/7. Fournit des réponses vérifiées et contextuelles, entraînées exclusivement sur votre dépôt documentaire privé."
         },
         "popular_searches": {
           "label": "Questions suggérées",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "Note sous la saisie",
-          "default": "L'IA répond uniquement à partir du contenu actuel de la base de connaissances, sans données externes",
+          "default": "Les réponses sont générées exclusivement à partir de votre dépôt documentaire privé ; aucune donnée externe.",
           "info": "Laisser vide pour masquer"
         }
       }

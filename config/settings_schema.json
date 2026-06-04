@@ -4,7 +4,7 @@
     "theme_name": "chat",
     "theme_label": "t:schema.theme_label",
     "theme_description": "t:schema.theme_description",
-    "theme_version": "1.2.1",
+    "theme_version": "2.0.0",
     "theme_syntax_version": "v2",
     "theme_scope": "wiki",
     "theme_author": "Baklib",
@@ -12,9 +12,10 @@
     "theme_support_url": "",
     "theme_thumb_url": "images/theme/thumb.png",
     "theme_preview_images": [
-      "images/theme/index.webp",
-      "images/theme/chat.webp",
-      "images/theme/list.webp"
+      "images/theme/${lang}/cover.png",
+      "images/theme/${lang}/index.png",
+      "images/theme/${lang}/history.png",
+      "images/theme/${lang}/page.png"
     ],
     "theme_languages": [
       {

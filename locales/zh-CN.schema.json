@@ -1,6 +1,6 @@
 {
-  "theme_label": "AI Chat模版",
-  "theme_description": "适用于智能对话、知识问答和自动回复的 AI 聊天主题",
+  "theme_label": "Chat",
+  "theme_description": "向全天候企业知识专家提问，秒级获取结构化摘要；基于私有文档库专属训练，提供经核验、贴合语境的智能回答。",
   "settings": {
     "brand": {
       "title": "品牌相关",
@@ -16,7 +16,7 @@
       "site_description": {
         "label": "站点副标题",
         "info": "显示在左侧栏站点名称下方",
-        "default": "Knowledge AI"
+        "default": "AI Search & Answer"
       },
       "robot_name": {
         "label": "机器人名称",
@@ -131,7 +131,7 @@
     },
     "index": {
       "name": "首页",
-      "description": "用于发布首页",
+      "description": "AI Search & Answer 欢迎页",
       "settings": {
         "groups": {
           "welcome": "欢迎区",
@@ -139,11 +139,11 @@
         },
         "welcome_title": {
           "label": "欢迎标题",
-          "default": "AI 知识问答助手"
+          "default": "AI Search & Answer"
         },
         "welcome_description": {
           "label": "欢迎描述",
-          "default": "请输入您想了解的问题，系统将基于文档内容和智能分析，快速为您找到最相关的答案。"
+          "default": "您全天候专属的企业知识专家。基于贵司私有文档库专属训练，提供经核验、贴合语境的回答。"
         },
         "popular_searches": {
           "label": "热搜问题",
@@ -159,7 +159,7 @@
         },
         "chat_disclaimer": {
           "label": "输入框下方说明",
-          "default": "AI 仅基于当前知识库内容回答，不引用外部数据",
+          "default": "回答仅基于贵司私有文档库生成，不引用外部数据",
           "info": "留空则不显示"
         }
       }

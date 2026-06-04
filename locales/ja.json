@@ -28,8 +28,8 @@
     "sidebar": {
       "open_menu": "メニューを開く",
       "new_chat": "新しいチャット",
-      "menu": "メニュー",
-      "recent": "最近"
+      "menu": "ナビゲーション",
+      "recent": "履歴"
     },
     "recent_chats": {
       "new_chat": "新しいチャット",

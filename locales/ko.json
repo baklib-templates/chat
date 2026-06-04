@@ -28,8 +28,8 @@
     "sidebar": {
       "open_menu": "메뉴 열기",
       "new_chat": "새 대화",
-      "menu": "메뉴",
-      "recent": "최근"
+      "menu": "내비게이션",
+      "recent": "기록"
     },
     "recent_chats": {
       "new_chat": "새 대화",

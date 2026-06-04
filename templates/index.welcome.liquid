@@ -17,24 +17,32 @@
       <p class="mx-auto mt-4 max-w-xl text-pretty text-sm leading-relaxed text-base-content/55">{{ welcome_description }}</p>
     </div>
     <div class="w-full shrink-0 px-4 py-4 sm:px-6 sm:py-5">
-      <div class="mx-auto w-full max-w-3xl">
-        <form
-          class="flex items-end gap-2 rounded-2xl border border-base-content/10 bg-base-100 p-2 shadow-lg transition-all focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15"
-          data-action="submit->welcome-chat#submit"
+      <div class="group relative mx-auto w-full max-w-3xl">
+        <div
+          class="pointer-events-none absolute -inset-3 rounded-[1.35rem] bg-linear-to-r from-primary/35 via-secondary/30 to-accent/35 opacity-80 blur-2xl transition-all duration-500 group-has-focus-within:opacity-100 group-has-focus-within:blur-3xl"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="relative rounded-2xl bg-linear-to-r from-primary/55 via-secondary/45 to-accent/50 p-px shadow-[0_12px_40px_-14px] shadow-primary/25 transition-shadow duration-500 group-has-focus-within:shadow-[0_16px_48px_-12px] group-has-focus-within:shadow-primary/35"
         >
-          <textarea
-            rows="1"
-            data-welcome-chat-target="input"
-            data-action="keydown->welcome-chat#onInputKeydown"
-            autocomplete="off"
-            placeholder="{{ chat_input_placeholder | escape_once }}"
-            class="max-h-32 min-h-[48px] flex-1 resize-none border-none bg-transparent px-1 py-2.5 text-base outline-none placeholder:text-base-content/45"
-            oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
-          ></textarea>
-          <button type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:opacity-40 sm:h-11 sm:w-11" aria-label="{{ 'templates.index.send_question' | t: '发送问题' }}">
-            <i class="ri-send-plane-2-fill text-lg" aria-hidden="true"></i>
-          </button>
-        </form>
+          <form
+            class="relative flex items-end gap-2 rounded-[calc(1rem-1px)] border border-base-content/8 bg-base-100 p-2 shadow-sm transition-all group-has-focus-within:border-primary/25 group-has-focus-within:ring-2 group-has-focus-within:ring-primary/15"
+            data-action="submit->welcome-chat#submit"
+          >
+            <textarea
+              rows="1"
+              data-welcome-chat-target="input"
+              data-action="keydown->welcome-chat#onInputKeydown"
+              autocomplete="off"
+              placeholder="{{ chat_input_placeholder | escape_once }}"
+              class="max-h-32 min-h-[48px] flex-1 resize-none border-none bg-transparent px-1 py-2.5 text-base outline-none placeholder:text-base-content/45"
+              oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+            ></textarea>
+            <button type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-content shadow-md transition-all hover:brightness-110 active:scale-95 disabled:opacity-40 sm:h-11 sm:w-11" aria-label="{{ 'templates.index.send_question' | t: '发送问题' }}">
+              <i class="ri-send-plane-2-fill text-lg" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
         {% if chat_disclaimer != blank %}
           <p class="mt-3 text-center text-[11px] leading-relaxed text-base-content/45">{{ chat_disclaimer }}</p>
         {% endif %}

@@ -28,8 +28,8 @@
     "sidebar": {
       "open_menu": "Menü öffnen",
       "new_chat": "Neuer Chat",
-      "menu": "Menü",
-      "recent": "Zuletzt"
+      "menu": "Navigation",
+      "recent": "Verlauf"
     },
     "recent_chats": {
       "new_chat": "Neuer Chat",

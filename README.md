@@ -8,7 +8,7 @@ Baklib **Wiki** AI chat theme (`theme_scope`: `wiki`, version **1.2.1**): conver
 
 - **Welcome home** — Hero, popular prompts, and inline chat input; questions start a new AI session
 - **Chat workspace** — Streaming answers, source citations, PiP pop-out, optional session delete
-- **Docs alongside chat** — Left sidebar for new chat, knowledge-base entry, and recent sessions; `page.liquid` for full doc reading with nav tree and search modal
+- **Docs alongside chat** — Left sidebar for New Chat, knowledge-base entry, and recent sessions; `page.liquid` for full doc reading with nav tree and search modal
 - **AI & search** — Header search with preview, configurable assistant name and post-AI footer text
 - **Seven locales** — Runtime UI (`*.json`) and theme-editor copy (`*.schema.json`)
 - **Frontend stack** — Tailwind CSS 4, daisyUI, Stimulus, Alpine.js, Turbo (built from `src/` into `assets/`)

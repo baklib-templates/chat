@@ -27,12 +27,12 @@
   "snippets": {
     "sidebar": {
       "open_menu": "Open menu",
-      "new_chat": "New chat",
-      "menu": "Menu",
-      "recent": "Recent"
+      "new_chat": "New Chat",
+      "menu": "Navigation",
+      "recent": "History"
     },
     "recent_chats": {
-      "new_chat": "New chat",
+      "new_chat": "New Chat",
       "delete": "Delete chat",
       "delete_confirm": "Delete this chat? This cannot be undone."
     },

@@ -43433,6 +43433,7 @@ ${n}</ol>
     static targets = ["input", "prompt"];
     static values = {
       chatUrl: String,
+      chatsUrl: String,
       autoMessage: String
     };
     connect() {
@@ -43479,7 +43480,9 @@ ${n}</ol>
       }
     }
     async #createChat() {
-      const response = await fetch("/-/ai_chats", {
+      const chatsUrl = (this.chatsUrlValue || "").trim();
+      if (!chatsUrl) throw new Error("missing chats url");
+      const response = await fetch(chatsUrl, {
         method: "POST",
         headers: this.#jsonHeaders(),
         credentials: "same-origin"
@@ -43544,6 +43547,7 @@ ${n}</ol>
       searchUrl: String,
       previewUrl: String,
       chatUrl: String,
+      chatsUrl: String,
       askAiMessageTemplate: String,
       debounceMs: { type: Number, default: 220 }
     };
@@ -43801,7 +43805,9 @@ ${n}</ol>
       strong.textContent = q2 ? displayTpl.replace("%{query}", q2) : ellipsis;
     }
     async #createChat() {
-      const response = await fetch("/-/ai_chats", {
+      const chatsUrl = (this.chatsUrlValue || "").trim();
+      if (!chatsUrl) throw new Error("missing chats url");
+      const response = await fetch(chatsUrl, {
         method: "POST",
         headers: this.#jsonHeaders(),
         credentials: "same-origin"
@@ -44346,6 +44352,7 @@ ${n}</ol>
     static values = {
       url: String,
       chatsUrl: String,
+      homeUrl: String,
       currentChatId: String,
       deleteConfirm: String,
       deleteEnabled: { type: Boolean, default: false }
@@ -44377,7 +44384,8 @@ ${n}</ol>
         if (!response.ok) throw new Error("delete failed");
         if (item) item.remove();
         if (wasCurrent) {
-          window.Turbo?.visit?.("/") ?? (window.location.href = "/");
+          const homeUrl = (this.homeUrlValue || document.body?.dataset?.siteIndexPath || "/").trim() || "/";
+          window.Turbo?.visit?.(homeUrl) ?? (window.location.href = homeUrl);
           return;
         }
         this.refresh();
@@ -44523,7 +44531,7 @@ ${n}</ol>
     const STORAGE_KEY3 = "last_chat_url";
     const HISTORY_LINK_ID = "js-history-link";
     function chatBaseUrl() {
-      return document.body?.dataset?.chatUrl || "/s/chat";
+      return document.body?.dataset?.chatUrl || "";
     }
     function isChatPagePath(pathname) {
       try {

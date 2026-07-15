@@ -5,11 +5,13 @@
 {% assign chat_input_placeholder = page.settings.chat_input_placeholder %}
 {% assign chat_disclaimer = page.settings.chat_disclaimer %}
 {% assign chat_static_url = statics['chat'] %}
+{% assign ai_chats_url = script_name | append: '/-/ai_chats' %}
 
 <div
   class="flex min-h-0 flex-1 flex-col overflow-hidden w-full"
   data-controller="welcome-chat"
   data-welcome-chat-chat-url-value="{{ chat_static_url }}"
+  data-welcome-chat-chats-url-value="{{ ai_chats_url }}"
 >
   <div class="flex-1 overflow-y-auto w-full min-h-full flex items-center justify-center flex-col">
     <div class="mx-auto flex w-full max-w-3xl flex-col items-center justify-center px-4 pb-10 text-center sm:px-6 sm:pb-16">

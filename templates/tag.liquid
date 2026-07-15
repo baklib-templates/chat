@@ -15,8 +15,7 @@
             {% for site_tag in site.tags %}
             <li>
                 <a href="{{ site_tag.path }}" class="flex items-center p-2 rounded-xl transition hover:bg-accent"
-                    :class="'{{ tag.name }}' === '{{ site_tag.name }}' ? 'bg-accent' : ''"
-                    href="/?tag_name={{ tag.name }}">
+                    :class="'{{ tag.name }}' === '{{ site_tag.name }}' ? 'bg-accent' : ''">
                     <span class="flex justify-center items-center mr-3 w-4 h-4 text-lg font-bold rounded-full"
                         style="background-color: {{ site_tag.color }}"></span>
                     <span class="text-sm font-medium text-base-content/90">{{ site_tag.name }}</span>
@@ -47,7 +46,7 @@
                         <a href="{{ site_tag.path }}"
                             class="flex items-center p-2 rounded-xl transition hover:bg-accent"
                             :class="'{{ tag.name }}' === '{{ site_tag.name }}' ? 'bg-accent' : ''"
-                            href="/?tag_name={{ tag.name }}" @click="isDrawerOpen = false">
+                            @click="isDrawerOpen = false">
                             <span class="flex justify-center items-center mr-3 w-4 h-4 text-lg font-bold rounded-full"
                                 style="background-color: {{ site_tag.color }}"></span>
                             <span class="text-sm font-medium text-base-content/90">{{ site_tag.name }}</span>

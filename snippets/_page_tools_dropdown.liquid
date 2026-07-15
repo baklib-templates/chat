@@ -177,7 +177,7 @@
   </div>
   {% endif %}
   {% if chat_url %}
-    <div data-controller="welcome-chat" data-welcome-chat-chat-url-value="{{ chat_url }}">
+    <div data-controller="welcome-chat" data-welcome-chat-chat-url-value="{{ chat_url }}" data-welcome-chat-chats-url-value="{{ script_name | append: '/-/ai_chats' }}">
       <button
         type="button"
         class="btn btn-ghost btn-sm gap-1.5 rounded-md border border-base-300 bg-base-100 px-4 hover:bg-base-200"

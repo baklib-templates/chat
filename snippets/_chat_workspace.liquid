@@ -7,6 +7,8 @@
 {% assign chat = site.ai_chats[resolved_chat_id] %}
 {% assign chat_has_title = chat.title | presence %}
 {% assign chat_title_url = statics['chat_title'] %}
+{% assign ai_search_url = script_name | append: '/-/ai-search-completion' %}
+{% assign ai_chats_url = script_name | append: '/-/ai_chats' %}
 {% assign is_historical_chat = false %}
 {% if chat and chat.messages.size > 0 %}
   {% assign is_historical_chat = true %}
@@ -44,8 +46,8 @@
   <div
     class="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
     data-controller="ai-search"
-    data-ai-search-url-value="/-/ai-search-completion"
-    data-ai-search-chats-url-value="/-/ai_chats"
+    data-ai-search-url-value="{{ ai_search_url }}"
+    data-ai-search-chats-url-value="{{ ai_chats_url }}"
     data-ai-search-timeout-value="60"
     data-ai-search-chat-id-value="{{ chat_id }}"
     data-ai-search-auto-submit-value="{{ auto_submit }}"

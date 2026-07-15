@@ -2,7 +2,7 @@
 {% assign initial_message = params.message | default: params.q | strip %}
 
 {% unless chat_id %}
-  <script>window.location.replace('/');</script>
+  <script>window.location.replace({{ site.index_path | to_json }});</script>
 {% else %}
   {% render 'chat_workspace', chat_id: chat_id, initial_message: initial_message %}
 {% endunless %}

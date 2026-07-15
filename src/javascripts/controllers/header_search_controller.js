@@ -18,6 +18,7 @@ export default class extends Controller {
     searchUrl: String,
     previewUrl: String,
     chatUrl: String,
+    chatsUrl: String,
     askAiMessageTemplate: String,
     debounceMs: { type: Number, default: 220 },
   };
@@ -321,7 +322,10 @@ export default class extends Controller {
   }
 
   async #createChat() {
-    const response = await fetch("/-/ai_chats", {
+    const chatsUrl = (this.chatsUrlValue || "").trim();
+    if (!chatsUrl) throw new Error("missing chats url");
+
+    const response = await fetch(chatsUrl, {
       method: "POST",
       headers: this.#jsonHeaders(),
       credentials: "same-origin",

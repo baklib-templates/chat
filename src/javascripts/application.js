@@ -80,7 +80,7 @@ Alpine.start();
   const HISTORY_LINK_ID = "js-history-link";
 
   function chatBaseUrl() {
-    return document.body?.dataset?.chatUrl || "/s/chat";
+    return document.body?.dataset?.chatUrl || "";
   }
 
   function isChatPagePath(pathname) {

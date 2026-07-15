@@ -56,7 +56,8 @@
       }
     </style>
   </head>
-  <body id="js--body" class="min-h-dvh overflow-hidden" data-chat-url="{{ statics['chat'] }}">
+  {%- assign ai_chats_url = script_name | append: '/-/ai_chats' -%}
+  <body id="js--body" class="min-h-dvh overflow-hidden" data-chat-url="{{ statics['chat'] }}" data-site-index-path="{{ site.index_path }}">
     {%- assign current_chat_id = params.id | default: params.chat_id | strip -%}
     {%- assign chat_delete_enabled = site.settings.chat_delete_enabled -%}
     <div
@@ -64,8 +65,9 @@
       data-controller="recent-chats"
       data-recent-chats-url-value="{{ statics['recent_chats'] }}"
       data-recent-chats-current-chat-id-value="{{ current_chat_id }}"
+      data-recent-chats-home-url-value="{{ site.index_path }}"
       {% if chat_delete_enabled %}
-        data-recent-chats-chats-url-value="/-/ai_chats"
+        data-recent-chats-chats-url-value="{{ ai_chats_url }}"
         data-recent-chats-delete-enabled-value="true"
         data-recent-chats-delete-confirm-value="{{ 'snippets.recent_chats.delete_confirm' | t: '确定删除此对话吗？此操作不可恢复。' | escape_once }}"
       {% endif %}

@@ -5,6 +5,7 @@ export default class extends Controller {
   static values = {
     url: String,
     chatsUrl: String,
+    homeUrl: String,
     currentChatId: String,
     deleteConfirm: String,
     deleteEnabled: { type: Boolean, default: false },
@@ -48,7 +49,8 @@ export default class extends Controller {
       if (item) item.remove();
 
       if (wasCurrent) {
-        window.Turbo?.visit?.("/") ?? (window.location.href = "/");
+        const homeUrl = (this.homeUrlValue || document.body?.dataset?.siteIndexPath || "/").trim() || "/";
+        window.Turbo?.visit?.(homeUrl) ?? (window.location.href = homeUrl);
         return;
       }
 

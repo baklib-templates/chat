@@ -1,6 +1,7 @@
 {% assign search_ask_ai_message_tpl = 'search.ask_ai_message' | t: '请介绍一下「%{query}」' %}
 {% assign chat_static_url = statics['chat'] %}
 {% assign search_preview_url = statics['search_preview'] %}
+{% assign ai_chats_url = script_name | append: '/-/ai_chats' %}
 {% assign index_page = site.pages['/'] %}
 {% assign hot_keywords = index_page.settings.popular_searches | reg_split: "/\n/" %}
 
@@ -10,6 +11,7 @@
   data-header-search-search-url-value="{{ site.search_path }}"
   data-header-search-preview-url-value="{{ search_preview_url }}"
   data-header-search-chat-url-value="{{ chat_static_url }}"
+  data-header-search-chats-url-value="{{ ai_chats_url }}"
   data-header-search-ask-ai-message-template-value="{{ search_ask_ai_message_tpl | escape_once }}"
 >
   <!-- left_sidebar：文档目录 -->

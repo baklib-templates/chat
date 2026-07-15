@@ -1,15 +1,17 @@
 {% comment %}
-  旧搜索路由兼容：带 q 参数时自动创建会话并跳转到 /s/chat
+  旧搜索路由兼容：带 q 参数时自动创建会话并跳转到静态页 chat
 {% endcomment %}
 {% assign keywords = search.keywords | default: params.q | strip %}
+{% assign ai_chats_url = script_name | append: '/-/ai_chats' %}
 
 {% if keywords == blank %}
-  <script>window.location.replace('/');</script>
+  <script>window.location.replace({{ site.index_path | to_json }});</script>
 {% else %}
   <div
     class="flex min-h-0 flex-1 items-center justify-center px-4 text-sm text-base-content/50"
     data-controller="welcome-chat"
     data-welcome-chat-chat-url-value="{{ statics['chat'] }}"
+    data-welcome-chat-chats-url-value="{{ ai_chats_url }}"
     data-welcome-chat-auto-message-value="{{ keywords | escape }}"
   >
     <span class="loading loading-spinner loading-md text-primary"></span>

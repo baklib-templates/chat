@@ -10,6 +10,17 @@
   </div>
 </template>
 
+<template data-ai-search-target="statusMessageTemplate">
+  <div
+    class="ai-chat-status flex items-center gap-2 text-sm leading-relaxed text-base-content/60"
+    role="status"
+    aria-live="polite"
+  >
+    <span class="loading loading-spinner loading-xs shrink-0 text-primary" aria-hidden="true"></span>
+    <span class="ai-chat-status-text"></span>
+  </div>
+</template>
+
 <template data-ai-search-target="assistantMessageTemplate">
   <div class="ai-chat-assistant-round">
     <div class="ai-chat-avatar ai-chat-avatar--bot">

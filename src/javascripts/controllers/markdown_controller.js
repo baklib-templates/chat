@@ -129,7 +129,14 @@ export default class extends Controller {
   static targets = ["content", "renderedContent"];
 
   connect() {
-    this.renderContent();
+    // Skip empty sources: AI assistant bubbles pre-fill renderedContent with a
+    // thinking/reading status before markdown source is available.
+    const source = this.hasContentTarget
+      ? this.contentTarget.textContent
+      : this.element.textContent;
+    if ((source || "").trim()) {
+      this.renderContent();
+    }
   }
 
   contentTargetConnected(element) {
@@ -143,8 +150,12 @@ export default class extends Controller {
 
   renderContent() {
     if (this.rendering) return;
-    this.rendering = true;
     const source = this.hasContentTarget ? this.contentTarget.textContent : this.element.textContent;
+    // Don't clobber thinking/reading status when markdown source is still empty
+    // (e.g. MutationObserver fires after clearing the source for a status update).
+    if (!(source || "").trim()) return;
+
+    this.rendering = true;
     const html = marked.parse(source || "");
 
     if (this.hasRenderedContentTarget) {

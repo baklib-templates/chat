@@ -23323,6 +23323,7 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       "clearButton",
       "userMessageTemplate",
       "assistantMessageTemplate",
+      "statusMessageTemplate",
       "retryButton"
     ];
     static classes = ["hidden"];
@@ -23770,6 +23771,8 @@ Please report this to https://github.com/markedjs/marked.`, e) {
       const enableMarkdownStyle = () => renderedEl?.classList.add("chat-message");
       const disableMarkdownStyle = () => renderedEl?.classList.remove("chat-message");
       if (status === "error") {
+        roundEl?.classList.remove("ai-chat-assistant-round--loading");
+        roundEl?.setAttribute("aria-busy", "false");
         const button = this.retryButton.cloneNode(true);
         button.dataset.idx = String(idx);
         button.classList.remove("hidden");
@@ -23788,11 +23791,14 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         this.scrollToBottom();
         return;
       }
+      const isLoading = status === "status" || status === "streaming" && !content;
+      roundEl?.classList.toggle("ai-chat-assistant-round--loading", isLoading);
+      roundEl?.setAttribute("aria-busy", isLoading ? "true" : "false");
       if (status === "canceled" || status === "status") {
         if (contentEl) contentEl.textContent = "";
         if (renderedEl) {
           disableMarkdownStyle();
-          renderedEl.innerHTML = `<span class="text-base-content/50">${this.escapeHTML(content)}</span>`;
+          renderedEl.innerHTML = this.#renderStatusHtml(content);
         }
         this.scrollToBottom();
         return;
@@ -23808,9 +23814,24 @@ Please report this to https://github.com/markedjs/marked.`, e) {
         }
       } else if (renderedEl) {
         disableMarkdownStyle();
-        renderedEl.innerHTML = `<span class="text-base-content/50">${this.messagesValue.thinking}</span>`;
+        renderedEl.innerHTML = this.#renderStatusHtml(this.#defaultThinkingLabel());
       }
       this.scrollToBottom();
+    }
+    #defaultThinkingLabel() {
+      return this.messagesValue?.thinking_status || this.messagesValue?.thinking || "";
+    }
+    #renderStatusHtml(text2) {
+      const label = (text2 || this.#defaultThinkingLabel()).trim();
+      if (this.hasStatusMessageTemplateTarget) {
+        const tpl = this.statusMessageTemplateTarget.content.cloneNode(true);
+        const textEl = tpl.querySelector(".ai-chat-status-text");
+        if (textEl) textEl.textContent = label;
+        const mount = document.createElement("div");
+        mount.appendChild(tpl);
+        return mount.innerHTML;
+      }
+      return `<div class="ai-chat-status flex items-center gap-2 text-sm leading-relaxed text-base-content/60" role="status" aria-live="polite"><span class="loading loading-spinner loading-xs shrink-0 text-primary" aria-hidden="true"></span><span class="ai-chat-status-text">${this.escapeHTML(label)}</span></div>`;
     }
     #triggerMarkdown(markdownRoot) {
       if (!markdownRoot || !window.Stimulus) return;
@@ -43204,7 +43225,10 @@ ${n}</ol>
   var markdown_controller_default = class extends Controller {
     static targets = ["content", "renderedContent"];
     connect() {
-      this.renderContent();
+      const source = this.hasContentTarget ? this.contentTarget.textContent : this.element.textContent;
+      if ((source || "").trim()) {
+        this.renderContent();
+      }
     }
     contentTargetConnected(element) {
       element.markdownObserver = new MutationObserver(() => this.renderContent());
@@ -43215,8 +43239,9 @@ ${n}</ol>
     }
     renderContent() {
       if (this.rendering) return;
-      this.rendering = true;
       const source = this.hasContentTarget ? this.contentTarget.textContent : this.element.textContent;
+      if (!(source || "").trim()) return;
+      this.rendering = true;
       const html = g.parse(source || "");
       if (this.hasRenderedContentTarget) {
         this.renderedContentTarget.innerHTML = html;

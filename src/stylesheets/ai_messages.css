@@ -30,6 +30,15 @@
   @apply w-fit max-w-full rounded-2xl rounded-tl-md border border-base-content/8 bg-base-200/35 px-4 py-2.5 text-sm shadow-sm backdrop-blur-sm sm:text-[0.9375rem];
 }
 
+/* AI chat thinking / reading status row (spinner + label) */
+.ai-chat-status {
+  @apply min-h-[1.65em];
+}
+
+.ai-chat-assistant-round--loading [data-markdown-target="renderedContent"]:not(.chat-message) {
+  @apply py-0.5;
+}
+
 .ai-chat-avatar {
   @apply shrink-0 object-cover;
 }

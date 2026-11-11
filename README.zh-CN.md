@@ -2,7 +2,18 @@
 
 [English](README.md) | 简体中文
 
-Baklib **Wiki** AI 对话主题（`theme_scope`: `wiki`，版本 **1.2.1**）：以会话为核心的知识问答，含欢迎首页、会话侧栏、引用来源面板、文档阅读与搜索、Turbo 导航，面向智能客服与知识库问答，而非传统纯文档或通用帮助中心布局。
+这是把知识库投影成对话站的模板。适合以提问为入口的知识问答和智能客服。不适合长文产品文档或常见问题列表式帮助中心。
+
+要知道结构、字段和怎么用，按顺序读 `docs/`。本文件后半是构建和更新，不要从那里推断内容模型。
+
+| 文件 | 读它是为了 |
+| --- | --- |
+| [docs/README.md](docs/README.md) | 分册目录 |
+| [docs/overview.md](docs/overview.md) | 是什么、什么场合用 |
+| [docs/structure.md](docs/structure.md) | 首页变体和页面关系 |
+| [docs/schema.md](docs/schema.md) | 字段 id，以及能不能改 |
+| [docs/usage.md](docs/usage.md) | 建站后怎么配 |
+| [docs/activation.yml](docs/activation.yml) | 快速开始的编排配方 |
 
 ## 特性
 

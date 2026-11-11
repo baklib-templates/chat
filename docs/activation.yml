@@ -1,0 +1,16 @@
+apply: wiki_space
+page_template: page
+ask_path: /
+arrangements:
+  - key: original
+    title: 对话按原目录挂文档
+    description: 知识库目录原样留下，对话引用仍按原来的章节找。
+    rule: original
+  - key: topics
+    title: 按顶层话题开对话入口
+    description: 每个顶层目录成为一个话题，文档挂在话题下面。
+    rule: top_folder
+  - key: flat
+    title: 先把文档铺平再问
+    description: 文章先都放在根下，对话直接对着全部原文。
+    rule: flat

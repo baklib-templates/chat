@@ -2,7 +2,18 @@
 
 English | [简体中文](README.zh-CN.md)
 
-Baklib **Wiki** AI chat theme (`theme_scope`: `wiki`, version **1.2.1**): conversation-first knowledge Q&A with a welcome home, session sidebar, citation panel, integrated doc browsing, search, and Turbo-driven navigation—not a traditional docs-only or help-center layout.
+This is a conversation site projected from a wiki knowledge base. Use it for support chat and knowledge Q&A. Do not use it for long-form product docs or a FAQ help center.
+
+Read `docs/` in this order. The rest of this file is the feature list and build notes, not the content model. The docs are in Chinese.
+
+| File | Read it to learn |
+| --- | --- |
+| [docs/README.md](docs/README.md) | Index of the docs |
+| [docs/overview.md](docs/overview.md) | What it is, and when to use it |
+| [docs/structure.md](docs/structure.md) | Home variants and how pages relate |
+| [docs/schema.md](docs/schema.md) | Field ids, and which ones are writable |
+| [docs/usage.md](docs/usage.md) | How to set the site up |
+| [docs/activation.yml](docs/activation.yml) | Get-started arrangement recipe |
 
 ## Features
 

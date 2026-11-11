@@ -1,0 +1,81 @@
+skill:
+  version: 2
+  preset: chat
+  writer: wiki_space
+  summary: 以对话检索和回答授权知识，缺少资料时明确说明。
+  home:
+    template: index.welcome
+    hero_fields:
+    - welcome_title
+    - welcome_description
+    slots: 0
+  navigation: {}
+  site_fields:
+  - site_description
+  - company_name
+  - robot_name
+  - kb_menu_label
+  - left_sidebar_width
+  - header_height
+  - copyright
+  - service_term_url
+  - privacy_policy_url
+  - show_published_at
+  - show_author
+  - feedback_enabled
+  - show_page_tools_dropdown
+  - feedback_helper_text
+  page_types:
+  - template: feedback_error_turbo_stream
+    role: feedback_error_turbo_stream
+    writable: []
+  - template: feedback_success_turbo_stream
+    role: feedback_success_turbo_stream
+    writable: []
+  - template: feedback_turbo_stream
+    role: feedback_turbo_stream
+    writable: []
+  - template: index.welcome
+    role: index.welcome
+    writable:
+    - welcome_title
+    - welcome_description
+    - popular_searches
+    - popular_searches_label
+    - chat_input_placeholder
+    - chat_disclaimer
+  - template: page
+    role: page
+    writable:
+    - show_list
+    - icon
+    - description
+    - tags
+    - thumb_image_url
+  - template: search
+    role: search
+    writable: []
+  - template: tag
+    role: tag
+    writable: []
+  limits:
+    channels: 20
+    pages: 100
+  industries: []
+  content_model:
+    hierarchy:
+    - page
+    body_field: content
+    default_access: public
+    source_of_truth: knowledge_base
+    boundaries:
+    - 没有知识来源时不能虚构答案，AI 需实际配置
+  customization:
+    mode: organization_candidate
+    protected:
+    - content_model
+    - source_references
+    - permissions
+    - identity
+    - forms
+    - dam_references
